@@ -1,0 +1,58 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: protocol
+type: object
+required: [type, domain, status, reproducibility_status]
+properties:
+  type:
+    const: protocol
+  domain:
+    enum: [phylogenomics, morphometry, cytogenetics, herbarium]
+  phase:
+    type: string
+    description: "Relative path inside protocols/ e.g. wetlab/02_dna-extraction"
+  name:
+    type: string
+  tools:
+    type: array
+    items:
+      type: string
+  status:
+    enum: [draft, current, deprecated]
+  validated_with:
+    type: object
+    properties:
+      software_versions:
+        type: object
+      environment:
+        type: string
+      expected_runtime:
+        type: string
+      test_dataset:
+        type: string
+  reproducibility_status:
+    enum: [validated, partially_validated, deprecated, unknown]
+  last_validated:
+    oneOf:
+      - type: string
+        format: date
+      - type: "null"
+  deprecated_reason:
+    oneOf:
+      - type: string
+      - type: "null"
+  replaced_by:
+    oneOf:
+      - type: string
+      - type: "null"
+  owner:
+    type: string
+  canonical:
+    type: boolean
+  reviewed_by:
+    type: array
+    items:
+      type: string
+  fork_of:
+    oneOf:
+      - type: string
+      - type: "null"

@@ -1,0 +1,68 @@
+# Call profile: MSCA Postdoctoral Fellowships — European Fellowship
+# Read only by _scripts/templates/new-grant.md. No evaluator reads this
+# (the CORDIS/fit-score engine was dropped as overengineering — see
+# _meta/VAULT_ARCHITECTURE.md §5).
+#
+# Adding a future call = adding one more profile file here. No code changes
+# to new-grant.md are required as long as the same shape (eligibility,
+# milestones, part_b1_sections) is followed.
+
+scheme: "MSCA-PF-EF"
+agency: "European Commission (REA)"
+call_id: "HORIZON-MSCA-2026-PF-01-01"
+
+part_b1_max_pages: 10
+
+formatting:
+  - "A4, margins >= 15mm on all sides"
+  - "Times New Roman (Windows/macOS) or Nimbus Roman No. 9 L (Linux), min. 11pt body text"
+  - "No hyperlinks to external content in Part B-1 (disregarded by evaluators)"
+  - "Disclose any generative-AI tool use at the end of Part B-2"
+
+# Used only to generate a minimal Part B-1 stub when the user skips
+# importing an existing template at grant-creation time.
+part_b1_sections:
+  - id: excellence
+    title: "Excellence"
+    weight: 0.5
+    page_budget: 4.5
+  - id: impact
+    title: "Impact"
+    weight: 0.3
+    page_budget: 2.5
+  - id: implementation
+    title: "Quality and Efficiency of the Implementation"
+    weight: 0.2
+    page_budget: 3
+
+part_b2_sections:
+  - id: cv
+    title: "Part B2 — Curriculum Vitae"
+    page_budget: 5
+  - id: capacity
+    title: "Part B2 — Capacity of the Participating Organisations"
+    page_budget: null
+
+eligibility:
+  - id: phd_by_deadline
+    label: "PhD degree awarded (or thesis successfully defended) by the call deadline"
+  - id: max_8y_research_experience
+    label: "<= 8 years of full-time research experience since PhD award (career breaks, time outside research and some third-country research excluded — use the REA self-assessment tool)"
+  - id: mobility_12_36
+    label: "Not resided or carried out main activity in the host country for more than 12 months in the 36 months before the deadline"
+  - id: one_proposal_per_call
+    label: "Only one MSCA-PF proposal submitted in this call"
+
+milestones:
+  - offset_weeks: 13
+    label: "Eligibility gates verified"
+  - offset_weeks: 11
+    label: "Objectives + methodology concept fixed"
+  - offset_weeks: 8
+    label: "Full Part B1 draft"
+  - offset_weeks: 4
+    label: "Host / supervisor / NCP review round"
+  - offset_weeks: 2
+    label: "Final polish, Part A complete on portal"
+  - offset_weeks: 1
+    label: "Submit (do not wait for the last day)"

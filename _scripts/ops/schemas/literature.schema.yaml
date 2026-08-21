@@ -1,0 +1,31 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: literature
+type: object
+required: [type, citekey, stage]
+properties:
+  type:
+    const: literature
+  citekey:
+    type: string
+    pattern: "^[a-z0-9_-]+$"
+  stage:
+    enum: [seed, litnote, zettel, claim, manuscript-fragment]
+    description: "Default on import: litnote. Conscious manual promotion."
+  authors:
+    type: array
+  year:
+    type: integer
+    minimum: 1700
+    maximum: 2100
+  journal:
+    type: string
+  doi:
+    type: string
+  title:
+    type: string
+  project_code:
+    type: array
+    items:
+      type: string
+  status:
+    enum: [unread, reading, annotated, synthesized]

@@ -1,0 +1,32 @@
+Classify the following scientific paper into EXACTLY ONE category.
+Respond ONLY with: {"category": "...", "reason": "..."}
+
+RULES when categories overlap:
+- Phylogenetic tree or network is the main output → phylogenomics
+- Molecular data used to resolve species identity or nomenclature → taxonomy
+- Morphometric analysis (GMM, geometric) without formal nomenclatural acts → morphometry
+- Morphometrics as one tool among several in a formal species revision → taxonomy
+- Molecular markers for population structure without a phylogenetic tree → genetics
+- Named software tool, Shiny app, or pipeline delivered → methods_software
+- Floristic surveys, regional checklists, new territory records → taxonomy
+- Allometry comparing shape/size among specimens, populations, or taxa → morphometry
+- Allometry as ecological scaling law (body size vs metabolic rate, biomass) → ecology_biogeography
+- CS/software/AI without biological application → informatics
+- Paper unrelated to plant evolutionary biology → other
+
+CATEGORIES:
+- phylogenomics: molecular trees, phylogeography, diversification rates, ancestral states, reticulate evolution (when tree is the primary output)
+- taxonomy: species delimitation, nomenclatural acts, revisionary work, integrative taxonomy with formal outcomes, floristic surveys and checklists
+- morphometry: quantitative shape/size analysis among specimens/populations/taxa (geometric morphometrics, GMM, traditional morphometrics, organismal allometry) even when used to evaluate species boundaries without nomenclatural acts
+- ecology_biogeography: SDMs, niche modelling, phytosociology, vegetation classification, community ecology, conservation ecology
+- genetics: population structure, AFLP/RADseq/SSR/SNPs/cpDNA, gene flow, hybridization, admixture, epigenetic variation (no phylogenetic tree as main output)
+- cytogenetics: genome size, flow cytometry, karyology, polyploidy, chromosome counts, C-values
+- stats_ml: statistical or computational framework applicable across study systems (Bayesian methods, ML algorithms, R/Python packages, probabilistic models)
+- methods_software: named software tools, databases, pipelines, lab protocols (e.g. HybPiper, BPP, Shiny apps, chromosome databases, DNA extraction protocols)
+- philosophy: history of systematics or biometry, species concept theory, ontology of biological taxa, scientific methodology critique
+- informatics: computer science, coding, software engineering, AI/ML systems, agent systems — without direct biological application
+- other: medicine, veterinary, energy systems, human ecology, social sciences
+
+Title: {title}
+Abstract: {abstract}
+Keywords: {keywords}

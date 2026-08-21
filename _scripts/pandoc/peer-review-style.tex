@@ -1,0 +1,80 @@
+% peer-review-style.tex
+% Pandoc include-in-header for PDF export of vault notes (peer reviews,
+% expense sheets, memos, …). Compile with LuaLaTeX. Adapted from
+% ~/Desktop/temp5/latex/book-style.sty, simplified for the article class
+% Pandoc emits.
+%
+% Libertinus is a Unicode-rich font: Greek letters and math symbols typed
+% directly in the Markdown (ρ, σ, ≈, ≤, ×, →, µ, …) render natively, so no
+% per-character mapping package is required.
+
+% ── Page geometry (tighter margins → fuller pages) ───────────
+\usepackage[a4paper, margin=2cm]{geometry}
+
+% ── Fonts (LuaLaTeX) ─────────────────────────────────────────
+\usepackage{libertinus-otf}   % loads unicode-math + Libertinus Math too
+\usepackage{microtype}
+\usepackage{eurosym}
+
+% ── Colours ──────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{accent}{RGB}{58,115,184}   % Cambridge blue (links only)
+\definecolor{ink}{RGB}{34,42,53}        % Near-black body text & headings
+\definecolor{slate}{RGB}{92,103,115}    % Secondary / captions / running head
+
+% ── Section headings (black) ─────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{ink}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{ink}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{ink}}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.1em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.9em}{0.4em}
+
+% ── Headers / footers ────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{slate}\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\color{slate}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ── Tables: denser rows, roomier columns, small font ─────────
+\usepackage{etoolbox}
+\usepackage{array}
+\usepackage{ragged2e}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+% Pandoc emits longtable for pipe tables; shrink font and left-justify
+% wrapped cells (no hyphenation) so long place names read cleanly.
+\AtBeginEnvironment{longtable}{\small\RaggedRight}
+
+% ── Captions ─────────────────────────────────────────────────
+\usepackage[font=small, labelfont=bf, labelsep=period,
+            textfont={color=slate}]{caption}
+
+% ── Lists ────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist{itemsep=2pt, topsep=4pt, leftmargin=1.5em}
+
+% ── Block quotes ─────────────────────────────────────────────
+\renewenvironment{quote}
+  {\list{}{\leftmargin=1.5em\rightmargin=1.5em}\item\relax\color{slate}\itshape}
+  {\endlist}
+
+% ── Paragraph shape: no indent, small vertical gap ───────────
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+
+% ── Deferred: hyperref is loaded by Pandoc late in the preamble,
+%    so recolour links and set body colour at begin-document ──
+\AtBeginDocument{%
+  \hypersetup{
+    colorlinks  = true,
+    breaklinks  = true,
+    urlcolor    = accent,
+    linkcolor   = accent,
+    citecolor   = accent,
+  }%
+  \color{ink}%
+}

@@ -1,0 +1,11 @@
+# Optional extras for the audio transcription pipeline
+# (automation/transcribe_file.py, automation/transcribe_server.py).
+# Install only if you use conference/lab-note recording:
+#   pip install -r requirements-transcription.txt
+
+numpy
+sounddevice
+soundfile
+openai-whisper
+flask
+requests

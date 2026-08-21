@@ -1,0 +1,38 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: lab-note
+type: object
+required: [type, experiment_id, date]
+properties:
+  type:
+    const: lab-note
+  experiment_id:
+    type: string
+    pattern: "^[0-9A-F]{8}$"
+    description: "Adler-32 hex uppercase, 8 char (idea C)"
+  date:
+    type: string
+    format: date
+  project_code:
+    oneOf:
+      - type: string
+      - type: "null"
+  activity_type:
+    oneOf:
+      - enum: [dna_extraction, pcr, library_prep, gel, herbarium, sequencing, analysis]
+      - type: "null"
+  protocol:
+    oneOf:
+      - type: string
+      - type: "null"
+  samples_processed:
+    oneOf:
+      - type: integer
+      - type: "null"
+  success_count:
+    oneOf:
+      - type: integer
+      - type: "null"
+  material:
+    oneOf:
+      - enum: [fresh, silica, herbarium]
+      - type: "null"

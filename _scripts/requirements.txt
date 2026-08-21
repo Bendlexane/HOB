@@ -1,0 +1,11 @@
+# Core dependencies for _scripts/.
+# Most of the pipeline is stdlib (sqlite3, pathlib, json, urllib) — only Excel
+# export needs external packages. Audio transcription has its own optional
+# file: requirements-transcription.txt.
+
+# Excel export (kpi/database.py export)
+pandas>=2.0
+openpyxl>=3.1
+
+# Optional: for development
+# pytest>=8

@@ -1,0 +1,9 @@
+{
+  "_comment": "Registry of monitored cron jobs. cron_heartbeat.py checks each one for liveness (did it fire within max_age_hours?) and health (did its log contain an error signature?). Add a row whenever you add a cron in crontab.example. 'log' is relative to _scripts/ops/logs/. 'beat' is the optional explicit success-heartbeat name (ops/logs/heartbeat/<beat>.txt); when present it takes precedence over log mtime. Set 'critical' false for non-essential jobs (warning instead of error on staleness).",
+  "jobs": [
+    {"name": "kpi_collector",     "log": "kpi_collector.log",     "beat": "kpi_collector",     "max_age_hours": 26, "schedule": "0 17 * * *",  "critical": true},
+    {"name": "archive_published", "log": "archive_published.log", "beat": "archive_published", "max_age_hours": 26, "schedule": "0 8 * * *",   "critical": true},
+    {"name": "update_posteriors", "log": "update_posteriors.log", "beat": "update_posteriors", "max_age_hours": 26, "schedule": "5 8 * * *",   "critical": false},
+    {"name": "refresh_gantt",     "log": "refresh_gantt.log",     "beat": "refresh_gantt",     "max_age_hours": 26, "schedule": "10 8 * * *",  "critical": false}
+  ]
+}

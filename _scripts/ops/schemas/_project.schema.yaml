@@ -1,0 +1,44 @@
+# JSON Schema for _project.md frontmatter
+# Validated by _scripts/ops/checks/frontmatter_lint.py
+$schema: http://json-schema.org/draft-07/schema#
+title: project
+type: object
+required: [code, status, role]
+properties:
+  code:
+    type: string
+    pattern: "^[0-9]{4}_[A-Z0-9]+_[A-Z]+$"
+    description: "YYYY_TAXON_KEYWORD (e.g. 2026_PLUMBAGO_PHYLO)"
+  title:
+    type: string
+  status:
+    enum: [data_collection, drafting, in_review, published]
+  role:
+    enum: [lead, coauthor, supervisor]
+  position:
+    type: integer
+    minimum: 1
+  authors_total:
+    oneOf:
+      - type: integer
+        minimum: 1
+      - const: TBD
+  lead_author:
+    oneOf:
+      - type: string
+      - type: "null"
+  master_location:
+    enum: [local, external]
+  journal_target:
+    type: string
+  linked_grant:
+    oneOf:
+      - type: string
+      - type: "null"
+  contribution_scope:
+    type: array
+    items:
+      type: string
+  created:
+    type: string
+    format: date

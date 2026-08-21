@@ -1,0 +1,22 @@
+{
+  "_doc": "Beta-PERT priors per (role, phase) cell. Edited by hand. See _meta/VAULT_ARCHITECTURE.md sec. 'Bayesian Gantt prediction'.",
+  "_units": "calendar days",
+  "_phases": ["dc=data_collection", "dr=drafting", "ir=in_review"],
+  "_roles": ["lead", "not_lead"],
+  "_calibration_note": "Example priors calibrated on real botany/phylogenetics projects: lead.dc ML=270d (~field+lab+bioinformatics for a single-author project). not_lead.dc ML=300d (coauthor projects tend longer). Drafting ML=150/180d. IR symmetric across roles (journal-determined). PERT mean: lead dc≈312d, dr≈174d, ir≈146d; not_lead dc≈365d, dr≈220d, ir≈146d. Recalibrate on your own project history — see ml/README.md.",
+  "lead": {
+    "dc": {"O": 60,  "ML": 270, "P": 730},
+    "dr": {"O": 45,  "ML": 150, "P": 400},
+    "ir": {"O": 30,  "ML": 120, "P": 365}
+  },
+  "not_lead": {
+    "dc": {"O": 90,  "ML": 300, "P": 900},
+    "dr": {"O": 60,  "ML": 180, "P": 540},
+    "ir": {"O": 30,  "ML": 120, "P": 365}
+  },
+  "_nig_strength": {
+    "kappa_0": 0.5,
+    "a_0": 3,
+    "_note": "kappa_0 = pseudo-observations carrying prior weight; a_0 sets IG shape. b_0 derived from elicited variance. kappa_0=0.5 chosen deliberately low: simulation (Bayesian_gantt_system_simulation.R) showed that kappa_0>=2 causes the model to get stuck on a wrong ML for many projects; with kappa_0=0.5 the prior weight is <5% after 10 real observations and the data self-corrects quickly even if PERT estimates are off by 10x."
+  }
+}

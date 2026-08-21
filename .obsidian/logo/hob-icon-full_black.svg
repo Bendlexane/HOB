@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 700 700"
+   width="100%"
+   height="100%"
+   version="1.1"
+   id="svg31"
+   sodipodi:docname="hob-icon-full_black.svg"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview31"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.66"
+     inkscape:cx="220.45455"
+     inkscape:cy="324.24242"
+     inkscape:window-width="1920"
+     inkscape:window-height="965"
+     inkscape:window-x="0"
+     inkscape:window-y="31"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg31" />
+  <defs
+     id="defs15">
+    <!-- 1. Gradient for H: Early Morning & Hint of Day (Alba/Mattina -> Accenno Giorno) -->
+    <linearGradient
+       id="gradientH"
+       x1="157.3588"
+       y1="72.757293"
+       x2="283.83409"
+       y2="199.23259"
+       gradientTransform="matrix(0.6799747,0,0,1.470643,-49.939394,-63.212121)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#4b4e8c"
+         id="stop1" />
+      <!-- Alba Purple -->
+      <stop
+         offset="50%"
+         stop-color="#ffb88c"
+         id="stop2" />
+      <!-- Early Morning Peach -->
+      <stop
+         offset="100%"
+         stop-color="#6ba1d8"
+         id="stop3" />
+      <!-- Accenno di Giorno Sky Blue -->
+    </linearGradient>
+    <!-- 2. Gradient for O: Full Day & Sunset (Giorno -> Tramonto) -->
+    <linearGradient
+       id="gradientO"
+       x1="262"
+       y1="112"
+       x2="438"
+       y2="288"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-49.939394,-63.212121)">
+      <stop
+         offset="0%"
+         stop-color="#6ba1d8"
+         id="stop4" />
+      <!-- Sky Blue (Giorno) -->
+      <stop
+         offset="30%"
+         stop-color="#a8cff3"
+         id="stop5" />
+      <!-- Soft Blue -->
+      <stop
+         offset="70%"
+         stop-color="#cf9a7d"
+         id="stop6" />
+      <!-- Sunset Gold -->
+      <stop
+         offset="100%"
+         stop-color="#b76e63"
+         id="stop7" />
+      <!-- Sunset Terracotta -->
+    </linearGradient>
+    <!-- 3. Gradient for B: Dusk & Night (Sera -> Notte) -->
+    <linearGradient
+       id="gradientB"
+       x1="705.71413"
+       y1="76.871069"
+       x2="839.34048"
+       y2="210.49741"
+       gradientTransform="matrix(0.71842121,0,0,1.3919411,-49.939394,-63.212121)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#cf9a7d"
+         id="stop8" />
+      <!-- Sunset Gold (Accenno di Tramonto) -->
+      <stop
+         offset="12%"
+         stop-color="#b76e63"
+         id="stopSunset2" />
+      <!-- Sunset Terracotta -->
+      <stop
+         offset="28%"
+         stop-color="#5d4a78"
+         id="stop9" />
+      <!-- Warm Dusk Purple (Sera) -->
+      <stop
+         offset="42%"
+         stop-color="#4a3a6b"
+         id="stopDusk2" />
+      <!-- Deep Dusk Purple -->
+      <stop
+         offset="50%"
+         stop-color="#1a2151"
+         id="stop10" />
+      <!-- Twilight Indigo/Navy (Night starts here) -->
+      <stop
+         offset="75%"
+         stop-color="#0b1026"
+         id="stop11" />
+      <!-- Night Obsidian Navy (Notte) -->
+      <stop
+         offset="100%"
+         stop-color="#080c1e"
+         id="stopNightEnd" />
+      <!-- Deep Night Obsidian Navy -->
+    </linearGradient>
+    <!-- Warm Fire Glow for the inner sprite core -->
+    <linearGradient
+       id="warmGlow"
+       x1="416.20308"
+       y1="188.97025"
+       x2="416.20308"
+       y2="124.93901"
+       gradientTransform="matrix(0.78086881,0,0,1.2806248,-49.939394,-63.212121)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#cf9a7d"
+         id="stop12" />
+      <stop
+         offset="100%"
+         stop-color="#ffe6c0"
+         id="stop13" />
+    </linearGradient>
+    <!-- Glass Frost Overlay for the ears and hood -->
+    <linearGradient
+       id="glassOverlay"
+       x1="0%"
+       y1="0%"
+       x2="100%"
+       y2="100%">
+      <stop
+         offset="0%"
+         stop-color="#ffffff"
+         stop-opacity="0.32"
+         id="stop14" />
+      <stop
+         offset="100%"
+         stop-color="#ffffff"
+         stop-opacity="0.08"
+         id="stop15" />
+    </linearGradient>
+    <!-- Glass Blur -->
+    <filter
+       id="glassBlur"
+       x="-0.41142857"
+       y="-0.20571429"
+       width="1.8228571"
+       height="1.4114286">
+      <feGaussianBlur
+         stdDeviation="6"
+         result="blur"
+         id="feGaussianBlur15" />
+      <feComposite
+         in="SourceGraphic"
+         in2="blur"
+         operator="over"
+         id="feComposite15" />
+    </filter>
+    <!-- Star definition for the night side -->
+    <g
+       id="star">
+      <path
+         d="M 0,-6 L 1.5,-1.5 L 6,0 L 1.5,1.5 L 0,6 L -1.5,1.5 L -6,0 L -1.5,-1.5 Z"
+         fill="#ffffff"
+         opacity="0.95"
+         id="path15" />
+    </g>
+  </defs>
+  <rect
+     style="fill:#000004;fill-opacity:1;stroke:#003761;stroke-width:2.83371"
+     id="rect1"
+     width="701.50781"
+     height="696.98199"
+     x="0.013461576"
+     y="1.5090159" />
+  <g
+     transform="translate(45, 210)"
+     id="g31">
+    <!-- ================= LETTER H (Mattina Presto & Accenno di Giorno) ================= -->
+    <path
+       d="M 70.060606,56.787879 V 216.78788 M 130.06061,56.787879 V 216.78788 m -60.000004,-80 h 60.000004"
+       stroke="url(#gradientH)"
+       stroke-width="26"
+       stroke-linecap="round"
+       fill="none"
+       id="path16"
+       style="stroke:url(#gradientH)" />
+    <!-- ================= INTEGRATED LETTER O (The Sprite: Giorno & Tramonto) ================= -->
+    <!-- Outer 'O' Ring -->
+    <circle
+       cx="300.06061"
+       cy="136.78787"
+       r="75"
+       stroke="url(#gradientO)"
+       stroke-width="26"
+       fill="none"
+       id="circle19"
+       style="stroke:url(#gradientO)" />
+    <!-- Yellow Sun (Sole Mezzo Tagliato) - Shifted exactly to the outer border of the O ring -->
+    <g
+       transform="rotate(135,103.54114,86.698002)"
+       id="g20">
+      <!-- Sun semi-circle pointing inward from the outer edge -->
+      <path
+         d="m -15.382938,-1.0410146 c 0,-8.836562 6.6541475,-14.9374254 15.49070326,-14.9374254 8.83655584,0 16.06421074,6.1360482 16.06421074,14.9726102 l -4.87344,0.62184636 -3.5034889,0.38875281 -3.8255528,0.22608626 -3.26995951,0.085234 -5.16063639,-0.092873 -3.8854221,-0.30936949 -1.6749673,-0.19655231 -1.823159,-0.21394206 -1.563931,-0.22189949 z"
+         fill="#ffd24d"
+         filter="drop-shadow(0 0 6px rgba(255, 210, 77, 0.8))"
+         id="path20"
+         sodipodi:nodetypes="csccccccccccc" />
+    </g>
+    <!-- Inner Sprite Core / Glowing Hearth Flame inside the 'O' with Keyhole Cut-out -->
+    <path
+       d="m 300.06061,96.787879 c -15,25.000001 -25,40.000001 -25,55.000001 0,15 11,27 25,27 14,0 25,-12 25,-27 0,-15 -10,-30 -25,-55.000001 z m -2.5,49.330001 a 5,5 0 1 1 5,0 l 2.5,11.67 h -10 z"
+       fill="url(#warmGlow)"
+       filter="drop-shadow(0 0 12px rgba(255, 230, 192, 0.8))"
+       id="path21"
+       style="fill:url(#warmGlow)" />
+    <!-- Faint spark floating inside the 'O' above the flame -->
+    <circle
+       cx="300.06061"
+       cy="86.78788"
+       r="4"
+       fill="#ffe6c0"
+       opacity="0.8"
+       id="circle21" />
+    <!-- ================= LETTER B (Sera & Notte) ================= -->
+    <path
+       d="M 470.06061,56.787879 V 216.78788 c 45,0 70,-15 70,-40 0,-15 -12,-25 -40,-25 28,0 36,-10 36,-25 0,-20 -21,-70.000001 -66,-70.000001 z"
+       stroke="url(#gradientB)"
+       stroke-width="26"
+       stroke-linejoin="round"
+       stroke-linecap="round"
+       fill="none"
+       id="path22"
+       style="stroke:url(#gradientB)" />
+    <!-- Full Moon (Luna Piena - Semicerchio) - Shifted inward to fit exactly on the outer boundary curve of B -->
+    <!-- Positioned at x=578, y=244 and rotated -45 degrees to match the tangent of the B curve at that point -->
+    <g
+       transform="rotate(-49.678399,492.3197,-482.14023)"
+       id="g23">
+      <path
+         d="m -10.947603,0.14260277 c 0.0019,-6.49780287 5.2699319,-11.76429577 11.7677305,-11.76429577 6.4977986,0 11.7574235,4.9765248 11.7593175,11.47432762 L 6.2942781,1.025126 1.0642118,1.4804073 -4.1052713,1.2369976 -7.4403975,0.79308722 Z"
+         fill="#ffffff"
+         filter="drop-shadow(0 0 4px rgba(255, 255, 255, 0.9))"
+         id="path23"
+         style="stroke-width:1.47097"
+         sodipodi:nodetypes="cscccccc" />
+    </g>
+    <!-- ================= INTEGRATED NIGHT STARS (Hugging/Inside the letter strokes) ================= -->
+    <use
+       href="#star"
+       transform="matrix(0.8,0,0,0.8,70.060606,56.787879)"
+       id="use23" />
+    <!-- Capping the top-left tip of H -->
+    <use
+       href="#star"
+       transform="matrix(0.6,0,0,0.6,70.060606,96.787879)"
+       id="use24" />
+    <!-- Embedded directly on the left vertical stroke -->
+    <use
+       href="#star"
+       transform="matrix(0.5,0,0,0.5,92.060606,111.78788)"
+       id="use25" />
+    <!-- Nestled inside the top-left inner joint of H -->
+    <use
+       href="#star"
+       transform="matrix(0.5,0,0,0.5,47.060606,66.787879)"
+       id="use26" />
+    <!-- Hugging the outer left edge of H near the top -->
+    <!-- Stars integrated on/inside/around the B (Sera / Notte) -->
+    <use
+       href="#star"
+       transform="matrix(0.7,0,0,0.7,470.06061,56.787879)"
+       id="use27" />
+    <!-- Capping the top-left tip of B -->
+    <use
+       href="#star"
+       transform="matrix(0.8,0,0,0.8,498.06061,106.78788)"
+       id="use28" />
+    <!-- Nestled INSIDE the top loop counter of B -->
+    <use
+       href="#star"
+       transform="matrix(0.5,0,0,0.5,545.06061,76.787879)"
+       id="use29" />
+    <!-- Hugging the top outer curve of B -->
+    <use
+       href="#star"
+       transform="matrix(0.6,0,0,0.6,552.06061,176.78788)"
+       id="use30" />
+    <!-- Hugging the middle outer indentation of B -->
+    <use
+       href="#star"
+       transform="matrix(0.7,0,0,0.7,525.06061,196.78788)"
+       id="use31" />
+    <!-- Embedded directly on the bottom stroke of B -->
+  </g>
+</svg>

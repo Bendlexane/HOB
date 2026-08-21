@@ -1,0 +1,83 @@
+# JSON Schema for _grant.md frontmatter
+# Validated by _scripts/ops/checks/frontmatter_lint.py
+$schema: http://json-schema.org/draft-07/schema#
+title: grant
+type: object
+required: [code, status, scheme]
+properties:
+  code:
+    type: string
+    pattern: "^GRANT_[0-9]{4}_[A-Z0-9_]+$"
+    description: "GRANT_YYYY_ACRONYM (e.g. GRANT_2026_MSCA)"
+  title:
+    type: string
+  status:
+    enum: [writing, submitted, active, archived]
+  scheme:
+    type: string
+    description: "Call scheme code, e.g. MSCA-PF-EF"
+  agency:
+    type: string
+  call_id:
+    type: string
+  profile:
+    type: string
+    description: "Path to the call profile YAML that scaffolded this grant"
+  deadline:
+    oneOf:
+      - type: string
+        format: date
+      - type: "null"
+  amount_requested:
+    oneOf:
+      - type: number
+      - type: "null"
+  amount_funded:
+    oneOf:
+      - type: number
+      - type: "null"
+  period_start:
+    oneOf:
+      - type: string
+        format: date
+      - type: "null"
+  period_end:
+    oneOf:
+      - type: string
+        format: date
+      - type: "null"
+  host_institution:
+    oneOf:
+      - type: string
+      - type: "null"
+  supervisor:
+    oneOf:
+      - type: string
+      - type: "null"
+  outcome:
+    oneOf:
+      - enum: [funded, rejected, withdrawn]
+      - type: "null"
+  linked_projects:
+    type: array
+    items:
+      type: string
+  deliverables:
+    type: array
+    items:
+      type: string
+  eligibility:
+    type: array
+    items:
+      type: object
+      required: [id, label, status]
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        status:
+          enum: [unknown, met, not_met]
+  created:
+    type: string
+    format: date

@@ -1,0 +1,83 @@
+{
+  "_comment": "Single source of truth for vault actions. Read by _templates/actions.md (the Templater launcher / Cmd+T) AND by the 'Vault Actions' panel in _HOME.md. Keep template `name`/`display` strings in sync with the suggester wording. All files live in _scripts/templates/.",
+  "categories": [ 
+    {
+      "key": "📓 Notes",
+      "icon": "📓",
+      "label": "Notes",
+      "hint": "Ideas, lab notes, protocols",
+      "display": "📓 Write & Take Notes — Ideas, lab notes, protocols",
+      "templates": [
+        { "file": "sticky-note", "icon": "🗒️", "label": "Post-it", "name": "🗒️ Post-it — Add a quick sticky note to the Home dashboard", "desc": "What it does: Adds a small sticky note to the Home dashboard.\nWhen to use it: For a short reminder that doesn't need a full note file." },
+        { "file": "idea.md", "icon": "💡", "label": "Idea", "name": "💡 Idea — Capture a quick idea → 00_STAGING/ideas/", "desc": "What it does: Captures a quick idea in the staging area.\nWhen to use it: To jot down a fast concept or thought to elaborate later." },
+        { "file": "lab-note.md", "icon": "🔬", "label": "Lab Note", "name": "🔬 Lab Note — Lab note with date + experiment ID → 00_STAGING/_daily/", "desc": "What it does: Creates a dated lab note with an experiment ID.\nWhen to use it: To record daily experimental procedures, raw observations, or lab work." },
+        { "file": "protocol.md", "icon": "📋", "label": "Protocol", "name": "📋 Protocol — Create a protocol (wet/dry lab, morphometry...) → 03_KNOWLEDGE/protocols/", "desc": "What it does: Generates a standard protocol template (wet/dry lab, morphometry, etc.).\nWhen to use it: To document reusable step-by-step methodologies or experimental guidelines." }
+      ]
+    },
+    {
+      "key": "📄 Publication Cycle",
+      "icon": "📄",
+      "label": "Publications",
+      "hint": "Projects, journal submissions",
+      "display": "📄 Publication Cycle — Projects, journal submissions",
+      "templates": [
+        { "file": "new-project.md", "icon": "🆕", "label": "New Project", "name": "🆕 New Project — Full research project scaffold: folders, Gantt, KPI", "desc": "What it does: Sets up a full project folder structure, including Gantt chart and KPI tracking.\nWhen to use it: When initiating a new scientific research study or publication project." },
+        { "file": "new-journal-round.md", "script": "new-journal-round.js", "icon": "📬", "label": "New Journal Round", "name": "📬 New Journal Round — Add a submission/revision round to an existing project", "desc": "What it does: Creates a folder round structure for paper revisions or submissions.\nWhen to use it: When submitting a paper to a journal or preparing a revision round." },
+        { "file": "new-latex-abstract.md", "icon": "📝", "label": "LaTeX Abstract", "name": "📝 LaTeX Abstract — Create a LaTeX template for a conference abstract", "desc": "What it does: Generates a LaTeX abstract file, prompting for authors from the DB and target folder.\nWhen to use it: When writing an abstract for a conference or workshop presentation." }
+      ]
+    },
+    {
+      "key": "🔍 Peer Review",
+      "icon": "🔍",
+      "label": "Peer Review",
+      "hint": "New review workspace",
+      "display": "🔍 Peer Review — New review",
+      "templates": [
+        { "file": "peer-review.md", "icon": "✍️", "label": "New Review", "name": "✍️ New Review — Full peer review workspace: folders, task list, deadlines → 09_PEER_REVIEWS/", "desc": "What it does: Scaffolds a workspace for a journal peer review, with task lists and deadlines.\nWhen to use it: When invited by a journal editor to review a submitted manuscript." },
+        { "file": "new-peer-round.md", "script": "new-peer-round.js", "icon": "🔁", "label": "New Round", "name": "🔁 New Round — Add a review round to an existing peer review", "desc": "What it does: Adds another round of review for an existing peer review project.\nWhen to use it: When a revised manuscript is sent back to you for re-evaluation." }
+      ]
+    },
+    {
+      "key": "💰 Grants",
+      "icon": "💰",
+      "label": "Grants",
+      "hint": "Manage grant proposals",
+      "display": "💰 Grants — Manage grant proposals",
+      "templates": [
+        { "file": "new-grant.md", "icon": "💼", "label": "New Grant", "name": "💼 New Grant — Create a new grant proposal workspace → 02_GRANTS/", "desc": "What it does: Creates a workspace to prepare a funding or grant proposal.\nWhen to use it: When applying for research funding, grants, or fellowships." }
+      ]
+    },
+    {
+      "key": "✈️ Missions & Events",
+      "icon": "✈️",
+      "label": "Missions",
+      "hint": "Conference / workshop workspace",
+      "display": "✈️ Missions & Events — Conference/workshop workspace",
+      "templates": [
+        { "file": "mission.md", "icon": "🎯", "label": "New Conference", "name": "🎯 New Conference — Conference/workshop workspace from programme → 05_ADMIN/missions/conferences/", "desc": "What it does: Creates a workspace for a conference or workshop based on its program.\nWhen to use it: When attending, preparing, or organizing a scientific conference or workshop." },
+        { "file": "fieldwork.md", "icon": "🥾", "label": "Fieldwork", "name": "🥾 Fieldwork — Fieldwork mission workspace → 05_ADMIN/missions/fieldwork/", "desc": "What it does: Scaffolds a mission workspace for field expeditions and sampling.\nWhen to use it: When planning or executing botanical/zoological collection trips or field studies." }
+      ]
+    },
+    {
+      "key": "⚙️ System & Utilities",
+      "icon": "⚙️",
+      "label": "System",
+      "hint": "Conversions, recovery, people DB",
+      "display": "⚙️ System & Utilities — file conversions, file recovery, edit people database",
+      "templates": [
+        { "file": "pdf-to-md.md", "icon": "📄", "label": "PDF → Markdown", "name": "📄 PDF → Markdown — Convert a PDF to Markdown" },
+        { "file": "transcribe-audio.md", "icon": "🎙️", "label": "Transcribe Audio", "name": "🎙️ Transcribe Audio — Transcribe an audio file embedded in this note (Whisper + Ollama)", "desc": "What it does: Transcribes an ![[audio]] file embedded in the current note and stamps the cleaned transcript right under the embed.\nWhen to use it: To turn a recorded lecture, meeting, or voice memo already dropped into a note into text.", "separator": true },
+        { "file": "export-to-latex.md", "icon": "📝", "label": "Export → LaTeX / PDF", "name": "📝 Export → LaTeX / PDF — Export current note to .tex or .pdf", "separator": true },
+        { "file": "file-recovery", "icon": "🩹", "label": "File Recovery", "name": "🩹 File Recovery — Open Obsidian native file recovery tool", "desc": "What it does: Opens Obsidian's native local history.\nWhen to use it: To recover recently lost edits or text (minutes/hours ago) that are not yet included in a Git backup." },
+        { "file": "file-recover.md", "icon": "🗑️", "label": "Recover Deleted File", "mode": "A", "name": "🗑️ Recover Deleted File — Find deleted files in git backups and restore them", "desc": "What it does: Searches and extracts deleted files from the Git history.\nWhen to use it: If you deleted a whole file in the past and want to restore it to the vault." },
+        { "file": "file-recover.md", "icon": "🔄", "label": "Restore Past Version", "mode": "B", "name": "🔄 Restore Past Version — Roll back the current note to an earlier backup", "desc": "What it does: Overwrites the current note with a previous version from Git.\nWhen to use it: If you made incorrect edits to a note and want to rollback its state to an earlier backup." },
+        { "file": "file-recover.md", "icon": "👁️", "label": "Preview Past Version", "mode": "C", "name": "👁️ Preview Past Version — View a past version of the current note read-only", "desc": "What it does: Opens a previous version from Git in read-only mode.\nWhen to use it: To compare or consult the old content of a note without overwriting the current one." },
+        { "file": "file-recover.md", "icon": "📦", "label": "Recover Renamed File", "mode": "D", "name": "📦 Recover Renamed File — Restore a moved/renamed file to its original location", "desc": "What it does: Locates renamed or moved files in the Git history.\nWhen to use it: If you lost track of a moved or renamed note and want to restore it to its original path." },
+        { "file": "file-recover.md", "icon": "🔍", "label": "Browse Backup Commit", "mode": "E", "name": "🔍 Browse Backup Commit — View files touched in a specific backup", "separator": true, "desc": "What it does: Shows all files modified in a specific Git commit.\nWhen to use it: To examine the overall state of the vault at a specific point in the backup history." },
+        { "file": "view-person.md", "icon": "🪪", "label": "View Collaborator Info", "name": "🪪 View Collaborator Info — View details of a collaborator on the dashboard" },
+        { "file": "people-db.md", "icon": "👥", "label": "Edit Collaborator", "mode": "edit", "name": "👥 Edit Collaborator — Modify an existing collaborator in the People DB" },
+        { "file": "people-db.md", "icon": "➕", "label": "Add Collaborator", "mode": "add", "name": "➕ Add Collaborator — Add a new collaborator to the People DB" }
+      ]
+    }
+  ]
+}

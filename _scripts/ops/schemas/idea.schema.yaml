@@ -1,0 +1,24 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: idea
+type: object
+required: [type, status, decay]
+properties:
+  type:
+    const: idea
+  title:
+    type: string
+  status:
+    enum: [raw, developing, promoted, discarded]
+  decay:
+    enum: [never, soft, aggressive]
+  related_projects:
+    type: array
+    items:
+      type: string
+  related_literature:
+    type: array
+    items:
+      type: string
+  created:
+    type: string
+    format: date

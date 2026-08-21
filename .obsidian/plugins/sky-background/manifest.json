@@ -1,0 +1,9 @@
+{
+	"id": "sky-background",
+	"name": "Sky Background",
+	"version": "1.0.0",
+	"minAppVersion": "1.0.0",
+	"description": "A vault-wide time-of-day sky (gradient + sun/moon/stars) rendered behind the frosted-glass panels. Ported from the _HOME banner.",
+	"author": "Manuel Tiburtini",
+	"isDesktopOnly": false
+}

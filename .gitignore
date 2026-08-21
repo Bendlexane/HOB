@@ -1,0 +1,57 @@
+# ── Secrets / machine-local config ──────────────────────────────────────────
+.env
+_scripts/.env
+
+# ── Python ───────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# ── System ───────────────────────────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ── Node ─────────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Obsidian ─────────────────────────────────────────────────────────────
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# ── PDFs — live in Zotero, not in the vault ─────────────────────────────
+*.pdf
+*.PDF
+
+# ── LaTeX build artifacts ────────────────────────────────────────────────
+*.aux
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.toc
+*.synctex.gz
+latex.out/
+
+# ── R workspace ──────────────────────────────────────────────────────────
+*.RData
+*.rda
+*.rds
+.Rhistory
+.RDataTmp
+
+# ── Heavy/generated content this template doesn't ship with data for ────
+06_PLANNING/kpis/research_kpis.db
+06_PLANNING/kpis/research_kpis.db-wal
+06_PLANNING/kpis/research_kpis.db-shm
+06_PLANNING/kpis/exports/
+_scripts/ml/posteriors.json
+09_PEER_REVIEWS/**/manuscript/
+09_PEER_REVIEWS/**/round_*/
+04_PEOPLE/collaborators/_people-db.json.bak

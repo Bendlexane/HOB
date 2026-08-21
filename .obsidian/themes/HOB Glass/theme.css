@@ -1,0 +1,2221 @@
+/* ==============================================================================
+   HOB Glass — Frosted Glass Theme for Obsidian
+   Merged and consolidated from Glassmind theme and Obsidian Glass custom snippets.
+   ============================================================================== */
+
+/* ==============================================================================
+   PART 1: BASE GLASSMIND THEME
+   ============================================================================== */
+
+/* ──────────────────────────────────────────
+   1. Color Palette (Catppuccin Mocha base)
+   ────────────────────────────────────────── */
+
+:root {
+  --gm-crust:    17, 17, 27;
+  --gm-mantle:   24, 24, 37;
+  --gm-base:     30, 30, 46;
+  --gm-surface0: 49, 50, 68;
+  --gm-surface1: 69, 71, 90;
+  --gm-surface2: 88, 91, 112;
+  --gm-overlay0: 108, 112, 134;
+  --gm-overlay1: 127, 132, 156;
+  --gm-overlay2: 147, 153, 178;
+  --gm-subtext0: 166, 173, 200;
+  --gm-subtext1: 186, 194, 222;
+  --gm-text:     205, 214, 244;
+
+  /* Accent — lavender */
+  --gm-accent: 180, 190, 254;
+
+  /* Semantic colors */
+  --gm-red:      243, 139, 168;
+  --gm-peach:    250, 179, 135;
+  --gm-yellow:   249, 226, 175;
+  --gm-green:    166, 227, 161;
+  --gm-teal:     148, 226, 213;
+  --gm-sky:      137, 220, 235;
+  --gm-sapphire: 116, 199, 236;
+  --gm-blue:     137, 180, 250;
+  --gm-lavender: 180, 190, 254;
+  --gm-mauve:    203, 166, 247;
+  --gm-pink:     245, 194, 231;
+}
+
+/* ──────────────────────────────────────────
+   2. Core Variables — Solid Colors
+   ──────────────────────────────────────────
+   Solid colors for proper element rendering.
+   Transparency is applied on containers only.
+   ────────────────────────────────────────── */
+
+body {
+  /* Backgrounds */
+  --background-primary:       rgb(var(--gm-base));
+  --background-primary-alt:   rgb(var(--gm-mantle));
+  --background-secondary:     rgb(var(--gm-mantle));
+  --background-secondary-alt: rgb(var(--gm-crust));
+  --background-modifier-border: rgb(var(--gm-surface0));
+  --background-modifier-form-field: rgba(var(--gm-crust), 0.3);
+  --background-modifier-hover: rgba(var(--gm-accent), 0.12);
+  --background-modifier-active-hover: rgba(var(--gm-accent), 0.15);
+  --background-modifier-border-hover: rgb(var(--gm-surface1));
+  --background-modifier-border-focus: rgb(var(--gm-surface2));
+  --background-modifier-cover: rgba(var(--gm-crust), 0.9);
+
+  /* Color scale */
+  --color-base-00:  rgb(var(--gm-crust));
+  --color-base-05:  rgb(var(--gm-crust));
+  --color-base-10:  rgb(var(--gm-mantle));
+  --color-base-20:  rgb(var(--gm-base));
+  --color-base-25:  rgb(var(--gm-surface0));
+  --color-base-30:  rgb(var(--gm-surface1));
+  --color-base-35:  rgb(var(--gm-surface2));
+  --color-base-40:  rgb(var(--gm-overlay0));
+  --color-base-50:  rgb(var(--gm-overlay1));
+  --color-base-60:  rgb(var(--gm-overlay2));
+  --color-base-70:  rgb(var(--gm-subtext0));
+  --color-base-100: rgb(var(--gm-text));
+
+  /* Text */
+  --text-normal:    rgb(var(--gm-text));
+  --text-muted:     rgb(var(--gm-subtext0));
+  --text-faint:     rgb(var(--gm-overlay2));
+  --text-on-accent: rgb(var(--gm-mantle));
+  --text-accent:    rgb(var(--gm-accent));
+  --text-accent-hover: rgb(var(--gm-accent));
+  --text-error:     rgb(var(--gm-red));
+  --text-selection: rgba(var(--gm-overlay2), 0.3);
+
+  /* Icons */
+  --icon-color:                 rgb(var(--gm-subtext0));
+  --icon-color-hover:           rgb(var(--gm-text));
+  --icon-color-active:          rgb(var(--gm-accent));
+  --icon-color-focused:         rgb(var(--gm-text));
+  --clickable-icon-color:       rgb(var(--gm-subtext0));
+  --clickable-icon-color-hover: rgb(var(--gm-text));
+
+  /* Interactive */
+  --interactive-normal:       rgb(var(--gm-surface0));
+  --interactive-hover:        rgb(var(--gm-surface1));
+  --interactive-accent:       rgb(var(--gm-accent));
+  --interactive-accent-hover: rgb(var(--gm-accent));
+
+  /* Tabs */
+  --tab-text-color:                         rgb(var(--gm-overlay2));
+  --tab-text-color-active:                  rgb(var(--gm-subtext0));
+  --tab-text-color-focused:                 rgb(var(--gm-subtext0));
+  --tab-text-color-focused-active:          rgb(var(--gm-text));
+  --tab-text-color-focused-highlighted:     rgb(var(--gm-accent));
+  --tab-text-color-focused-active-current:  rgb(var(--gm-text));
+
+  /* Titlebar */
+  --titlebar-background:         rgb(var(--gm-crust));
+  --titlebar-background-focused: rgb(var(--gm-crust));
+  --titlebar-text-color:         rgb(var(--gm-subtext0));
+  --titlebar-text-color-focused: rgb(var(--gm-text));
+
+  /* Nav */
+  --nav-item-color:              rgb(var(--gm-subtext0));
+  --nav-item-color-hover:        rgb(var(--gm-text));
+  --nav-item-color-active:       rgb(var(--gm-text));
+  --nav-item-color-selected:     rgb(var(--gm-text));
+  --nav-item-color-highlighted:  rgb(var(--gm-accent));
+  --nav-item-background-hover:   rgba(var(--gm-accent), 0.08);
+  --nav-item-background-active:  rgba(var(--gm-accent), 0.1);
+  --nav-item-background-selected: rgba(var(--gm-accent), 0.15);
+
+  /* Collapse */
+  --collapse-icon-color:            rgb(var(--gm-overlay2));
+  --collapse-icon-color-collapsed:  rgb(var(--gm-subtext0));
+
+  /* Status bar */
+  --status-bar-text-color: rgb(var(--gm-subtext0));
+  --vault-name-color: rgb(var(--gm-text));
+
+  /* Search */
+  --search-icon-color:         rgb(var(--gm-subtext0));
+  --search-clear-button-color: rgb(var(--gm-subtext0));
+
+  /* Scrollbar */
+  --scrollbar-bg:               rgba(var(--gm-text), 0.05);
+  --scrollbar-thumb-bg:         rgba(var(--gm-text), 0.1);
+  --scrollbar-active-thumb-bg:  rgba(var(--gm-text), 0.2);
+
+  /* Semantic colors */
+  --color-red-rgb:    var(--gm-red);
+  --color-red:        rgb(var(--gm-red));
+  --color-orange-rgb: var(--gm-peach);
+  --color-orange:     rgb(var(--gm-peach));
+  --color-yellow-rgb: var(--gm-yellow);
+  --color-yellow:     rgb(var(--gm-yellow));
+  --color-green-rgb:  var(--gm-green);
+  --color-green:      rgb(var(--gm-green));
+  --color-cyan-rgb:   var(--gm-sapphire);
+  --color-cyan:       rgb(var(--gm-sapphire));
+  --color-blue-rgb:   var(--gm-blue);
+  --color-blue:       rgb(var(--gm-blue));
+  --color-purple-rgb: var(--gm-mauve);
+  --color-purple:     rgb(var(--gm-mauve));
+  --color-pink-rgb:   var(--gm-pink);
+  --color-pink:       rgb(var(--gm-pink));
+
+  /* Mono */
+  --mono-rgb-0:   var(--gm-crust);
+  --mono-rgb-100: var(--gm-text);
+
+  color-scheme: dark;
+}
+
+/* ──────────────────────────────────────────
+   3. Transparent Containers
+   ──────────────────────────────────────────
+   Hyprland compositor handles all blur.
+   We just provide transparent backgrounds.
+   ────────────────────────────────────────── */
+
+body {
+  background-color: transparent !important;
+}
+
+.app-container {
+  background-color: rgba(var(--gm-base), 0.1) !important;
+}
+
+/* Draw a frosted glass block in the top-left corner of the window directly above the ribbon */
+.app-container::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 60px !important;
+  height: 40px !important;
+  background: var(--vault-glass) !important;
+  background-color: var(--vault-glass) !important;
+  -webkit-backdrop-filter: var(--vault-blur) !important;
+  backdrop-filter: var(--vault-blur) !important;
+  border-right: 0.5px solid var(--vault-glass-border) !important;
+  box-sizing: border-box !important;
+  z-index: 99 !important;
+  pointer-events: none !important;
+}
+
+/* Titlebar — merge with tab bar */
+.titlebar {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 40px !important;
+  background-color: transparent !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+}
+.titlebar-inner {
+  background-color: transparent !important;
+  pointer-events: none !important;
+}
+
+/* Keep window buttons clickable and transparent for a seamless frosted glass look */
+.titlebar-button-container {
+  pointer-events: auto !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.titlebar-button {
+  pointer-events: auto !important;
+}
+
+/* Status bar */
+.status-bar {
+  background-color: rgba(var(--gm-crust), 0.4) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ──────────────────────────────────────────
+   4. Workspace
+   ────────────────────────────────────────── */
+
+/* Editor pane */
+.mod-root,
+.mod-root .workspace-leaf {
+  background-color: rgba(var(--gm-base), 0.35) !important;
+}
+
+/* Editor content — transparent */
+.mod-root .workspace-leaf-content,
+.mod-root .view-header,
+.mod-root .view-content {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Editor internals — transparent */
+.markdown-source-view,
+.markdown-reading-view,
+.markdown-preview-view,
+.markdown-preview-section,
+.cm-s-obsidian,
+.cm-editor,
+.cm-scroller,
+.cm-content,
+.cm-gutters,
+.cm-gutter,
+.cm-lineNumbers,
+.cm-activeLineGutter,
+.cm-line,
+.cm-activeLine {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Sidebars */
+.mod-left-split,
+.mod-right-split {
+  background-color: rgba(var(--gm-mantle), 0.4) !important;
+}
+
+/* Sidebar content panels */
+.mod-left-split .workspace-leaf,
+.mod-right-split .workspace-leaf {
+  background-color: rgba(var(--gm-base), 0.6) !important;
+}
+
+/* Tab header bars */
+.workspace-tab-header-container {
+  background-color: rgba(var(--gm-crust), 0.45) !important;
+}
+
+/* Main editor tab bar */
+.mod-root .workspace-tab-header-container {
+  background-color: rgba(var(--gm-mantle), 0.5) !important;
+  padding-right: 140px !important;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Pane dividers */
+.workspace-leaf-resize-handle {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ──────────────────────────────────────────
+   5. Overlays — Modals, Menus, Tooltips
+   ────────────────────────────────────────── */
+
+.modal-bg {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.modal,
+.prompt {
+  background-color: rgba(var(--gm-base), 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+}
+
+/* Settings modal panels — TRANSPARENT so they ride the modal's sky glass (§8)
+   instead of painting their own --gm-base slab, which is driven by theme-light/
+   theme-dark (macOS) and broke when the OS appearance ≠ the sky period (dark slab
+   under day ink → unreadable). Sky-driven now, like every other surface. */
+.modal.mod-settings .vertical-tab-header,
+.modal.mod-settings .modal-content,
+.modal.mod-settings .vertical-tabs {
+  background-color: transparent !important;
+}
+
+.modal.mod-settings .vertical-tab-content-container,
+.modal.mod-settings .vertical-tab-content {
+  background-color: var(--background-primary) !important;
+}
+
+/* Ensure setting cards inside the content use the secondary sky-driven color */
+.modal.mod-settings .vertical-tab-content > div,
+.modal.mod-settings .setting-item {
+  background-color: var(--background-primary-alt) !important;
+  border: 1px solid var(--background-modifier-border) !important;
+}
+
+/* Menus */
+.menu {
+  background-color: var(--vault-glass-strong) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+/* Tooltips */
+.tooltip {
+  background-color: rgba(var(--gm-base), 0.6) !important;
+}
+
+/* ──────────────────────────────────────────
+   6. Plugin Compatibility — Copilot
+   ────────────────────────────────────────── */
+
+/* Copilot dialogs */
+div[role="dialog"].tw-bg-primary {
+  background-color: rgba(var(--gm-base), 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Copilot floating panels */
+[data-copilot-draggable-modal].tw-bg-primary {
+  background-color: rgba(var(--gm-base), 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Copilot popovers */
+.tw-z-popover.tw-bg-primary,
+.tw-z-modal.tw-bg-primary {
+  background-color: rgba(var(--gm-base), 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Copilot elements inside modals */
+.modal .tw-bg-primary {
+  background-color: rgba(var(--gm-surface0), 0.5) !important;
+}
+
+.modal .tw-bg-secondary {
+  background-color: rgba(var(--gm-mantle), 0.4) !important;
+}
+
+/* ──────────────────────────────────────────
+   7. Scrollbar
+   ────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--gm-text), 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* ──────────────────────────────────────────
+   8. Light Mode
+   ────────────────────────────────────────── */
+
+.theme-light {
+  --gm-crust:    220, 224, 232;
+  --gm-mantle:   230, 233, 239;
+  --gm-base:     239, 241, 245;
+  --gm-surface0: 204, 208, 218;
+  --gm-surface1: 188, 192, 204;
+  --gm-surface2: 172, 176, 190;
+  --gm-overlay0: 156, 160, 176;
+  --gm-overlay1: 140, 143, 161;
+  --gm-overlay2: 124, 127, 147;
+  --gm-subtext0: 108, 111, 133;
+  --gm-subtext1: 92, 95, 119;
+  --gm-text:     76, 79, 105;
+  --gm-accent:   114, 135, 253;
+
+  --text-on-accent: #fff;
+  color-scheme: light;
+}
+
+/* ==============================================================================
+   PART 2: AUTHORITATIVE FROSTED GLASS (sky-background.css)
+   ============================================================================== */
+
+/* ──────────────────────────────────────────
+   1. The one glass recipe + ink palette
+   Tint stays glassy: high blur + saturation smears the sky into
+   a soft wash so text reads, while the colour still bleeds through.
+   ────────────────────────────────────────── */
+
+body.sky-bright {
+  --vault-glass-rgb: 252, 252, 255;
+  --vault-glass:        rgba(252, 252, 255, 0.16);  /* chrome: light, lets the sky read through → sits close to the editor's raw sky (no bright slab) */
+  --vault-glass-card:   rgba(252, 252, 255, 0.34);  /* note card: stronger frost so text stays crisp */
+  --vault-glass-strong: rgba(252, 252, 255, 0.46);  /* modals / menus */
+  --vault-glass-border: rgba(255, 255, 255, 0.38);
+  --vault-blur: blur(20px) saturate(1.5);
+
+  /* ink — dark on light glass */
+  --text-normal: #15191f;
+  --text-muted:  #3a424e;
+  --text-faint:  #5d6571;
+  --text-on-accent: #0e1f18;
+  --bold-color:   #0e1217;
+  --italic-color: #15191f;
+
+  --h1-color: #0e1217; --h2-color: #14181e; --h3-color: #1b2029;
+  --h4-color: #232a34; --h5-color: #2c343f; --h6-color: #36404c;
+
+  /* accent — deep teal reads on white glass; sage for fills */
+  --text-accent:        #1d7a5e;
+  --text-accent-hover:  #166b51;
+  --link-color:         #1d7a5e;
+  --link-color-hover:   #166b51;
+  --interactive-accent:       #8fc6a8;
+  --interactive-accent-hover: #7bbb98;
+
+  /* icons + nav + tabs */
+  --icon-color:          #232a34;
+  --icon-color-hover:    #0e1217;
+  --icon-color-active:   #1d7a5e;
+  --clickable-icon-color:#232a34;
+  --nav-item-color:        #3a424e;
+  --nav-item-color-hover:  #15191f;
+  --nav-item-color-active: #0e1217;
+  --tab-text-color:                        #4a5260;
+  --tab-text-color-active:                 #232a34;
+  --tab-text-color-focused:                #2c343f;
+  --tab-text-color-focused-active:         #15191f;
+  --tab-text-color-focused-active-current: #0e1217;
+  --titlebar-text-color:         #4a5260;
+  --titlebar-text-color-focused: #15191f;
+  --vault-name-color:      #0e1217;
+  --status-bar-text-color: #3a424e;
+
+  /* glass-native components (via Obsidian's own vars) */
+  --code-background: rgba(18, 28, 58, 0.28);
+  --code-normal:     #1b2029;
+  --blockquote-background-color: rgba(252, 252, 255, 0.12);
+  --blockquote-border-color:     #8fc6a8;
+  --tag-background:       rgba(252, 252, 255, 0.20);
+  --tag-background-hover: rgba(252, 252, 255, 0.34);
+  --tag-color:            #1d7a5e;
+  --table-header-color: #15191f;
+  --table-text-color:   #15191f;
+  --metadata-label-text-color: #3a424e;
+  --hr-color: rgba(0, 0, 0, 0.12);
+  --text-selection: rgba(143, 198, 168, 0.35);
+  --background-modifier-border:       rgba(255, 255, 255, 0.30);
+  --background-modifier-border-hover: rgba(255, 255, 255, 0.45);
+  --background-modifier-form-field: transparent;
+  --checkbox-color:       #1d7a5e;
+  --checkbox-color-hover: #166b51;
+
+  --background-primary:             rgba(252, 252, 255, 0.52);
+  --background-primary-alt:         rgba(252, 252, 255, 0.42);
+  --background-secondary:           rgba(252, 252, 255, 0.36);
+  --background-secondary-alt:       rgba(252, 252, 255, 0.48);
+  --background-float:               rgba(252, 252, 255, 0.52);
+  --background-float-active:        rgba(252, 252, 255, 0.42);
+  --background-modifier-form-field: rgba(252, 252, 255, 0.45);
+  --interactive-normal:             rgba(252, 252, 255, 0.40);
+  --interactive-hover:              rgba(252, 252, 255, 0.58);
+  --background-modifier-hover:      rgba(252, 252, 255, 0.20);
+  --background-modifier-active-hover: rgba(252, 252, 255, 0.30);
+}
+
+body.sky-dim {
+  --vault-glass-rgb: 14, 16, 32;
+  --vault-glass:        rgba(14, 16, 32, 0.20);  /* chrome: light, lets the night sky read through */
+  --vault-glass-card:   rgba(14, 16, 32, 0.40);  /* note card: stronger frost for crisp text */
+  --vault-glass-strong: rgba(14, 16, 32, 0.52);  /* modals / menus */
+  --vault-glass-border: rgba(255, 255, 255, 0.12);
+  --vault-blur: blur(22px) saturate(1.35);
+
+  /* ink — light on dark glass */
+  --text-normal: #eef2fb;
+  --text-muted:  #c2cadb;
+  --text-faint:  #939db1;
+  --text-on-accent: #06121c;
+  --bold-color:   #ffffff;
+  --italic-color: #eef2fb;
+
+  --h1-color: #ffffff; --h2-color: #f2f5fc; --h3-color: #e6ebf5;
+  --h4-color: #d9e0ec; --h5-color: #cdd5e4; --h6-color: #c2cbdc;
+
+  /* accent — light sapphire reads on dark glass */
+  --text-accent:        #8fd3ff;
+  --text-accent-hover:  #aadfff;
+  --link-color:         #8fd3ff;
+  --link-color-hover:   #aadfff;
+  --interactive-accent:       #5fb7e6;
+  --interactive-accent-hover: #74c7ec;
+
+  --icon-color:          #d6deef;
+  --icon-color-hover:    #ffffff;
+  --icon-color-active:   #8fd3ff;
+  --clickable-icon-color:#d6deef;
+  --nav-item-color:        #c2cadb;
+  --nav-item-color-hover:  #eef2fb;
+  --nav-item-color-active: #ffffff;
+  --tab-text-color:                        #a0acbf;
+  --tab-text-color-active:                 #d6deef;
+  --tab-text-color-focused:                #cdd5e4;
+  --tab-text-color-focused-active:         #eef2fb;
+  --tab-text-color-focused-active-current: #ffffff;
+  --titlebar-text-color:         #a0acbf;
+  --titlebar-text-color-focused: #eef2fb;
+  --vault-name-color:      #eef2fb;
+  --status-bar-text-color: #c2cadb;
+
+  --code-background: rgba(4, 6, 20, 0.72);
+  --code-normal:     #e6ebf5;
+  --blockquote-background-color: rgba(255, 255, 255, 0.06);
+  --blockquote-border-color:     #5fb7e6;
+  --tag-background:       rgba(255, 255, 255, 0.10);
+  --tag-background-hover: rgba(255, 255, 255, 0.18);
+  --tag-color:            #8fd3ff;
+  --table-header-color: #eef2fb;
+  --table-text-color:   #eef2fb;
+  --metadata-label-text-color: #c2cadb;
+  --hr-color: rgba(255, 255, 255, 0.14);
+  --text-selection: rgba(95, 183, 230, 0.32);
+  --background-modifier-border:       rgba(255, 255, 255, 0.12);
+  --background-modifier-border-hover: rgba(255, 255, 255, 0.22);
+  --background-modifier-form-field: transparent;
+  --checkbox-color:       #5fb7e6;
+  --checkbox-color-hover: #74c7ec;
+
+  --background-primary:             rgba(14, 16, 32, 0.52);
+  --background-primary-alt:         rgba(14, 16, 32, 0.42);
+  --background-secondary:           rgba(14, 16, 32, 0.36);
+  --background-secondary-alt:       rgba(14, 16, 32, 0.48);
+  --background-float:               rgba(14, 16, 32, 0.52);
+  --background-float-active:        rgba(14, 16, 32, 0.42);
+  --background-modifier-form-field: rgba(14, 16, 32, 0.45);
+  --interactive-normal:             rgba(14, 16, 32, 0.40);
+  --interactive-hover:              rgba(14, 16, 32, 0.58);
+  --background-modifier-hover:      rgba(14, 16, 32, 0.20);
+  --background-modifier-active-hover: rgba(14, 16, 32, 0.30);
+}
+
+/* ──────────────────────────────────────────
+   1.1. Dynamic Accent Colors per Phase of the Day
+   ────────────────────────────────────────── */
+
+/* ALBA / DAWN */
+body.sky-dawn {
+  --text-accent:              #e68a73;
+  --text-accent-hover:        #d97d65;
+  --link-color:               #e68a73;
+  --link-color-hover:         #d97d65;
+  --interactive-accent:       #ffb88c;
+  --interactive-accent-hover: #e09e74;
+  --text-on-accent:           #3b1c14;
+  --icon-color-active:        #e68a73;
+  --blockquote-border-color:  #ffb88c;
+  --tag-color:                #e68a73;
+  --checkbox-color:           #e68a73;
+  --checkbox-color-hover:     #d97d65;
+  --text-selection:           rgba(255, 184, 140, 0.35);
+}
+
+/* GIORNO / DAY */
+body.sky-day {
+  --text-accent:              #3b8fcb;
+  --text-accent-hover:        #2f7db5;
+  --link-color:               #3b8fcb;
+  --link-color-hover:         #2f7db5;
+  --interactive-accent:       #6ba1d8;
+  --interactive-accent-hover: #5d92c7;
+  --text-on-accent:           #0a2235;
+  --icon-color-active:        #3b8fcb;
+  --blockquote-border-color:  #6ba1d8;
+  --tag-color:                #3b8fcb;
+  --checkbox-color:           #3b8fcb;
+  --checkbox-color-hover:     #2f7db5;
+  --text-selection:           rgba(107, 161, 216, 0.35);
+}
+
+/* TRAMONTO / SUNSET */
+body.sky-sunset {
+  --text-accent:              #b76e63;
+  --text-accent-hover:        #a65e53;
+  --link-color:               #b76e63;
+  --link-color-hover:         #a65e53;
+  --interactive-accent:       #cf9a7d;
+  --interactive-accent-hover: #c08b6e;
+  --text-on-accent:           #2b140b;
+  --icon-color-active:        #b76e63;
+  --blockquote-border-color:  #cf9a7d;
+  --tag-color:                #b76e63;
+  --checkbox-color:           #b76e63;
+  --checkbox-color-hover:     #a65e53;
+  --text-selection:           rgba(207, 154, 125, 0.35);
+}
+
+/* CREPUSCOLO / DUSK */
+body.sky-dusk {
+  --text-accent:              #9b9ef0;
+  --text-accent-hover:        #8b8ee0;
+  --link-color:               #9b9ef0;
+  --link-color-hover:         #8b8ee0;
+  --interactive-accent:       #b4befc;
+  --interactive-accent-hover: #a3adf0;
+  --text-on-accent:           #161623;
+  --icon-color-active:        #9b9ef0;
+  --blockquote-border-color:  #b4befc;
+  --tag-color:                #9b9ef0;
+  --checkbox-color:           #b4befc;
+  --checkbox-color-hover:     #a3adf0;
+  --text-selection:           rgba(155, 158, 240, 0.32);
+}
+
+/* NOTTE / NIGHT */
+body.sky-night {
+  --text-accent:              #89b4fa;
+  --text-accent-hover:        #a8c7ff;
+  --link-color:               #89b4fa;
+  --link-color-hover:         #a8c7ff;
+  --interactive-accent:       #2e3575;
+  --interactive-accent-hover: #3d4596;
+  --text-on-accent:           #ffffff;
+  --icon-color-active:        #89b4fa;
+  --blockquote-border-color:  #2e3575;
+  --tag-color:                #89b4fa;
+  --checkbox-color:           #2e3575;
+  --checkbox-color-hover:     #3d4596;
+  --text-selection:           rgba(137, 180, 250, 0.25);
+}
+
+
+/* ──────────────────────────────────────────
+   2. Lift the app above the fixed sky; everything transparent.
+   The sky shows crisp around the glass panels.
+   ────────────────────────────────────────── */
+
+.app-container {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+}
+
+body,
+.horizontal-main-container,
+.workspace,
+.workspace-split.mod-root,
+.workspace-tabs,
+.workspace-tab-container,
+.workspace-leaf,
+.view-content,
+.view-header,
+.markdown-source-view,
+.markdown-reading-view,
+.cm-editor,
+.cm-scroller,
+.cm-gutters,
+.cm-content,
+.cm-line {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Glassmind tints these directly — neutralise so no grey/extra layer */
+body .workspace-split.mod-root,
+body .workspace-split.mod-root .workspace-leaf,
+body .workspace-split.mod-root .view-header,
+body .workspace-split.mod-left-split .workspace-leaf,
+body .workspace-split.mod-left-split .workspace-leaf-content,
+body .workspace-split.mod-left-split .workspace-tab-header-container,
+body .workspace-split.mod-right-split .workspace-leaf,
+body .workspace-split.mod-right-split .workspace-leaf-content,
+body .workspace-split.mod-right-split .workspace-tab-header-container {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* ──────────────────────────────────────────
+   3. THE one glass — every chrome surface, identical recipe.
+   Glass-bearing elements (one glass layer per region):
+     ribbon · left dock · right dock · editor topbar · note pane ·
+     status bar. Children above stay transparent → no double glass.
+   ────────────────────────────────────────── */
+
+.workspace-ribbon,
+body .workspace-split.mod-left-split,
+body .workspace-split.mod-right-split,
+body .workspace-split.mod-root .workspace-tab-header-container,
+.status-bar {
+  background: var(--vault-glass) !important;
+  background-color: var(--vault-glass) !important;
+  -webkit-backdrop-filter: var(--vault-blur) !important;
+  backdrop-filter: var(--vault-blur) !important;
+}
+
+/* Extend the left ribbon background all the way to the top of the screen under the titlebar controls */
+.workspace-ribbon.mod-left {
+  top: 0 !important;
+  padding-top: 40px !important;
+}
+
+/* Editor pane is fully transparent → the CRISP sky shows through it. Frost is
+   NEVER a full sheet over the editor (that blurred the sky away). Readability
+   frost lives ONLY on the note card (§4); the sky shows around it. The seam is
+   closed instead by toning the sidebar/chrome DOWN toward the sky (light
+   --vault-glass), not by darkening/frosting the editor up to the sidebar. */
+body .workspace-split.mod-root .workspace-leaf-content,
+body .workspace-split.mod-root .view-content,
+body .workspace-split.mod-root .view-header,
+body .workspace-split.mod-root .cm-editor,
+body .workspace-split.mod-root .cm-scroller {
+  background: transparent !important;
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* hairline only where panels meet the sky (sides), never internal seams */
+body .workspace-split.mod-left-split  { border-right: 0.5px solid var(--vault-glass-border) !important; }
+body .workspace-split.mod-right-split { border-left:  0.5px solid var(--vault-glass-border) !important; }
+.status-bar { border-top: 0.5px solid var(--vault-glass-border) !important; }
+
+/* resize handles transparent → thin sky line between split panes */
+.workspace-leaf-resize-handle { background: transparent !important; }
+
+/* ──────────────────────────────────────────
+   4. The note sits on a contained frosted CARD — readable width, centred,
+   rounded, with a hairline border; the CRISP sky shows AROUND it (a gutter).
+   Glass on .markdown-source-view / .markdown-reading-view (those live OUTSIDE
+   CodeMirror's transform, so backdrop-filter truly blurs — NEVER on .cm-sizer,
+   where it breaks into a flat grey veil). The card uses --vault-glass-card
+   (stronger than the chrome) so text stays crisp.
+   :not(.home-sky) so the card rule itself skips the home dashboard.
+   ────────────────────────────────────────── */
+
+body .workspace-split.mod-root .view-content:not(:has(.home-sky)) > .markdown-source-view,
+body .workspace-split.mod-root .view-content:not(:has(.home-sky)) > .markdown-reading-view {
+  background: var(--vault-glass-card) !important;
+  -webkit-backdrop-filter: var(--vault-blur) !important;
+  backdrop-filter: var(--vault-blur) !important;
+  border: 0.5px solid var(--vault-glass-border) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  max-width: calc(var(--file-line-width, 1250px) + 6rem) !important;
+  width: 94% !important;
+  margin: 12px auto 24px !important;
+  height: calc(100% - 36px) !important;
+}
+
+/* the text column itself stays transparent + centred (rides the card) */
+.markdown-source-view.mod-cm6 .cm-sizer,
+.markdown-reading-view .markdown-preview-sizer {
+  background: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 1.6rem 2rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* HOME: NO card on EITHER the source OR the reading view. cssclasses=home-sky
+   lands on the source view but NOT reliably on the reading view, so keying off
+   the per-view class left the reading-view carded (the lingering box around the
+   home note). Key off the PANE instead: if the view-content holds a home-sky
+   note, de-card both views → dashboard floats fully blended on the open sky. */
+body .workspace-split.mod-root .view-content:has(.home-sky) > .markdown-source-view,
+body .workspace-split.mod-root .view-content:has(.home-sky) > .markdown-reading-view {
+  background: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+.view-content:has(.home-sky) .cm-sizer,
+.view-content:has(.home-sky) .markdown-preview-sizer { padding: 0 !important; }
+
+/* ──────────────────────────────────────────
+   5. Stubborn text — make.md tree + nav titles are coloured
+   directly with !important by their plugins, so the var won't
+   reach them. Force them onto the current ink.
+   ────────────────────────────────────────── */
+
+.mk-tree-text,
+.mk-tree-section .mk-tree-text,
+.nav-file-title,
+.nav-folder-title,
+.nav-file-title-content,
+.nav-folder-title-content,
+.tree-item-self {
+  color: var(--text-normal) !important;
+}
+.nav-folder.mod-root > .nav-folder-title { color: var(--text-muted) !important; }
+
+/* ──────────────────────────────────────────
+   6. Glass-native components — no opaque boxes anywhere.
+   Most are handled by the vars in §1; these are the elements
+   that need an explicit transparent base or glass chip.
+   ────────────────────────────────────────── */
+
+/* inline code chip */
+:not(pre) > code,
+.cm-inline-code {
+  border: 0.5px solid var(--vault-glass-border) !important;
+  border-radius: 5px !important;
+  padding: 0 5px !important;
+}
+/* inline chips inherit --code-background by default (navy by day, near-black
+   0.72 by night) → heavier/darker than the blocks. Mirror the block frost
+   per period so a `chip` matches its ```block```. Text stays readable: dark ink
+   on the day white-frost, light ink on the sunset/dusk navy. */
+body.sky-dawn :not(pre) > code, body.sky-dawn .cm-inline-code,
+body.sky-day  :not(pre) > code, body.sky-day  .cm-inline-code {
+  background: rgba(255, 255, 255, 0.45) !important;
+}
+body.sky-sunset :not(pre) > code, body.sky-sunset .cm-inline-code,
+body.sky-dusk   :not(pre) > code, body.sky-dusk   .cm-inline-code {
+  background: rgba(18, 28, 58, 0.28) !important;
+}
+body.sky-night :not(pre) > code, body.sky-night .cm-inline-code {
+  background: rgba(176, 192, 232, 0.14) !important;
+}
+
+/* reading view — single pre element */
+body .markdown-rendered pre {
+  background:    rgba(18, 28, 58, 0.28) !important;
+  border: 1px solid rgba(255,255,255,0.35) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+/* live preview (CM6) — each line is its own element.
+   backdrop-filter on individual lines creates visible seam-bands → don't use it.
+   background forced directly (--code-background gets killed by transparent !important).
+   DEFAULT navy works on the warm dawn/sunset/dusk skies; day & night get their
+   own tints below (driven by the sky-<period> body class from sky-background). */
+body .cm-s-obsidian .cm-line.HyperMD-codeblock {
+  background:    rgba(18, 28, 58, 0.28) !important;
+  border-left:   1px solid rgba(255,255,255,0.35) !important;
+  border-right:  1px solid rgba(255,255,255,0.35) !important;
+  border-top:    none !important;
+  border-bottom: none !important;
+  box-shadow:    none !important;
+}
+body .cm-s-obsidian .cm-line.HyperMD-codeblock-begin {
+  border-top:    1px solid rgba(255,255,255,0.35) !important;
+  border-radius: 10px 10px 0 0 !important;
+}
+body .cm-s-obsidian .cm-line.HyperMD-codeblock-end {
+  border-bottom: 1px solid rgba(255,255,255,0.35) !important;
+  border-radius: 0 0 10px 10px !important;
+}
+
+/* DAY & DAWN — bright skies: white frost, more opaque than the note card (0.34)
+   so the block reads as a raised white panel instead of a dark slab. */
+body.sky-day .cm-s-obsidian .cm-line.HyperMD-codeblock,
+body.sky-day .markdown-rendered pre,
+body.sky-dawn .cm-s-obsidian .cm-line.HyperMD-codeblock,
+body.sky-dawn .markdown-rendered pre {
+  background: rgba(255, 255, 255, 0.50) !important;
+}
+/* NIGHT — dark sky: navy vanishes → flip to a light cool frost so it pops. */
+body.sky-night .cm-s-obsidian .cm-line.HyperMD-codeblock,
+body.sky-night .markdown-rendered pre {
+  background: rgba(176, 192, 232, 0.14) !important;
+}
+
+/* properties / frontmatter: NO boxes on the keys — transparent rows with a
+   single hairline separator (clean, like a plain list). */
+.metadata-container,
+.metadata-content,
+.metadata-properties,
+.metadata-property,
+.metadata-property-key,
+.metadata-property-value {
+  background: transparent !important;
+  border: none !important;
+}
+.metadata-property {
+  border: none !important;            /* no hairlines, no boxes — clean rows */
+  border-radius: 0 !important;
+}
+.metadata-property:hover {
+  background: transparent !important;
+}
+/* the key cell + every editable field: no fill, no box, ink-coloured text */
+.metadata-property-key,
+.metadata-property-key input,
+.metadata-property-key-input,
+.metadata-property-value,
+.metadata-property-value input,
+.metadata-input-longtext,
+.metadata-input-text {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--text-normal) !important;
+}
+.metadata-property-key-input:hover,
+.metadata-property-key-input:focus {
+  background: rgba(var(--vault-glass-rgb), 0.12) !important;
+  box-shadow: none !important;
+}
+
+/* make.md (Spaces) renders frontmatter with ITS OWN property panel, not
+   Obsidian's .metadata-* — so the rules above never reached it. The grey/white
+   boxes the user kept seeing are these: .mk-path-context-field is hardcoded
+   `background:white`, and the value cells carry a faint mono fill. Strip the
+   row box; turn tag/option values into soft glass pills (clean, like a list). */
+.mk-path-context,
+.mk-path-context-row,
+.mk-path-context-field,
+.mk-path-context-field-key,
+.mk-path-context-value,
+.mk-props-list,
+.mk-props-value,
+.mk-cell-text,
+.mk-cell-fileprop,
+.mk-cell-flex,
+.mk-cell-icon > div,
+.mk-path-context-field-space {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+/* value chips (tags, options, dates) → subtle glass pill instead of grey box */
+.mk-props-pill,
+.mk-cell-option-item,
+.mk-cell-clickable,
+.mk-cell-date-item,
+.mk-cell-tags-label {
+  background: rgba(var(--vault-glass-rgb), 0.16) !important;
+  border-radius: 12px !important;
+}
+.mk-cell-option-item:hover,
+.mk-cell-clickable:hover,
+.mk-cell-date-item:hover {
+  background: rgba(var(--vault-glass-rgb), 0.28) !important;
+}
+
+/* callouts / admonitions: tinted wash + accent rule, not a solid block */
+.callout {
+  background-color: rgba(var(--callout-color), 0.12) !important;
+  border: none !important;
+  border-left: 3px solid rgba(var(--callout-color), 0.6) !important;
+  border-radius: 0 6px 6px 0 !important;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* tables: transparent base, glassy header + zebra */
+.markdown-rendered table,
+.markdown-rendered th,
+.markdown-rendered td,
+.cm-table-widget table,
+.cm-table-widget th,
+.cm-table-widget td {
+  background: transparent !important;
+  border-color: var(--vault-glass-border) !important;
+}
+.markdown-rendered thead th,
+.cm-table-widget thead th {
+  background: rgba(var(--vault-glass-rgb), 0.18) !important;
+}
+.markdown-rendered tbody tr:nth-child(even) td,
+.cm-table-widget tbody tr:nth-child(even) td {
+  background: rgba(var(--vault-glass-rgb), 0.07) !important;
+}
+
+/* blockquotes inherit the var tint above; keep the bar crisp */
+.markdown-rendered blockquote,
+.cm-s-obsidian .HyperMD-quote {
+  border-radius: 0 6px 6px 0 !important;
+}
+
+/* embeds / transclusions: transparent, no nested card */
+.markdown-embed,
+.internal-embed {
+  background: transparent !important;
+  border: none !important;
+  border-left: 2px solid var(--vault-glass-border) !important;
+}
+
+/* ──────────────────────────────────────────
+   7. Buttons & icons — always visible on any sky.
+   Colour follows the ink; a glass chip appears on hover so a
+   grey icon is never lost on a blue daytime sky.
+   ────────────────────────────────────────── */
+
+.clickable-icon,
+.side-dock-ribbon-action,
+.nav-action-button,
+.view-action,
+.view-header-icon,
+.workspace-tab-header-inner-icon,
+.mk-icon,
+.workspace-split.mod-right-split .clickable-icon,
+.workspace-split.mod-right-split .workspace-tab-header-inner-icon {
+  color: var(--icon-color) !important;
+}
+/* most plugin icons are stroke="currentColor" SVGs → forcing the parent
+   colour flips them with the sky. Covers the right-dock icons that
+   previously stayed fixed at night. */
+.clickable-icon svg,
+.side-dock-ribbon-action svg,
+.nav-action-button svg,
+.view-action svg,
+.view-header-icon svg,
+.workspace-tab-header-inner-icon svg,
+.mk-icon svg,
+.mk-icon svg path,
+.workspace-split.mod-right-split .clickable-icon svg,
+.workspace-split.mod-right-split .workspace-tab-header-inner-icon svg {
+  color: var(--icon-color) !important;
+  stroke: currentColor;
+}
+.clickable-icon:hover,
+.side-dock-ribbon-action:hover,
+.nav-action-button:hover,
+.view-action:hover {
+  color: var(--icon-color-hover) !important;
+  background: rgba(var(--vault-glass-rgb), 0.30) !important;
+  border-radius: 8px !important;
+}
+.side-dock-ribbon-action.is-active,
+.clickable-icon.is-active {
+  color: var(--icon-color-active) !important;
+}
+
+/* generic buttons: glass chip, readable label */
+button:not(.mod-cta):not(.mod-warning):not(.mod-muted) {
+  background: rgba(var(--vault-glass-rgb), 0.34) !important;
+  color: var(--text-normal) !important;
+  border: 0.5px solid var(--vault-glass-border) !important;
+}
+button:not(.mod-cta):not(.mod-warning):not(.mod-muted):hover {
+  background: rgba(var(--vault-glass-rgb), 0.50) !important;
+}
+
+/* call-to-action keeps the accent (good contrast both phases) */
+button.mod-cta,
+.mod-cta {
+  background: var(--interactive-accent) !important;
+  color: var(--text-on-accent) !important;
+  border: none !important;
+}
+
+/* inputs: glass field, never a flat white box.
+   EXCLUDE metadata inputs — the property panel's key/value are <input type=text>,
+   so this rule was painting them (rgba glass = the YAML "boxes"). They must stay
+   transparent (handled in §6). :not([class*="metadata"]) keeps them out. */
+input[type="text"]:not([class*="metadata"]),
+input[type="search"]:not([class*="metadata"]),
+textarea:not([class*="metadata"]),
+.search-input-container input,
+.prompt-input {
+  background: rgba(var(--vault-glass-rgb), 0.30) !important;
+  color: var(--text-normal) !important;
+  border: 0.5px solid var(--vault-glass-border) !important;
+}
+/* belt-and-suspenders: metadata inputs transparent at a specificity that beats
+   both core (input.metadata-property-key-input, 0,1,1) and any stray rule. */
+body input.metadata-property-key-input,
+body input.metadata-input-text,
+body input.metadata-input-number,
+body .metadata-property-value input {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* ──────────────────────────────────────────
+   8. Overlays — modals, menus, palette, tooltips: same glass.
+   (formerly handled by frosted-glass.css, now folded in here)
+   ────────────────────────────────────────── */
+
+.modal,
+.prompt,
+.suggestion-container,
+.menu,
+.popover,
+.tooltip,
+.workspace-drawer {
+  background: var(--vault-glass-strong) !important;
+  -webkit-backdrop-filter: var(--vault-blur) !important;
+  backdrop-filter: var(--vault-blur) !important;
+  border: 1px solid var(--vault-glass-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.30) !important;
+}
+.modal-bg { background: rgba(0, 0, 0, 0.35) !important; }
+
+/* ──────────────────────────────────────────
+   8b. Overlay ink — FULLY sky-driven, never from Obsidian's light/dark toggle.
+   §8 already tints the glass per sky. But the base theme (theme-dark/theme-light,
+   which follows macOS) re-declares ink vars on each overlay's OWN containers,
+   BELOW the inherited body ink. So when the macOS appearance ≠ the sky period
+   (mac-dark by day, or mac-light in the evening) menu / modal / suggestion text
+   went dark-on-dark or light-on-light. Re-assert the sky ink on every overlay
+   root for BOTH sky states → the OS toggle can no longer make overlays illegible.
+   Ink literals mirror §1 (sky-bright) and the sky-dim block. We set the VARS on
+   roots (so var-driven text flips at once) and force color only on leaf classes
+   the base theme hardcodes — menu items are left on the var so .is-warning red
+   etc. survive.
+   ────────────────────────────────────────── */
+/* roots → ink vars (+ a base color for stray non-var text) */
+body.sky-bright .modal,
+body.sky-bright .menu,
+body.sky-bright .suggestion-container,
+body.sky-bright .prompt,
+body.sky-bright .popover,
+body.sky-bright .tooltip {
+  color: #15191f !important;
+  background: var(--vault-glass-strong) !important;
+  background-color: var(--vault-glass-strong) !important;
+}
+body.sky-bright .modal,
+body.sky-bright .modal *,
+body.sky-bright .menu,
+body.sky-bright .menu *,
+body.sky-bright .suggestion-container,
+body.sky-bright .suggestion-container *,
+body.sky-bright .prompt,
+body.sky-bright .prompt *,
+body.sky-bright .popover,
+body.sky-bright .popover *,
+body.sky-bright .tooltip,
+body.sky-bright .tooltip * {
+  --text-normal:                    #15191f !important;
+  --text-muted:                     #3a424e !important;
+  --text-faint:                     #5d6571 !important;
+  --background-primary:             rgba(252, 252, 255, 0.52) !important;
+  --background-primary-alt:         rgba(252, 252, 255, 0.42) !important;
+  --background-secondary:           rgba(252, 252, 255, 0.36) !important;
+  --background-secondary-alt:       rgba(252, 252, 255, 0.48) !important;
+  --background-float:               rgba(252, 252, 255, 0.52) !important;
+  --background-float-active:        rgba(252, 252, 255, 0.42) !important;
+  --background-modifier-form-field: rgba(252, 252, 255, 0.45) !important;
+  --interactive-normal:             rgba(252, 252, 255, 0.40) !important;
+  --interactive-hover:              rgba(252, 252, 255, 0.58) !important;
+}
+body.sky-dim .modal,
+body.sky-dim .menu,
+body.sky-dim .suggestion-container,
+body.sky-dim .prompt,
+body.sky-dim .popover,
+body.sky-dim .tooltip {
+  color: #eef2fb !important;
+  background: var(--vault-glass-strong) !important;
+  background-color: var(--vault-glass-strong) !important;
+}
+body.sky-dim .modal,
+body.sky-dim .modal *,
+body.sky-dim .menu,
+body.sky-dim .menu *,
+body.sky-dim .suggestion-container,
+body.sky-dim .suggestion-container *,
+body.sky-dim .prompt,
+body.sky-dim .prompt *,
+body.sky-dim .popover,
+body.sky-dim .popover *,
+body.sky-dim .tooltip,
+body.sky-dim .tooltip * {
+  --text-normal:                    #eef2fb !important;
+  --text-muted:                     #c2cadb !important;
+  --text-faint:                     #939db1 !important;
+  --background-primary:             rgba(14, 16, 32, 0.52) !important;
+  --background-primary-alt:         rgba(14, 16, 32, 0.42) !important;
+  --background-secondary:           rgba(14, 16, 32, 0.36) !important;
+  --background-secondary-alt:       rgba(14, 16, 32, 0.48) !important;
+  --background-float:               rgba(14, 16, 32, 0.52) !important;
+  --background-float-active:        rgba(14, 16, 32, 0.42) !important;
+  --background-modifier-form-field: rgba(14, 16, 32, 0.45) !important;
+  --interactive-normal:             rgba(14, 16, 32, 0.40) !important;
+  --interactive-hover:              rgba(14, 16, 32, 0.58) !important;
+}
+/* stubborn leaf text the base theme hardcodes (no coloured variants here) */
+body.sky-bright .modal .setting-item-name,
+body.sky-bright .modal .setting-item-heading .setting-item-name,
+body.sky-bright .modal .modal-title,
+body.sky-bright .modal .vertical-tab-nav-item,
+body.sky-bright .modal .community-plugin-name,
+body.sky-bright .suggestion-title,
+body.sky-bright .modal h1,
+body.sky-bright .modal h2,
+body.sky-bright .modal h3,
+body.sky-bright .modal h4,
+body.sky-bright .modal h5,
+body.sky-bright .modal h6 {
+  color: #15191f !important;
+}
+body.sky-bright .modal .setting-item-description,
+body.sky-bright .modal .vertical-tab-header-group-title,
+body.sky-bright .modal .community-plugin-author,
+body.sky-bright .modal .community-plugin-desc,
+body.sky-bright .suggestion-note,
+body.sky-bright .suggestion-hotkey {
+  color: #3a424e !important;
+}
+body.sky-dim .modal .setting-item-name,
+body.sky-dim .modal .setting-item-heading .setting-item-name,
+body.sky-dim .modal .modal-title,
+body.sky-dim .modal .vertical-tab-nav-item,
+body.sky-dim .modal .community-plugin-name,
+body.sky-dim .suggestion-title,
+body.sky-dim .modal h1,
+body.sky-dim .modal h2,
+body.sky-dim .modal h3,
+body.sky-dim .modal h4,
+body.sky-dim .modal h5,
+body.sky-dim .modal h6 {
+  color: #eef2fb !important;
+}
+body.sky-dim .modal .setting-item-description,
+body.sky-dim .modal .vertical-tab-header-group-title,
+body.sky-dim .modal .community-plugin-author,
+body.sky-dim .modal .community-plugin-desc,
+body.sky-dim .suggestion-note,
+body.sky-dim .suggestion-hotkey {
+  color: #c2cadb !important;
+}
+
+/* ──────────────────────────────────────────
+   9. Scrollbar — barely-there glass
+   ────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--vault-glass-rgb), 0.45);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--vault-glass-rgb), 0.65);
+}
+
+/* ──────────────────────────────────────────
+   10. make.md (Spaces) — sidebar tree + in-note frames.
+   The dock glass (§3) sits behind the whole tree; these rules keep
+   make.md's own containers transparent so the FULL row rests on the
+   glass (not just the sticker), and round every frame so there are
+   no 90° boxes.
+   ────────────────────────────────────────── */
+
+/* tree containers transparent → uniform dock glass behind every row */
+.mk-main-menu-container,
+.mk-tree,
+.mk-tree-wrapper,
+.mk-tree-section,
+.mk-space-body,
+.mk-space-scroller,
+.mk-path-tree {
+  background: transparent !important;
+}
+
+/* The sidebar is ONE block of glass (from §3). Rows are transparent so they
+   sit on that single sheet — only hover / active lift slightly. */
+.mk-tree-item,
+.nav-file-title,
+.nav-folder-title {
+  background: transparent !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;   /* make.md puts a drop shadow on every row */
+}
+.mk-tree-item:hover,
+.nav-file-title:hover,
+.nav-folder-title:hover {
+  background: rgba(var(--vault-glass-rgb), 0.20) !important;
+}
+.mk-tree-item.is-active,
+.mk-tree-item.mk-active,
+.mk-tree-item.is-selected,
+.nav-file-title.is-active,
+.nav-folder-title.is-active {
+  background: rgba(var(--vault-glass-rgb), 0.32) !important;
+}
+/* kill any opaque box behind the emoji/sticker → no "frost only under the
+   sticker"; the whole row sits on the single sidebar glass panel.
+   The actual fill is `.mk-path-icon button { background: var(--label-color) }`
+   — on the INNER button, which is why earlier rules on .mk-icon missed it. */
+.mk-tree-item .mk-icon,
+.mk-path-icon,
+.mk-path-icon button,
+.mk-path-icon-placeholder button,
+.mk-icon-container,
+.mk-icon-element,
+.mk-space-icon,
+.nav-file-icon,
+.nav-folder-icon,
+.tree-item-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+/* The sidebar sticker is a BARE <button> inside .mk-path-icon, so §7's generic
+   `button:not(.mod-cta)...` chip (specificity 0,3,1) was painting it — THAT was
+   the box under the sticker, beating the rule above (0,1,1). Beat §7 back: the
+   sky-class prefix gives 3 classes + more elements → (0,3,2) wins, hover too. */
+body.sky-bright .mk-tree-item .mk-path-icon button,
+body.sky-dim   .mk-tree-item .mk-path-icon button,
+body.sky-bright .mk-tree-item .mk-icon button,
+body.sky-dim   .mk-tree-item .mk-icon button,
+body.sky-bright .mk-tree-item .mk-path-icon button:hover,
+body.sky-dim   .mk-tree-item .mk-path-icon button:hover,
+body.sky-bright .mk-tree-item .mk-icon button:hover,
+body.sky-dim   .mk-tree-item .mk-icon button:hover {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* in-note make.md frames (the grey content boxes) — transparent base,
+   rounded corners. Content rides the note's glass card from §4. */
+.mk-frame,
+.mk-frame-edit,
+.mk-floweditor,
+.mk-flowspace,
+.mk-flow-node,
+.mk-path-context,
+.mk-note-header,
+.mk-list-group,
+.mk-list-item {
+  background: transparent !important;
+  border-radius: 12px !important;
+}
+/* list rows get a subtle glass chip on hover so they read as buttons */
+.mk-list-item:hover {
+  background: rgba(var(--vault-glass-rgb), 0.18) !important;
+}
+
+/* ──────────────────────────────────────────
+   11. Numeric rendering fix — Beirut (Arabic script) ships oldstyle
+   proportional digits that render at irregular heights in Latin context.
+   Activate lining + tabular OpenType features; if the font lacks them
+   the browser falls back to system-ui which has clean lining numbers.
+   ────────────────────────────────────────── */
+body {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+/* Dates, property values, frontmatter, tables — ensure lining figures */
+.metadata-property-value,
+.metadata-input-number,
+.cm-number,
+.cm-atom,
+table td,
+table th,
+.dataview.dataview-error,
+.dataview-result-list-ul,
+.dataview td,
+.dataview th {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+/* ==============================================================================
+   PART 3: ANIMATED HOB SVG LOGO (logo.css)
+   ============================================================================== */
+
+.workspace-leaf-content[data-type="file-explorer"]::before,
+.workspace-leaf-content[data-type="mk-path-view"]::before {
+  content: "";
+  display: block;
+  flex-shrink: 0;
+  margin: 10px 10px 14px;
+  height: 120px;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgdmlld0JveD0iMCAwIDUxMiAxOTAiCiAgIHdpZHRoPSI1MTIiCiAgIGhlaWdodD0iMTkwIgogICB2ZXJzaW9uPSIxLjEiCiAgIGlkPSJzdmczMSIKICAgc29kaXBvZGk6ZG9jbmFtZT0iaG9iLWljb24tZnVsbC5zdmciCiAgIGlua3NjYXBlOnZlcnNpb249IjEuNCAoZTdjM2ZlYjEsIDIwMjQtMTAtMDkpIgogICB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIKICAgeG1sbnM6c29kaXBvZGk9Imh0dHA6Ly9zb2RpcG9kaS5zb3VyY2Vmb3JnZS5uZXQvRFREL3NvZGlwb2RpLTAuZHRkIgogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxzb2RpcG9kaTpuYW1lZHZpZXcKICAgICBpZD0ibmFtZWR2aWV3MzEiCiAgICAgcGFnZWNvbG9yPSIjZmZmZmZmIgogICAgIGJvcmRlcmNvbG9yPSIjNjY2NjY2IgogICAgIGJvcmRlcm9wYWNpdHk9IjEuMCIKICAgICBpbmtzY2FwZTpzaG93cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMC4wIgogICAgIGlua3NjYXBlOnBhZ2VjaGVja2VyYm9hcmQ9IjAiCiAgICAgaW5rc2NhcGU6ZGVza2NvbG9yPSIjZDFkMWQxIgogICAgIGlua3NjYXBlOnpvb209IjAuNjIwMTcwMDUiCiAgICAgaW5rc2NhcGU6Y3g9IjMzNy4wMDQzNCIKICAgICBpbmtzY2FwZTpjeT0iNTI0LjA0OTgxIgogICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMTgwMCIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSI5NjUiCiAgICAgaW5rc2NhcGU6d2luZG93LXg9IjEyMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iMzEiCiAgICAgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMCIKICAgICBpbmtzY2FwZTpjdXJyZW50LWxheWVyPSJzdmczMSIgLz4KICA8ZGVmcwogICAgIGlkPSJkZWZzMTUiPgogIDxzdHlsZT4KICAgIEBrZXlmcmFtZXMgdHdpbmtsZS1vZGQgewogICAgICAwJSwgMTAwJSB7IG9wYWNpdHk6IDAuMjU7IH0KICAgICAgNTAlIHsgb3BhY2l0eTogMTsgZmlsdGVyOiBkcm9wLXNoYWRvdygwIDAgM3B4ICNmZmZmZmYpOyB9CiAgICB9CiAgICBAa2V5ZnJhbWVzIHR3aW5rbGUtZXZlbiB7CiAgICAgIDAlLCAxMDAlIHsgb3BhY2l0eTogMTsgZmlsdGVyOiBkcm9wLXNoYWRvdygwIDAgM3B4ICNmZmZmZmYpOyB9CiAgICAgIDUwJSB7IG9wYWNpdHk6IDAuMjU7IH0KICAgIH0KICAgIEBrZXlmcmFtZXMgZmxhbWUtZ2xvdyB7CiAgICAgIDAlLCAxMDAlIHsgb3BhY2l0eTogMC44OyBmaWx0ZXI6IGRyb3Atc2hhZG93KDAgMCA4cHggcmdiYSgyNTUsIDIzMCwgMTkyLCAwLjYpKTsgfQogICAgICA1MCUgeyBvcGFjaXR5OiAxOyBmaWx0ZXI6IGRyb3Atc2hhZG93KDAgMCAxNnB4IHJnYmEoMjU1LCAyMzAsIDE5MiwgMC45NSkpOyB9CiAgICB9CiAgICAuc3Rhci1vZGQgewogICAgICBhbmltYXRpb246IHR3aW5rbGUtb2RkIDIuMnMgaW5maW5pdGUgZWFzZS1pbi1vdXQ7CiAgICB9CiAgICAuc3Rhci1ldmVuIHsKICAgICAgYW5pbWF0aW9uOiB0d2lua2xlLWV2ZW4gMi44cyBpbmZpbml0ZSBlYXNlLWluLW91dDsKICAgIH0KICAgICNwYXRoMjEgewogICAgICBhbmltYXRpb246IGZsYW1lLWdsb3cgMy41cyBpbmZpbml0ZSBlYXNlLWluLW91dDsKICAgIH0KICA8L3N0eWxlPgoKICAgIDwhLS0gMS4gR3JhZGllbnQgZm9yIEg6IEVhcmx5IE1vcm5pbmcgJiBIaW50IG9mIERheSAoQWxiYS9NYXR0aW5hIC0+IEFjY2Vubm8gR2lvcm5vKSAtLT4KICAgIDxsaW5lYXJHcmFkaWVudAogICAgICAgaWQ9ImdyYWRpZW50SCIKICAgICAgIHgxPSIxNTcuMzU4OCIKICAgICAgIHkxPSI3Mi43NTcyOTQiCiAgICAgICB4Mj0iMjgzLjgzNDA4IgogICAgICAgeTI9IjE5OS4yMzI1OSIKICAgICAgIGdyYWRpZW50VHJhbnNmb3JtPSJzY2FsZSgwLjY3OTk3NDcsMS40NzA2NDMpIgogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjNGI0ZThjIgogICAgICAgICBpZD0ic3RvcDEiIC8+CiAgICAgIDwhLS0gQWxiYSBQdXJwbGUgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iNTAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjZmZiODhjIgogICAgICAgICBpZD0ic3RvcDIiIC8+CiAgICAgIDwhLS0gRWFybHkgTW9ybmluZyBQZWFjaCAtLT4KICAgICAgPHN0b3AKICAgICAgICAgb2Zmc2V0PSIxMDAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjNmJhMWQ4IgogICAgICAgICBpZD0ic3RvcDMiIC8+CiAgICAgIDwhLS0gQWNjZW5ubyBkaSBHaW9ybm8gU2t5IEJsdWUgLS0+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPCEtLSAyLiBHcmFkaWVudCBmb3IgTzogRnVsbCBEYXkgJiBTdW5zZXQgKEdpb3JubyAtPiBUcmFtb250bykgLS0+CiAgICA8bGluZWFyR3JhZGllbnQKICAgICAgIGlkPSJncmFkaWVudE8iCiAgICAgICB4MT0iMjYyIgogICAgICAgeTE9IjExMiIKICAgICAgIHgyPSI0MzgiCiAgICAgICB5Mj0iMjg4IgogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjNmJhMWQ4IgogICAgICAgICBpZD0ic3RvcDQiIC8+CiAgICAgIDwhLS0gU2t5IEJsdWUgKEdpb3JubykgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iMzAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjYThjZmYzIgogICAgICAgICBpZD0ic3RvcDUiIC8+CiAgICAgIDwhLS0gU29mdCBCbHVlIC0tPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjcwJSIKICAgICAgICAgc3RvcC1jb2xvcj0iI2NmOWE3ZCIKICAgICAgICAgaWQ9InN0b3A2IiAvPgogICAgICA8IS0tIFN1bnNldCBHb2xkIC0tPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjEwMCUiCiAgICAgICAgIHN0b3AtY29sb3I9IiNiNzZlNjMiCiAgICAgICAgIGlkPSJzdG9wNyIgLz4KICAgICAgPCEtLSBTdW5zZXQgVGVycmFjb3R0YSAtLT4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8IS0tIDMuIEdyYWRpZW50IGZvciBCOiBEdXNrICYgTmlnaHQgKFNlcmEgLT4gTm90dGUpIC0tPgogICAgPGxpbmVhckdyYWRpZW50CiAgICAgICBpZD0iZ3JhZGllbnRCIgogICAgICAgeDE9IjcwNS43MTQxMSIKICAgICAgIHkxPSI3Ni44NzEwNzEiCiAgICAgICB4Mj0iODM5LjM0MDQ1IgogICAgICAgeTI9IjIxMC40OTc0MSIKICAgICAgIGdyYWRpZW50VHJhbnNmb3JtPSJzY2FsZSgwLjcxODQyMTIxLDEuMzkxOTQxMSkiCiAgICAgICBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iMCUiCiAgICAgICAgIHN0b3AtY29sb3I9IiNjZjlhN2QiCiAgICAgICAgIGlkPSJzdG9wOCIgLz4KICAgICAgPCEtLSBTdW5zZXQgR29sZCAoQWNjZW5ubyBkaSBUcmFtb250bykgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iMTIlIgogICAgICAgICBzdG9wLWNvbG9yPSIjYjc2ZTYzIgogICAgICAgICBpZD0ic3RvcFN1bnNldDIiIC8+CiAgICAgIDwhLS0gU3Vuc2V0IFRlcnJhY290dGEgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iMjglIgogICAgICAgICBzdG9wLWNvbG9yPSIjNWQ0YTc4IgogICAgICAgICBpZD0ic3RvcDkiIC8+CiAgICAgIDwhLS0gV2FybSBEdXNrIFB1cnBsZSAoU2VyYSkgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iNDIlIgogICAgICAgICBzdG9wLWNvbG9yPSIjNGEzYTZiIgogICAgICAgICBpZD0ic3RvcER1c2syIiAvPgogICAgICA8IS0tIERlZXAgRHVzayBQdXJwbGUgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iNTAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjMmUzNTc1IgogICAgICAgICBpZD0ic3RvcDEwIiAvPgogICAgICA8IS0tIFR3aWxpZ2h0IEluZGlnby9OYXZ5IChOaWdodCBzdGFydHMgaGVyZSkgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iNzUlIgogICAgICAgICBzdG9wLWNvbG9yPSIjMWYyNDUyIgogICAgICAgICBpZD0ic3RvcDExIiAvPgogICAgICA8IS0tIE5pZ2h0IE9ic2lkaWFuIE5hdnkgKE5vdHRlKSAtLT4KICAgICAgPHN0b3AKICAgICAgICAgb2Zmc2V0PSIxMDAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjMTkxZDQ0IgogICAgICAgICBpZD0ic3RvcE5pZ2h0RW5kIiAvPgogICAgICA8IS0tIERlZXAgTmlnaHQgT2JzaWRpYW4gTmF2eSAtLT4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8IS0tIFdhcm0gRmlyZSBHbG93IGZvciB0aGUgaW5uZXIgc3ByaXRlIGNvcmUgLS0+CiAgICA8bGluZWFyR3JhZGllbnQKICAgICAgIGlkPSJ3YXJtR2xvdyIKICAgICAgIHgxPSI0MTYuMjAzMDkiCiAgICAgICB5MT0iMTg4Ljk3MDI1IgogICAgICAgeDI9IjQxNi4yMDMwOSIKICAgICAgIHkyPSIxMjQuOTM5MDEiCiAgICAgICBncmFkaWVudFRyYW5zZm9ybT0ic2NhbGUoMC43ODA4Njg4MSwxLjI4MDYyNDgpIgogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjY2Y5YTdkIgogICAgICAgICBpZD0ic3RvcDEyIiAvPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjEwMCUiCiAgICAgICAgIHN0b3AtY29sb3I9IiNmZmU2YzAiCiAgICAgICAgIGlkPSJzdG9wMTMiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPCEtLSBHbGFzcyBGcm9zdCBPdmVybGF5IGZvciB0aGUgZWFycyBhbmQgaG9vZCAtLT4KICAgIDxsaW5lYXJHcmFkaWVudAogICAgICAgaWQ9ImdsYXNzT3ZlcmxheSIKICAgICAgIHgxPSIwIgogICAgICAgeTE9IjAiCiAgICAgICB4Mj0iMSIKICAgICAgIHkyPSIxIj4KICAgICAgPHN0b3AKICAgICAgICAgb2Zmc2V0PSIwJSIKICAgICAgICAgc3RvcC1jb2xvcj0iI2ZmZmZmZiIKICAgICAgICAgc3RvcC1vcGFjaXR5PSIwLjMyIgogICAgICAgICBpZD0ic3RvcDE0IiAvPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjEwMCUiCiAgICAgICAgIHN0b3AtY29sb3I9IiNmZmZmZmYiCiAgICAgICAgIHN0b3Atb3BhY2l0eT0iMC4wOCIKICAgICAgICAgaWQ9InN0b3AxNSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8IS0tIEdsYXNzIEJsdXIgLS0+CiAgICA8ZmlsdGVyCiAgICAgICBpZD0iZ2xhc3NCbHVyIgogICAgICAgeD0iLTAuNDExNDI4NTciCiAgICAgICB5PSItMC4yMDU3MTQyOSIKICAgICAgIHdpZHRoPSIxLjgyMjg1NzEiCiAgICAgICBoZWlnaHQ9IjEuNDExNDI4NiI+CiAgICAgIDxmZUdhdXNzaWFuQmx1cgogICAgICAgICBzdGREZXZpYXRpb249IjYiCiAgICAgICAgIHJlc3VsdD0iYmx1ciIKICAgICAgICAgaWQ9ImZlR2F1c3NpYW5CbHVyMTUiIC8+CiAgICAgIDxmZUNvbXBvc2l0ZQogICAgICAgICBpbj0iU291cmNlR3JhcGhpYyIKICAgICAgICAgaW4yPSJibHVyIgogICAgICAgICBvcGVyYXRvcj0ib3ZlciIKICAgICAgICAgaWQ9ImZlQ29tcG9zaXRlMTUiIC8+CiAgICA8L2ZpbHRlcj4KICAgIDwhLS0gU3RhciBkZWZpbml0aW9uIGZvciB0aGUgbmlnaHQgc2lkZSAtLT4KICAgIDxnCiAgICAgICBpZD0ic3RhciI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwtNiAxLjUsLTEuNSA2LDAgMS41LDEuNSAwLDYgLTEuNSwxLjUgLTYsMCAtMS41LC0xLjUgWiIKICAgICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgICAgb3BhY2l0eT0iMC45NSIKICAgICAgICAgaWQ9InBhdGgxNSIgLz4KICAgIDwvZz4KICA8L2RlZnM+CiAgPGcKICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtOTMuNjcxNjQzLC0xMDQuNDI5ODkpIgogICAgIGlkPSJnMzEiPgogICAgPCEtLSA9PT09PT09PT09PT09PT09PSBMRVRURVIgSCAoTWF0dGluYSBQcmVzdG8gJiBBY2Nlbm5vIGRpIEdpb3JubykgPT09PT09PT09PT09PT09PT0gLS0+CiAgICA8cGF0aAogICAgICAgZD0ibSAxMjAsMTIwIHYgMTYwIG0gNjAsLTE2MCB2IDE2MCBtIC02MCwtODAgaCA2MCIKICAgICAgIHN0cm9rZT0idXJsKCNncmFkaWVudEgpIgogICAgICAgc3Ryb2tlLXdpZHRoPSIyNiIKICAgICAgIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIKICAgICAgIGZpbGw9Im5vbmUiCiAgICAgICBpZD0icGF0aDE2IgogICAgICAgc3R5bGU9InN0cm9rZTp1cmwoI2dyYWRpZW50SCkiIC8+CiAgICA8IS0tID09PT09PT09PT09PT09PT09IElOVEVHUkFURUQgTEVUVEVSIE8gKFRoZSBTcHJpdGU6IEdpb3JubyAmIFRyYW1vbnRvKSA9PT09PT09PT09PT09PT09PSAtLT4KICAgIDwhLS0gT3V0ZXIgJ08nIFJpbmcgLS0+CiAgICA8Y2lyY2xlCiAgICAgICBjeD0iMzUwIgogICAgICAgY3k9IjIwMCIKICAgICAgIHI9Ijc1IgogICAgICAgc3Ryb2tlPSJ1cmwoI2dyYWRpZW50TykiCiAgICAgICBzdHJva2Utd2lkdGg9IjI2IgogICAgICAgZmlsbD0ibm9uZSIKICAgICAgIGlkPSJjaXJjbGUxOSIKICAgICAgIHN0eWxlPSJzdHJva2U6dXJsKCNncmFkaWVudE8pIiAvPgogICAgPCEtLSBZZWxsb3cgU3VuIChTb2xlIE1lenpvIFRhZ2xpYXRvKSAtIFNoaWZ0ZWQgZXhhY3RseSB0byB0aGUgb3V0ZXIgYm9yZGVyIG9mIHRoZSBPIHJpbmcgLS0+CiAgICA8ZwogICAgICAgdHJhbnNmb3JtPSJyb3RhdGUoMTM1LDExNS40MTkyNiwxMjguNjQ2NzUpIgogICAgICAgaWQ9ImcyMCI+CiAgICAgIDwhLS0gU3VuIHNlbWktY2lyY2xlIHBvaW50aW5nIGlud2FyZCBmcm9tIHRoZSBvdXRlciBlZGdlIC0tPgogICAgICA8cGF0aAogICAgICAgICBkPSJtIC0xNS4zODI5MzgsLTEuMDQxMDE0NiBjIDAsLTguODM2NTYyIDYuNjU0MTQ3NSwtMTQuOTM3NDI1NCAxNS40OTA3MDMyNiwtMTQuOTM3NDI1NCA4LjgzNjU1NTg0LDAgMTYuMDY0MjEwNzQsNi4xMzYwNDgyIDE2LjA2NDIxMDc0LDE0Ljk3MjYxMDIgbCAtNC44NzM0NCwwLjYyMTg0NjM2IC0zLjUwMzQ4ODksMC4zODg3NTI4MSAtMy44MjU1NTI4LDAuMjI2MDg2MjYgLTMuMjY5OTU5NTEsMC4wODUyMzQgLTUuMTYwNjM2MzksLTAuMDkyODczIC0zLjg4NTQyMjEsLTAuMzA5MzY5NDkgLTEuNjc0OTY3MywtMC4xOTY1NTIzMSAtMS44MjMxNTksLTAuMjEzOTQyMDYgLTEuNTYzOTMxLC0wLjIyMTg5OTQ5IHoiCiAgICAgICAgIGZpbGw9IiNmZmQyNGQiCiAgICAgICAgIGZpbHRlcj0iZHJvcC1zaGFkb3coMCAwIDZweCByZ2JhKDI1NSwgMjEwLCA3NywgMC44KSkiCiAgICAgICAgIGlkPSJwYXRoMjAiCiAgICAgICAgIHNvZGlwb2RpOm5vZGV0eXBlcz0iY3NjY2NjY2NjY2NjYyIgLz4KICAgIDwvZz4KICAgIDwhLS0gSW5uZXIgU3ByaXRlIENvcmUgLyBHbG93aW5nIEhlYXJ0aCBGbGFtZSBpbnNpZGUgdGhlICdPJyB3aXRoIEtleWhvbGUgQ3V0LW91dCAtLT4KICAgIDxwYXRoCiAgICAgICBkPSJtIDM1MCwxNjAgYyAtMTUsMjUgLTI1LDQwIC0yNSw1NSAwLDE1IDExLDI3IDI1LDI3IDE0LDAgMjUsLTEyIDI1LC0yNyAwLC0xNSAtMTAsLTMwIC0yNSwtNTUgeiBtIC0yLjUsNDkuMzMgYSA1LDUgMCAxIDEgNSwwIEwgMzU1LDIyMSBoIC0xMCB6IgogICAgICAgZmlsbD0idXJsKCN3YXJtR2xvdykiCiAgICAgICBmaWx0ZXI9ImRyb3Atc2hhZG93KDAgMCAxMnB4IHJnYmEoMjU1LCAyMzAsIDE5MiwgMC44KSkiCiAgICAgICBpZD0icGF0aDIxIgogICAgICAgc3R5bGU9ImZpbGw6dXJsKCN3YXJtR2xvdykiIC8+CiAgICA8IS0tIEZhaW50IHNwYXJrIGZsb2F0aW5nIGluc2lkZSB0aGUgJ08nIGFib3ZlIHRoZSBmbGFtZSAtLT4KICAgIDxjaXJjbGUKICAgICAgIGN4PSIzNTAiCiAgICAgICBjeT0iMTUwIgogICAgICAgcj0iNCIKICAgICAgIGZpbGw9IiNmZmU2YzAiCiAgICAgICBvcGFjaXR5PSIwLjgiCiAgICAgICBpZD0iY2lyY2xlMjEiIC8+CiAgICA8IS0tID09PT09PT09PT09PT09PT09IExFVFRFUiBCIChTZXJhICYgTm90dGUpID09PT09PT09PT09PT09PT09IC0tPgogICAgPHBhdGgKICAgICAgIGQ9Im0gNTIwLDEyMCB2IDE2MCBjIDQ1LDAgNzAsLTE1IDcwLC00MCAwLC0xNSAtMTIsLTI1IC00MCwtMjUgMjgsMCAzNiwtMTAgMzYsLTI1IDAsLTIwIC0yMSwtNzAgLTY2LC03MCB6IgogICAgICAgc3Ryb2tlPSJ1cmwoI2dyYWRpZW50QikiCiAgICAgICBzdHJva2Utd2lkdGg9IjI2IgogICAgICAgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIKICAgICAgIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIKICAgICAgIGZpbGw9Im5vbmUiCiAgICAgICBpZD0icGF0aDIyIgogICAgICAgc3R5bGU9InN0cm9rZTp1cmwoI2dyYWRpZW50QikiIC8+CiAgICA8IS0tIEZ1bGwgTW9vbiAoTHVuYSBQaWVuYSAtIFNlbWljZXJjaGlvKSAtIFNoaWZ0ZWQgaW53YXJkIHRvIGZpdCBleGFjdGx5IG9uIHRoZSBvdXRlciBib3VuZGFyeSBjdXJ2ZSBvZiBCIC0tPgogICAgPCEtLSBQb3NpdGlvbmVkIGF0IHg9NTc4LCB5PTI0NCBhbmQgcm90YXRlZCAtNDUgZGVncmVlcyB0byBtYXRjaCB0aGUgdGFuZ2VudCBvZiB0aGUgQiBjdXJ2ZSBhdCB0aGF0IHBvaW50IC0tPgogICAgPGcKICAgICAgIHRyYW5zZm9ybT0icm90YXRlKC00OS42NzgzOTksNTg1LjU2ODY3LC01MDQuNDc2NzIpIgogICAgICAgaWQ9ImcyMyI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Im0gLTEwLjk0NzYwMywwLjE0MjYwMjc3IGMgMC4wMDE5LC02LjQ5NzgwMjg3IDUuMjY5OTMxOSwtMTEuNzY0Mjk1NzcgMTEuNzY3NzMwNSwtMTEuNzY0Mjk1NzcgNi40OTc3OTg2LDAgMTEuNzU3NDIzNSw0Ljk3NjUyNDggMTEuNzU5MzE3NSwxMS40NzQzMjc2MiBMIDYuMjk0Mjc4MSwxLjAyNTEyNiAxLjA2NDIxMTgsMS40ODA0MDczIC00LjEwNTI3MTMsMS4yMzY5OTc2IC03LjQ0MDM5NzUsMC43OTMwODcyMiBaIgogICAgICAgICBmaWxsPSIjZmZmZmZmIgogICAgICAgICBmaWx0ZXI9ImRyb3Atc2hhZG93KDAgMCA0cHggcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjkpKSIKICAgICAgICAgaWQ9InBhdGgyMyIKICAgICAgICAgc3R5bGU9InN0cm9rZS13aWR0aDoxLjQ3MDk3IgogICAgICAgICBzb2RpcG9kaTpub2RldHlwZXM9ImNzY2NjY2NjIiAvPgogICAgPC9nPgogICAgPCEtLSA9PT09PT09PT09PT09PT09PSBJTlRFR1JBVEVEIE5JR0hUIFNUQVJTIChIdWdnaW5nL0luc2lkZSB0aGUgbGV0dGVyIHN0cm9rZXMpID09PT09PT09PT09PT09PT09IC0tPgogICAgPHVzZQogICAgICAgaHJlZj0iI3N0YXIiCiAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjgsMCwwLDAuOCwxMjAsMTIwKSIKICAgICAgIGNsYXNzPSJzdGFyLW9kZCIgaWQ9InVzZTIzIiAvPgogICAgPCEtLSBDYXBwaW5nIHRoZSB0b3AtbGVmdCB0aXAgb2YgSCAtLT4KICAgIDx1c2UKICAgICAgIGhyZWY9IiNzdGFyIgogICAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMC42LDAsMCwwLjYsMTIwLDE2MCkiCiAgICAgICBjbGFzcz0ic3Rhci1ldmVuIiBpZD0idXNlMjQiIC8+CiAgICA8IS0tIEVtYmVkZGVkIGRpcmVjdGx5IG9uIHRoZSBsZWZ0IHZlcnRpY2FsIHN0cm9rZSAtLT4KICAgIDx1c2UKICAgICAgIGhyZWY9IiNzdGFyIgogICAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMC41LDAsMCwwLjUsMTQyLDE3NSkiCiAgICAgICBjbGFzcz0ic3Rhci1vZGQiIGlkPSJ1c2UyNSIgLz4KICAgIDwhLS0gTmVzdGxlZCBpbnNpZGUgdGhlIHRvcC1sZWZ0IGlubmVyIGpvaW50IG9mIEggLS0+CiAgICA8dXNlCiAgICAgICBocmVmPSIjc3RhciIKICAgICAgIHRyYW5zZm9ybT0ibWF0cml4KDAuNSwwLDAsMC41LDk3LDEzMCkiCiAgICAgICBjbGFzcz0ic3Rhci1ldmVuIiBpZD0idXNlMjYiIC8+CiAgICA8IS0tIEh1Z2dpbmcgdGhlIG91dGVyIGxlZnQgZWRnZSBvZiBIIG5lYXIgdGhlIHRvcCAtLT4KICAgIDwhLS0gU3RhcnMgaW50ZWdyYXRlZCBvbi9pbnNpZGUvYXJvdW5kIHRoZSBCIChTZXJhIC8gTm90dGUpIC0tPgogICAgPHVzZQogICAgICAgaHJlZj0iI3N0YXIiCiAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjcsMCwwLDAuNyw1MjAsMTIwKSIKICAgICAgIGNsYXNzPSJzdGFyLW9kZCIgaWQ9InVzZTI3IiAvPgogICAgPCEtLSBDYXBwaW5nIHRoZSB0b3AtbGVmdCB0aXAgb2YgQiAtLT4KICAgIDx1c2UKICAgICAgIGhyZWY9IiNzdGFyIgogICAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMC44LDAsMCwwLjgsNTQ4LDE3MCkiCiAgICAgICBjbGFzcz0ic3Rhci1ldmVuIiBpZD0idXNlMjgiIC8+CiAgICA8IS0tIE5lc3RsZWQgSU5TSURFIHRoZSB0b3AgbG9vcCBjb3VudGVyIG9mIEIgLS0+CiAgICA8dXNlCiAgICAgICBocmVmPSIjc3RhciIKICAgICAgIHRyYW5zZm9ybT0ibWF0cml4KDAuNSwwLDAsMC41LDU5NSwxNDApIgogICAgICAgY2xhc3M9InN0YXItb2RkIiBpZD0idXNlMjkiIC8+CiAgICA8IS0tIEh1Z2dpbmcgdGhlIHRvcCBvdXRlciBjdXJ2ZSBvZiBCIC0tPgogICAgPHVzZQogICAgICAgaHJlZj0iI3N0YXIiCiAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjYsMCwwLDAuNiw2MDIsMjQwKSIKICAgICAgIGNsYXNzPSJzdGFyLWV2ZW4iIGlkPSJ1c2UzMCIgLz4KICAgIDwhLS0gSHVnZ2luZyB0aGUgbWlkZGxlIG91dGVyIGluZGVudGF0aW9uIG9mIEIgLS0+CiAgICA8dXNlCiAgICAgICBocmVmPSIjc3RhciIKICAgICAgIHRyYW5zZm9ybT0ibWF0cml4KDAuNywwLDAsMC43LDU3NSwyNjApIgogICAgICAgY2xhc3M9InN0YXItb2RkIiBpZD0idXNlMzEiIC8+CiAgICA8IS0tIEVtYmVkZGVkIGRpcmVjdGx5IG9uIHRoZSBib3R0b20gc3Ryb2tlIG9mIEIgLS0+CiAgPC9nPgo8L3N2Zz4K");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  /* Add drop shadow to outline the dark B letter and make it pop */
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15)) drop-shadow(0 1px 2px rgba(255, 255, 255, 0.05));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover: glow-only, NO scale (scale triggers on the whole sidebar panel) */
+.workspace-leaf-content[data-type="file-explorer"]:hover::before,
+.workspace-leaf-content[data-type="mk-path-view"]:hover::before {
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.28)) drop-shadow(0 1px 4px rgba(255, 255, 255, 0.12));
+}
+\n
+/* ==============================================================================
+   PART 4: GOOGLE-STYLE SEARCH BAR (home-search.css)
+   ============================================================================= */
+
+.block-language-search-bar {
+  max-width: 1400px;
+  margin: 0.5rem auto 1.5rem;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+/* strip any wrapper box around the block (theme / embed background) */
+.block-language-search-bar > div,
+.block-language-search-bar .home-tab-searchbar-container {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-height: 0 !important;
+}
+
+/* when embedded inside the greeting banner: full width, no extra margins
+   (only the inner block — NOT the slot, whose margin controls the spacing) */
+.home-banner-search .block-language-search-bar {
+  max-width: none !important;
+  margin: 0 !important;
+  width: 100%;
+}
+.home-banner-search { width: 100%; }
+
+/* container fills the page width */
+.block-language-search-bar .home-tab-searchbar-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* the bar: full pill, soft shadow, lifts on hover/focus */
+.block-language-search-bar .home-tab-searchbar {
+  position: relative !important;
+  width: 100% !important;
+  max-width: min(1400px, 92vw) !important;
+  margin: 0 auto !important;
+  box-sizing: border-box;
+  border-radius: 999px !important;
+  background: var(--background-primary) !important;
+  border: 1px solid var(--background-modifier-border) !important;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12) !important;
+  padding: 0 1.3rem 0 3.4rem !important;        /* room for the magnifier */
+  height: 88px !important;                        /* +25% taller */
+  min-height: 88px !important;
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.block-language-search-bar .home-tab-searchbar:hover,
+.block-language-search-bar .home-tab-searchbar:focus-within {
+  border-color: transparent !important;
+  box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.22) !important;
+}
+
+/* magnifier icon (left) */
+.block-language-search-bar .home-tab-searchbar::before {
+  content: "";
+  position: absolute;
+  left: 1.15rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background-color: var(--text-muted);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center / contain;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center / contain;
+  pointer-events: none;
+}
+
+/* input: blend into the pill */
+.block-language-search-bar .home-tab-searchbar input {
+  width: 100% !important;
+  height: 88px !important;
+  line-height: 88px !important;          /* = bar height → vertically centered */
+  align-self: center !important;
+  border: none !important;
+  background: transparent !important;
+  font-family: var(--font-interface) !important;
+  font-size: 1.5rem !important;
+  padding: 0 !important;
+  color: var(--text-normal) !important;
+}
+.block-language-search-bar .home-tab-searchbar input:focus {
+  box-shadow: none !important;
+}
+
+/* hide native placeholder, show our own custom text when empty */
+.block-language-search-bar .home-tab-searchbar input::placeholder {
+  color: transparent !important;
+}
+.block-language-search-bar .home-tab-searchbar:has(input:placeholder-shown)::after {
+  content: "what are you looking for?";
+  position: absolute;
+  left: 3.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-faint);
+  font-size: 1.5rem;
+  pointer-events: none;
+}
+
+/* ===== home-tab dropdown — REAL classes (.home-tab-suggestion-*) ===== */
+
+/* container: remove the plugin's 700px cap → as wide as the bar, centered */
+.home-tab-suggestion-container {
+  width: 90% !important;
+  min-width: 0 !important;
+  max-width: min(1400px, 92vw) !important;
+  margin: 0 auto !important;
+  border-radius: 0 0 16px 16px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22) !important;
+}
+
+/* row spacing + size */
+.home-tab-suggestion-container .suggestion-item {
+  padding: 0.55rem 1rem !important;
+}
+/* title side gets the room; never break mid-word, ellipsis if too long */
+.home-tab-suggestion-container .suggestion {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+.home-tab-suggestion-title {
+  display: block !important;
+  word-break: normal !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 1.1rem !important;
+}
+/* path: capped width on the right, ellipsis, doesn't squeeze the title */
+.home-tab-suggestion-filepath {
+  flex: 0 1 34% !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 0.9rem !important;
+}
+.home-tab-suggestion-filepath .home-tab-file-path {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* bottom hints — larger */
+.home-tab-hotkey-suggestions .prompt-instruction,
+.home-tab-hotkey-suggestions .prompt-instruction-command {
+  font-size: 0.9rem !important;
+}
+
+/* ===== search bar when embedded in the greeting banner: frosted glass ===== */
+/* Override the CSS variable the plugin uses so it picks up our warm color */
+.home-banner-search {
+  --background-modifier-form-field: var(--vault-glass-card);
+}
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q.svelte-1v6c0q,
+.home-banner-search .home-tab-searchbar.embedded.svelte-1v6c0q.svelte-1v6c0q {
+  background: var(--vault-glass-card) !important;
+  background-color: var(--vault-glass-card) !important;
+  border: 1px solid var(--vault-glass-border) !important;
+  box-shadow: none !important;
+  backdrop-filter: var(--vault-blur);
+}
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q.svelte-1v6c0q:hover,
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q.svelte-1v6c0q:focus-within {
+  background: var(--vault-glass-strong) !important;
+  background-color: var(--vault-glass-strong) !important;
+  border-color: var(--background-modifier-border-hover) !important;
+  box-shadow: 0 0 0 3px rgba(var(--vault-glass-rgb), 0.22) !important;
+}
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q input.svelte-1v6c0q {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-normal) !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q:hover input.svelte-1v6c0q,
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q:focus-within input.svelte-1v6c0q {
+  background: transparent !important;
+  background-color: transparent !important;
+  mix-blend-mode: normal;
+}
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q .home-tab-suggestion-file-tag,
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q .nav-file-tag {
+  display: none !important;
+}
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q::before {       /* magnifier */
+  background-color: var(--text-muted) !important;
+}
+.home-banner-search .home-tab-searchbar.svelte-1v6c0q:has(input:placeholder-shown)::after {
+  color: var(--text-faint) !important;            /* placeholder text */
+}
+
+/* folders in search results have no extension → hide the empty type tag */
+.home-tab-suggestion-file-tag:empty { display: none !important; }
+\n
+/* ==============================================================================
+   PART 5: CUSTOM PREMIUM LOADING SCREEN (HOB Glass Philosophy)
+   ============================================================================== */
+
+/* Loading screen overlay background */
+body:has(> .app-container > .progress-bar),
+body:has(> .progress-bar),
+body:has(.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *)) {
+  background: transparent !important;
+}
+
+body > .app-container > .progress-bar,
+body > .progress-bar,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *) {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999999 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  /* Obsidian's default padding (8px) + content-box sizing made the bar 100vw+16px wide,
+     shifting every centered child 8px off the true viewport centre */
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  border: none !important;
+  border-width: 0px !important;
+  outline: none !important;
+  box-shadow: none !important;
+  /* Massive vertical sky time-lapse gradient covering dawn, day, sunset, dusk, night, and back to dawn.
+     Uses background-image (NOT the `background` shorthand): the shorthand would implicitly reset
+     background-position with !important, and author !important declarations override @keyframes
+     in the cascade — which is exactly what kept the sky frozen at dawn. background-position must
+     stay un-!important so skyTimeLapse is allowed to animate it. */
+  background-color: #4b4e8c !important;
+  background-image: linear-gradient(to bottom,
+    #4b4e8c 0%,     /* Dawn violet      (sun rises,   cycle ~0%)  */
+    #d98a7b 3.5%,   /* Dawn rose                                  */
+    #ffb88c 8%,     /* Dawn peach                                 */
+    #6ba1d8 20%,    /* Morning blue     (cycle ~18%)              */
+    #a8cff3 33%,    /* Day light blue   (sun zenith, cycle ~32%)  */
+    #8fc3ee 44%,    /* Day blue                                   */
+    #e8a87c 54%,    /* Golden hour      (cycle ~54%)              */
+    #b76e63 62%,    /* Sunset terracotta (sun sets,  cycle ~63%)  */
+    #5d4a78 71%,    /* Dusk purple                                */
+    #2c3e50 77%,    /* Deep dusk slate                            */
+    #0b1026 84%,    /* Night            (moon high,  cycle ~87%)  */
+    #131a3d 90%,    /* Late night indigo                          */
+    #4b4e8c 92.86%, /* Pre-dawn violet — last 1/14 of the canvas  */
+    #d98a7b 96.36%, /* mirrors the first 1/14 so the loop from    */
+    #f9ad88 100%    /* 100% back to 0% is seamless                */
+  ) !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 1400% !important;
+  background-position: center 0%; /* animated below — must NOT be !important */
+  animation: skyTimeLapse 4s linear infinite !important; /* one full day every 4s, in sync with celestialArc */
+}
+
+@keyframes skyTimeLapse {
+  0% { background-position: center 0%; }
+  100% { background-position: center 100%; }
+}
+
+/* Twinkling starfield in the background layer - attached to message::after (no transform) */
+body > .app-container > .progress-bar .progress-bar-message::after,
+body > .progress-bar .progress-bar-message::after,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *) .progress-bar-message::after {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background: transparent !important;
+  box-shadow: 
+    15vw 12vh 1px #fff, 28vw 8vh 1.5px rgba(255,255,255,0.75), 8vw 45vh 1px rgba(255,255,255,0.8),
+    18vw 72vh 2px #fff, 38vw 64vh 1px rgba(255,255,255,0.9), 42vw 25vh 1px #fff,
+    55vw 12vh 2.5px rgba(255,255,255,0.95), 68vw 48vh 1px #fff, 78vw 18vh 1.5px rgba(255,255,255,0.8),
+    88vw 32vh 2px #fff, 92vw 65vh 1px rgba(255,255,255,0.7), 85vw 85vh 1.5px #fff,
+    12vw 88vh 1px rgba(255,255,255,0.8), 50vw 82vh 2px #fff, 62vw 88vh 1px #fff,
+    74vw 75vh 1.5px rgba(255,255,255,0.9), 30vw 92vh 1px #fff, 40vw 5vh 1px rgba(255,255,255,0.6),
+    60vw 30vh 1.5px #fff, 82vw 52vh 2px rgba(255,255,255,0.85) !important;
+  animation: starsNightCycle 4s linear infinite !important; /* same 4s clock as the sky and the sun/moon */
+}
+
+/* Stars live on the day/night clock: invisible at noon, blazing and twinkling at night */
+@keyframes starsNightCycle {
+  0%   { opacity: 0.35; }  /* pre-dawn remnant */
+  8%   { opacity: 0.12; }
+  30%  { opacity: 0.04; }  /* full day — stars gone */
+  55%  { opacity: 0.08; }
+  68%  { opacity: 0.30; }  /* dusk — first stars */
+  76%  { opacity: 0.70; }
+  82%  { opacity: 0.95; }  /* night */
+  86%  { opacity: 0.55; }  /* twinkle dip */
+  91%  { opacity: 0.95; }
+  96%  { opacity: 0.55; }
+  100% { opacity: 0.35; }
+}
+
+/* Glowing Celestial Body (Sun / Moon) arcing across the sky - attached to message::before (no transform) */
+body > .app-container > .progress-bar .progress-bar-message::before,
+body > .progress-bar .progress-bar-message::before,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *) .progress-bar-message::before {
+  content: "" !important;
+  position: fixed !important;
+  width: 90px !important;
+  height: 90px !important;
+  border-radius: 50% !important;
+  z-index: 1 !important; /* behind the glass card (z-index 2) so it blurs as it passes */
+  pointer-events: none !important;
+  animation: celestialArc 4s linear infinite !important; /* Speed doubled to 4s */
+}
+
+/* Every keyframe declares left/top/opacity/transform explicitly so no segment falls back to the
+   un-animated base value mid-flight. The moon window is deliberately wide (77% → 99% ≈ 0.9s per
+   cycle) so it is actually catchable during a real startup. */
+@keyframes celestialArc {
+  /* ALBA / DAWN — sun climbs out of the horizon */
+  0% {
+    left: -8vw;
+    top: 26vh;
+    opacity: 0;
+    transform: scale(1);
+    background: radial-gradient(circle at 35% 35%, #ffe6c0, #ff9e6d);
+    box-shadow: 0 0 60px 15px rgba(255, 158, 109, 0.7);
+  }
+  5% {
+    left: 0vw;
+    top: 22vh;
+    opacity: 1;
+    transform: scale(1);
+    background: radial-gradient(circle at 35% 35%, #ffe6c0, #ff9e6d);
+    box-shadow: 0 0 60px 15px rgba(255, 158, 109, 0.7);
+  }
+  15% {
+    left: 14vw;
+    top: 11vh;
+    opacity: 1;
+    transform: scale(1);
+    background: radial-gradient(circle at 35% 35%, #ffe6c0, #ff9e6d);
+    box-shadow: 0 0 60px 15px rgba(255, 158, 109, 0.7);
+  }
+  /* GIORNO / DAY — white-hot zenith */
+  30% {
+    left: 29vw;
+    top: 5vh;
+    opacity: 1;
+    transform: scale(1);
+    background: radial-gradient(circle at 35% 35%, #ffffff, #ffd24d);
+    box-shadow: 0 0 80px 25px rgba(255, 210, 77, 0.85);
+  }
+  46% {
+    left: 44vw;
+    top: 4vh;
+    opacity: 1;
+    transform: scale(1);
+    background: radial-gradient(circle at 35% 35%, #ffffff, #ffd24d);
+    box-shadow: 0 0 80px 25px rgba(255, 210, 77, 0.85);
+  }
+  /* TRAMONTO / SUNSET — sun reddens and sinks */
+  58% {
+    left: 56vw;
+    top: 7vh;
+    opacity: 1;
+    transform: scale(1);
+    background: radial-gradient(circle at 35% 35%, #e7c39e, #c98a6e);
+    box-shadow: 0 0 70px 20px rgba(201, 138, 110, 0.75);
+  }
+  67% {
+    left: 63vw;
+    top: 13vh;
+    opacity: 1;
+    transform: scale(0.9);
+    background: radial-gradient(circle at 35% 35%, #e7c39e, #c98a6e);
+    box-shadow: 0 0 70px 20px rgba(201, 138, 110, 0.75);
+  }
+  /* CREPUSCOLO / DUSK — sun gone, moon takes the same arc */
+  72% {
+    left: 67vw;
+    top: 19vh;
+    opacity: 0;
+    transform: scale(0.7);
+    background: radial-gradient(circle at 35% 35%, #e7c39e, #c98a6e);
+    box-shadow: 0 0 60px 15px rgba(201, 138, 110, 0.5);
+  }
+  75% {
+    left: 71vw;
+    top: 21vh;
+    opacity: 0;
+    transform: scale(0.8);
+    background: radial-gradient(circle at 35% 35%, #ffffff, #dbe4ff);
+    box-shadow: 0 0 70px 18px rgba(208, 220, 255, 0.75);
+  }
+  /* NOTTE / NIGHT — bright moon, wide visibility window */
+  80% {
+    left: 75vw;
+    top: 13vh;
+    opacity: 1;
+    transform: scale(0.92);
+    background: radial-gradient(circle at 35% 35%, #ffffff, #dbe4ff);
+    box-shadow: 0 0 70px 18px rgba(208, 220, 255, 0.8);
+  }
+  89% {
+    left: 83vw;
+    top: 5vh;
+    opacity: 1;
+    transform: scale(0.92);
+    background: radial-gradient(circle at 35% 35%, #ffffff, #dbe4ff);
+    box-shadow: 0 0 70px 18px rgba(208, 220, 255, 0.8);
+  }
+  97% {
+    left: 91vw;
+    top: 5vh;
+    opacity: 1;
+    transform: scale(0.92);
+    background: radial-gradient(circle at 35% 35%, #ffffff, #dbe4ff);
+    box-shadow: 0 0 70px 18px rgba(208, 220, 255, 0.8);
+  }
+  100% {
+    left: 96vw;
+    top: 8vh;
+    opacity: 0;
+    transform: scale(0.92);
+    background: radial-gradient(circle at 35% 35%, #ffffff, #dbe4ff);
+    box-shadow: 0 0 70px 18px rgba(208, 220, 255, 0.7);
+  }
+}
+
+/* Frosted glass card in the center */
+body > .app-container > .progress-bar::before,
+body > .progress-bar::before,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *)::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(450px, 90vw) !important;
+  height: 280px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: none !important;
+  border-width: 0px !important;
+  outline: none !important;
+  outline-width: 0px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45) !important;
+  -webkit-backdrop-filter: blur(35px) saturate(1.4) !important;
+  backdrop-filter: blur(35px) saturate(1.4) !important;
+  z-index: 2 !important; /* in front of the sun to blur it as it passes */
+  border-radius: 16px !important; /* Elegant rounded corners */
+}
+
+/* Embed the HOB logo into the card */
+body > .app-container > .progress-bar::after,
+body > .progress-bar::after,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *)::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -90px) !important;
+  width: 250px !important;
+  height: 96px !important;
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgdmlld0JveD0iMCAwIDUxMiAxOTAiCiAgIHdpZHRoPSI1MTIiCiAgIGhlaWdodD0iMTkwIgogICB2ZXJzaW9uPSIxLjEiCiAgIGlkPSJzdmczMSIKICAgc29kaXBvZGk6ZG9jbmFtZT0iaG9iLWljb24tZnVsbC5zdmciCiAgIGlua3NjYXBlOnZlcnNpb249IjEuNCAoZTdjM2ZlYjEsIDIwMjQtMTAtMDkpIgogICB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIKICAgeG1sbnM6c29kaXBvZGk9Imh0dHA6Ly9zb2RpcG9kaS5zb3VyY2Vmb3JnZS5uZXQvRFREL3NvZGlwb2RpLTAuZHRkIgogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxzb2RpcG9kaTpuYW1lZHZpZXcKICAgICBpZD0ibmFtZWR2aWV3MzEiCiAgICAgcGFnZWNvbG9yPSIjZmZmZmZmIgogICAgIGJvcmRlcmNvbG9yPSIjNjY2NjY2IgogICAgIGJvcmRlcm9wYWNpdHk9IjEuMCIKICAgICBpbmtzY2FwZTpzaG93cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMC4wIgogICAgIGlua3NjYXBlOnBhZ2VjaGVja2VyYm9hcmQ9IjAiCiAgICAgaW5rc2NhcGU6ZGVza2NvbG9yPSIjZDFkMWQxIgogICAgIGlua3NjYXBlOnpvb209IjAuNjIwMTcwMDUiCiAgICAgaW5rc2NhcGU6Y3g9IjMzNy4wMDQzNCIKICAgICBpbmtzY2FwZTpjeT0iNTI0LjA0OTgxIgogICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMTgwMCIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSI5NjUiCiAgICAgaW5rc2NhcGU6d2luZG93LXg9IjEyMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iMzEiCiAgICAgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMCIKICAgICBpbmtzY2FwZTpjdXJyZW50LWxheWVyPSJzdmczMSIgLz4KICA8ZGVmcwogICAgIGlkPSJkZWZzMTUiPgogIDxzdHlsZT4KICAgIEBrZXlmcmFtZXMgdHdpbmtsZS1vZGQgewogICAgICAwJSwgMTAwJSB7IG9wYWNpdHk6IDAuMjU7IH0KICAgICAgNTAlIHsgb3BhY2l0eTogMTsgZmlsdGVyOiBkcm9wLXNoYWRvdygwIDAgM3B4ICNmZmZmZmYpOyB9CiAgICB9CiAgICBAa2V5ZnJhbWVzIHR3aW5rbGUtZXZlbiB7CiAgICAgIDAlLCAxMDAlIHsgb3BhY2l0eTogMTsgZmlsdGVyOiBkcm9wLXNoYWRvdygwIDAgM3B4ICNmZmZmZmYpOyB9CiAgICAgIDUwJSB7IG9wYWNpdHk6IDAuMjU7IH0KICAgIH0KICAgIEBrZXlmcmFtZXMgZmxhbWUtZ2xvdyB7CiAgICAgIDAlLCAxMDAlIHsgb3BhY2l0eTogMC44OyBmaWx0ZXI6IGRyb3Atc2hhZG93KDAgMCA4cHggcmdiYSgyNTUsIDIzMCwgMTkyLCAwLjYpKTsgfQogICAgICA1MCUgeyBvcGFjaXR5OiAxOyBmaWx0ZXI6IGRyb3Atc2hhZG93KDAgMCAxNnB4IHJnYmEoMjU1LCAyMzAsIDE5MiwgMC45NSkpOyB9CiAgICB9CiAgICAuc3Rhci1vZGQgewogICAgICBhbmltYXRpb246IHR3aW5rbGUtb2RkIDIuMnMgaW5maW5pdGUgZWFzZS1pbi1vdXQ7CiAgICB9CiAgICAuc3Rhci1ldmVuIHsKICAgICAgYW5pbWF0aW9uOiB0d2lua2xlLWV2ZW4gMi44cyBpbmZpbml0ZSBlYXNlLWluLW91dDsKICAgIH0KICAgICNwYXRoMjEgewogICAgICBhbmltYXRpb246IGZsYW1lLWdsb3cgMy41cyBpbmZpbml0ZSBlYXNlLWluLW91dDsKICAgIH0KICA8L3N0eWxlPgoKICAgIDwhLS0gMS4gR3JhZGllbnQgZm9yIEg6IEVhcmx5IE1vcm5pbmcgJiBIaW50IG9mIERheSAoQWxiYS9NYXR0aW5hIC0+IEFjY2Vubm8gR2lvcm5vKSAtLT4KICAgIDxsaW5lYXJHcmFkaWVudAogICAgICAgaWQ9ImdyYWRpZW50SCIKICAgICAgIHgxPSIxNTcuMzU4OCIKICAgICAgIHkxPSI3Mi43NTcyOTQiCiAgICAgICB4Mj0iMjgzLjgzNDA4IgogICAgICAgeTI9IjE5OS4yMzI1OSIKICAgICAgIGdyYWRpZW50VHJhbnNmb3JtPSJzY2FsZSgwLjY3OTk3NDcsMS40NzA2NDMpIgogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjNGI0ZThjIgogICAgICAgICBpZD0ic3RvcDEiIC8+CiAgICAgIDwhLS0gQWxiYSBQdXJwbGUgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iNTAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjZmZiODhjIgogICAgICAgICBpZD0ic3RvcDIiIC8+CiAgICAgIDwhLS0gRWFybHkgTW9ybmluZyBQZWFjaCAtLT4KICAgICAgPHN0b3AKICAgICAgICAgb2Zmc2V0PSIxMDAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjNmJhMWQ4IgogICAgICAgICBpZD0ic3RvcDMiIC8+CiAgICAgIDwhLS0gQWNjZW5ubyBkaSBHaW9ybm8gU2t5IEJsdWUgLS0+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPCEtLSAyLiBHcmFkaWVudCBmb3IgTzogRnVsbCBEYXkgJiBTdW5zZXQgKEdpb3JubyAtPiBUcmFtb250bykgLS0+CiAgICA8bGluZWFyR3JhZGllbnQKICAgICAgIGlkPSJncmFkaWVudE8iCiAgICAgICB4MT0iMjYyIgogICAgICAgeTE9IjExMiIKICAgICAgIHgyPSI0MzgiCiAgICAgICB5Mj0iMjg4IgogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjNmJhMWQ4IgogICAgICAgICBpZD0ic3RvcDQiIC8+CiAgICAgIDwhLS0gU2t5IEJsdWUgKEdpb3JubykgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iMzAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjYThjZmYzIgogICAgICAgICBpZD0ic3RvcDUiIC8+CiAgICAgIDwhLS0gU29mdCBCbHVlIC0tPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjcwJSIKICAgICAgICAgc3RvcC1jb2xvcj0iI2NmOWE3ZCIKICAgICAgICAgaWQ9InN0b3A2IiAvPgogICAgICA8IS0tIFN1bnNldCBHb2xkIC0tPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjEwMCUiCiAgICAgICAgIHN0b3AtY29sb3I9IiNiNzZlNjMiCiAgICAgICAgIGlkPSJzdG9wNyIgLz4KICAgICAgPCEtLSBTdW5zZXQgVGVycmFjb3R0YSAtLT4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8IS0tIDMuIEdyYWRpZW50IGZvciBCOiBEdXNrICYgTmlnaHQgKFNlcmEgLT4gTm90dGUpIC0tPgogICAgPGxpbmVhckdyYWRpZW50CiAgICAgICBpZD0iZ3JhZGllbnRCIgogICAgICAgeDE9IjcwNS43MTQxMSIKICAgICAgIHkxPSI3Ni44NzEwNzEiCiAgICAgICB4Mj0iODM5LjM0MDQ1IgogICAgICAgeTI9IjIxMC40OTc0MSIKICAgICAgIGdyYWRpZW50VHJhbnNmb3JtPSJzY2FsZSgwLjcxODQyMTIxLDEuMzkxOTQxMSkiCiAgICAgICBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iMCUiCiAgICAgICAgIHN0b3AtY29sb3I9IiNjZjlhN2QiCiAgICAgICAgIGlkPSJzdG9wOCIgLz4KICAgICAgPCEtLSBTdW5zZXQgR29sZCAoQWNjZW5ubyBkaSBUcmFtb250bykgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iMTIlIgogICAgICAgICBzdG9wLWNvbG9yPSIjYjc2ZTYzIgogICAgICAgICBpZD0ic3RvcFN1bnNldDIiIC8+CiAgICAgIDwhLS0gU3Vuc2V0IFRlcnJhY290dGEgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iMjglIgogICAgICAgICBzdG9wLWNvbG9yPSIjNWQ0YTc4IgogICAgICAgICBpZD0ic3RvcDkiIC8+CiAgICAgIDwhLS0gV2FybSBEdXNrIFB1cnBsZSAoU2VyYSkgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iNDIlIgogICAgICAgICBzdG9wLWNvbG9yPSIjNGEzYTZiIgogICAgICAgICBpZD0ic3RvcER1c2syIiAvPgogICAgICA8IS0tIERlZXAgRHVzayBQdXJwbGUgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iNTAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjMmUzNTc1IgogICAgICAgICBpZD0ic3RvcDEwIiAvPgogICAgICA8IS0tIFR3aWxpZ2h0IEluZGlnby9OYXZ5IChOaWdodCBzdGFydHMgaGVyZSkgLS0+CiAgICAgIDxzdG9wCiAgICAgICAgIG9mZnNldD0iNzUlIgogICAgICAgICBzdG9wLWNvbG9yPSIjMWYyNDUyIgogICAgICAgICBpZD0ic3RvcDExIiAvPgogICAgICA8IS0tIE5pZ2h0IE9ic2lkaWFuIE5hdnkgKE5vdHRlKSAtLT4KICAgICAgPHN0b3AKICAgICAgICAgb2Zmc2V0PSIxMDAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjMTkxZDQ0IgogICAgICAgICBpZD0ic3RvcE5pZ2h0RW5kIiAvPgogICAgICA8IS0tIERlZXAgTmlnaHQgT2JzaWRpYW4gTmF2eSAtLT4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8IS0tIFdhcm0gRmlyZSBHbG93IGZvciB0aGUgaW5uZXIgc3ByaXRlIGNvcmUgLS0+CiAgICA8bGluZWFyR3JhZGllbnQKICAgICAgIGlkPSJ3YXJtR2xvdyIKICAgICAgIHgxPSI0MTYuMjAzMDkiCiAgICAgICB5MT0iMTg4Ljk3MDI1IgogICAgICAgeDI9IjQxNi4yMDMwOSIKICAgICAgIHkyPSIxMjQuOTM5MDEiCiAgICAgICBncmFkaWVudFRyYW5zZm9ybT0ic2NhbGUoMC43ODA4Njg4MSwxLjI4MDYyNDgpIgogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjAlIgogICAgICAgICBzdG9wLWNvbG9yPSIjY2Y5YTdkIgogICAgICAgICBpZD0ic3RvcDEyIiAvPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjEwMCUiCiAgICAgICAgIHN0b3AtY29sb3I9IiNmZmU2YzAiCiAgICAgICAgIGlkPSJzdG9wMTMiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPCEtLSBHbGFzcyBGcm9zdCBPdmVybGF5IGZvciB0aGUgZWFycyBhbmQgaG9vZCAtLT4KICAgIDxsaW5lYXJHcmFkaWVudAogICAgICAgaWQ9ImdsYXNzT3ZlcmxheSIKICAgICAgIHgxPSIwIgogICAgICAgeTE9IjAiCiAgICAgICB4Mj0iMSIKICAgICAgIHkyPSIxIj4KICAgICAgPHN0b3AKICAgICAgICAgb2Zmc2V0PSIwJSIKICAgICAgICAgc3RvcC1jb2xvcj0iI2ZmZmZmZiIKICAgICAgICAgc3RvcC1vcGFjaXR5PSIwLjMyIgogICAgICAgICBpZD0ic3RvcDE0IiAvPgogICAgICA8c3RvcAogICAgICAgICBvZmZzZXQ9IjEwMCUiCiAgICAgICAgIHN0b3AtY29sb3I9IiNmZmZmZmYiCiAgICAgICAgIHN0b3Atb3BhY2l0eT0iMC4wOCIKICAgICAgICAgaWQ9InN0b3AxNSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8IS0tIEdsYXNzIEJsdXIgLS0+CiAgICA8ZmlsdGVyCiAgICAgICBpZD0iZ2xhc3NCbHVyIgogICAgICAgeD0iLTAuNDExNDI4NTciCiAgICAgICB5PSItMC4yMDU3MTQyOSIKICAgICAgIHdpZHRoPSIxLjgyMjg1NzEiCiAgICAgICBoZWlnaHQ9IjEuNDExNDI4NiI+CiAgICAgIDxmZUdhdXNzaWFuQmx1cgogICAgICAgICBzdGREZXZpYXRpb249IjYiCiAgICAgICAgIHJlc3VsdD0iYmx1ciIKICAgICAgICAgaWQ9ImZlR2F1c3NpYW5CbHVyMTUiIC8+CiAgICAgIDxmZUNvbXBvc2l0ZQogICAgICAgICBpbj0iU291cmNlR3JhcGhpYyIKICAgICAgICAgaW4yPSJibHVyIgogICAgICAgICBvcGVyYXRvcj0ib3ZlciIKICAgICAgICAgaWQ9ImZlQ29tcG9zaXRlMTUiIC8+CiAgICA8L2ZpbHRlcj4KICAgIDwhLS0gU3RhciBkZWZpbml0aW9uIGZvciB0aGUgbmlnaHQgc2lkZSAtLT4KICAgIDxnCiAgICAgICBpZD0ic3RhciI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwtNiAxLjUsLTEuNSA2LDAgMS41LDEuNSAwLDYgLTEuNSwxLjUgLTYsMCAtMS41LC0xLjUgWiIKICAgICAgICAgZmlsbD0iI2ZmZmZmZiIKICAgICAgICAgb3BhY2l0eT0iMC45NSIKICAgICAgICAgaWQ9InBhdGgxNSIgLz4KICAgIDwvZz4KICA8L2RlZnM+CiAgPGcKICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtOTMuNjcxNjQzLC0xMDQuNDI5ODkpIgogICAgIGlkPSJnMzEiPgogICAgPCEtLSA9PT09PT09PT09PT09PT09PSBMRVRURVIgSCAoTWF0dGluYSBQcmVzdG8gJiBBY2Nlbm5vIGRpIEdpb3JubykgPT09PT09PT09PT09PT09PT0gLS0+CiAgICA8cGF0aAogICAgICAgZD0ibSAxMjAsMTIwIHYgMTYwIG0gNjAsLTE2MCB2IDE2MCBtIC02MCwtODAgaCA2MCIKICAgICAgIHN0cm9rZT0idXJsKCNncmFkaWVudEgpIgogICAgICAgc3Ryb2tlLXdpZHRoPSIyNiIKICAgICAgIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIKICAgICAgIGZpbGw9Im5vbmUiCiAgICAgICBpZD0icGF0aDE2IgogICAgICAgc3R5bGU9InN0cm9rZTp1cmwoI2dyYWRpZW50SCkiIC8+CiAgICA8IS0tID09PT09PT09PT09PT09PT09IElOVEVHUkFURUQgTEVUVEVSIE8gKFRoZSBTcHJpdGU6IEdpb3JubyAmIFRyYW1vbnRvKSA9PT09PT09PT09PT09PT09PSAtLT4KICAgIDwhLS0gT3V0ZXIgJ08nIFJpbmcgLS0+CiAgICA8Y2lyY2xlCiAgICAgICBjeD0iMzUwIgogICAgICAgY3k9IjIwMCIKICAgICAgIHI9Ijc1IgogICAgICAgc3Ryb2tlPSJ1cmwoI2dyYWRpZW50TykiCiAgICAgICBzdHJva2Utd2lkdGg9IjI2IgogICAgICAgZmlsbD0ibm9uZSIKICAgICAgIGlkPSJjaXJjbGUxOSIKICAgICAgIHN0eWxlPSJzdHJva2U6dXJsKCNncmFkaWVudE8pIiAvPgogICAgPCEtLSBZZWxsb3cgU3VuIChTb2xlIE1lenpvIFRhZ2xpYXRvKSAtIFNoaWZ0ZWQgZXhhY3RseSB0byB0aGUgb3V0ZXIgYm9yZGVyIG9mIHRoZSBPIHJpbmcgLS0+CiAgICA8ZwogICAgICAgdHJhbnNmb3JtPSJyb3RhdGUoMTM1LDExNS40MTkyNiwxMjguNjQ2NzUpIgogICAgICAgaWQ9ImcyMCI+CiAgICAgIDwhLS0gU3VuIHNlbWktY2lyY2xlIHBvaW50aW5nIGlud2FyZCBmcm9tIHRoZSBvdXRlciBlZGdlIC0tPgogICAgICA8cGF0aAogICAgICAgICBkPSJtIC0xNS4zODI5MzgsLTEuMDQxMDE0NiBjIDAsLTguODM2NTYyIDYuNjU0MTQ3NSwtMTQuOTM3NDI1NCAxNS40OTA3MDMyNiwtMTQuOTM3NDI1NCA4LjgzNjU1NTg0LDAgMTYuMDY0MjEwNzQsNi4xMzYwNDgyIDE2LjA2NDIxMDc0LDE0Ljk3MjYxMDIgbCAtNC44NzM0NCwwLjYyMTg0NjM2IC0zLjUwMzQ4ODksMC4zODg3NTI4MSAtMy44MjU1NTI4LDAuMjI2MDg2MjYgLTMuMjY5OTU5NTEsMC4wODUyMzQgLTUuMTYwNjM2MzksLTAuMDkyODczIC0zLjg4NTQyMjEsLTAuMzA5MzY5NDkgLTEuNjc0OTY3MywtMC4xOTY1NTIzMSAtMS44MjMxNTksLTAuMjEzOTQyMDYgLTEuNTYzOTMxLC0wLjIyMTg5OTQ5IHoiCiAgICAgICAgIGZpbGw9IiNmZmQyNGQiCiAgICAgICAgIGZpbHRlcj0iZHJvcC1zaGFkb3coMCAwIDZweCByZ2JhKDI1NSwgMjEwLCA3NywgMC44KSkiCiAgICAgICAgIGlkPSJwYXRoMjAiCiAgICAgICAgIHNvZGlwb2RpOm5vZGV0eXBlcz0iY3NjY2NjY2NjY2NjYyIgLz4KICAgIDwvZz4KICAgIDwhLS0gSW5uZXIgU3ByaXRlIENvcmUgLyBHbG93aW5nIEhlYXJ0aCBGbGFtZSBpbnNpZGUgdGhlICdPJyB3aXRoIEtleWhvbGUgQ3V0LW91dCAtLT4KICAgIDxwYXRoCiAgICAgICBkPSJtIDM1MCwxNjAgYyAtMTUsMjUgLTI1LDQwIC0yNSw1NSAwLDE1IDExLDI3IDI1LDI3IDE0LDAgMjUsLTEyIDI1LC0yNyAwLC0xNSAtMTAsLTMwIC0yNSwtNTUgeiBtIC0yLjUsNDkuMzMgYSA1LDUgMCAxIDEgNSwwIEwgMzU1LDIyMSBoIC0xMCB6IgogICAgICAgZmlsbD0idXJsKCN3YXJtR2xvdykiCiAgICAgICBmaWx0ZXI9ImRyb3Atc2hhZG93KDAgMCAxMnB4IHJnYmEoMjU1LCAyMzAsIDE5MiwgMC44KSkiCiAgICAgICBpZD0icGF0aDIxIgogICAgICAgc3R5bGU9ImZpbGw6dXJsKCN3YXJtR2xvdykiIC8+CiAgICA8IS0tIEZhaW50IHNwYXJrIGZsb2F0aW5nIGluc2lkZSB0aGUgJ08nIGFib3ZlIHRoZSBmbGFtZSAtLT4KICAgIDxjaXJjbGUKICAgICAgIGN4PSIzNTAiCiAgICAgICBjeT0iMTUwIgogICAgICAgcj0iNCIKICAgICAgIGZpbGw9IiNmZmU2YzAiCiAgICAgICBvcGFjaXR5PSIwLjgiCiAgICAgICBpZD0iY2lyY2xlMjEiIC8+CiAgICA8IS0tID09PT09PT09PT09PT09PT09IExFVFRFUiBCIChTZXJhICYgTm90dGUpID09PT09PT09PT09PT09PT09IC0tPgogICAgPHBhdGgKICAgICAgIGQ9Im0gNTIwLDEyMCB2IDE2MCBjIDQ1LDAgNzAsLTE1IDcwLC00MCAwLC0xNSAtMTIsLTI1IC00MCwtMjUgMjgsMCAzNiwtMTAgMzYsLTI1IDAsLTIwIC0yMSwtNzAgLTY2LC03MCB6IgogICAgICAgc3Ryb2tlPSJ1cmwoI2dyYWRpZW50QikiCiAgICAgICBzdHJva2Utd2lkdGg9IjI2IgogICAgICAgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIKICAgICAgIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIKICAgICAgIGZpbGw9Im5vbmUiCiAgICAgICBpZD0icGF0aDIyIgogICAgICAgc3R5bGU9InN0cm9rZTp1cmwoI2dyYWRpZW50QikiIC8+CiAgICA8IS0tIEZ1bGwgTW9vbiAoTHVuYSBQaWVuYSAtIFNlbWljZXJjaGlvKSAtIFNoaWZ0ZWQgaW53YXJkIHRvIGZpdCBleGFjdGx5IG9uIHRoZSBvdXRlciBib3VuZGFyeSBjdXJ2ZSBvZiBCIC0tPgogICAgPCEtLSBQb3NpdGlvbmVkIGF0IHg9NTc4LCB5PTI0NCBhbmQgcm90YXRlZCAtNDUgZGVncmVlcyB0byBtYXRjaCB0aGUgdGFuZ2VudCBvZiB0aGUgQiBjdXJ2ZSBhdCB0aGF0IHBvaW50IC0tPgogICAgPGcKICAgICAgIHRyYW5zZm9ybT0icm90YXRlKC00OS42NzgzOTksNTg1LjU2ODY3LC01MDQuNDc2NzIpIgogICAgICAgaWQ9ImcyMyI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Im0gLTEwLjk0NzYwMywwLjE0MjYwMjc3IGMgMC4wMDE5LC02LjQ5NzgwMjg3IDUuMjY5OTMxOSwtMTEuNzY0Mjk1NzcgMTEuNzY3NzMwNSwtMTEuNzY0Mjk1NzcgNi40OTc3OTg2LDAgMTEuNzU3NDIzNSw0Ljk3NjUyNDggMTEuNzU5MzE3NSwxMS40NzQzMjc2MiBMIDYuMjk0Mjc4MSwxLjAyNTEyNiAxLjA2NDIxMTgsMS40ODA0MDczIC00LjEwNTI3MTMsMS4yMzY5OTc2IC03LjQ0MDM5NzUsMC43OTMwODcyMiBaIgogICAgICAgICBmaWxsPSIjZmZmZmZmIgogICAgICAgICBmaWx0ZXI9ImRyb3Atc2hhZG93KDAgMCA0cHggcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjkpKSIKICAgICAgICAgaWQ9InBhdGgyMyIKICAgICAgICAgc3R5bGU9InN0cm9rZS13aWR0aDoxLjQ3MDk3IgogICAgICAgICBzb2RpcG9kaTpub2RldHlwZXM9ImNzY2NjY2NjIiAvPgogICAgPC9nPgogICAgPCEtLSA9PT09PT09PT09PT09PT09PSBJTlRFR1JBVEVEIE5JR0hUIFNUQVJTIChIdWdnaW5nL0luc2lkZSB0aGUgbGV0dGVyIHN0cm9rZXMpID09PT09PT09PT09PT09PT09IC0tPgogICAgPHVzZQogICAgICAgaHJlZj0iI3N0YXIiCiAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjgsMCwwLDAuOCwxMjAsMTIwKSIKICAgICAgIGNsYXNzPSJzdGFyLW9kZCIgaWQ9InVzZTIzIiAvPgogICAgPCEtLSBDYXBwaW5nIHRoZSB0b3AtbGVmdCB0aXAgb2YgSCAtLT4KICAgIDx1c2UKICAgICAgIGhyZWY9IiNzdGFyIgogICAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMC42LDAsMCwwLjYsMTIwLDE2MCkiCiAgICAgICBjbGFzcz0ic3Rhci1ldmVuIiBpZD0idXNlMjQiIC8+CiAgICA8IS0tIEVtYmVkZGVkIGRpcmVjdGx5IG9uIHRoZSBsZWZ0IHZlcnRpY2FsIHN0cm9rZSAtLT4KICAgIDx1c2UKICAgICAgIGhyZWY9IiNzdGFyIgogICAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMC41LDAsMCwwLjUsMTQyLDE3NSkiCiAgICAgICBjbGFzcz0ic3Rhci1vZGQiIGlkPSJ1c2UyNSIgLz4KICAgIDwhLS0gTmVzdGxlZCBpbnNpZGUgdGhlIHRvcC1sZWZ0IGlubmVyIGpvaW50IG9mIEggLS0+CiAgICA8dXNlCiAgICAgICBocmVmPSIjc3RhciIKICAgICAgIHRyYW5zZm9ybT0ibWF0cml4KDAuNSwwLDAsMC41LDk3LDEzMCkiCiAgICAgICBjbGFzcz0ic3Rhci1ldmVuIiBpZD0idXNlMjYiIC8+CiAgICA8IS0tIEh1Z2dpbmcgdGhlIG91dGVyIGxlZnQgZWRnZSBvZiBIIG5lYXIgdGhlIHRvcCAtLT4KICAgIDwhLS0gU3RhcnMgaW50ZWdyYXRlZCBvbi9pbnNpZGUvYXJvdW5kIHRoZSBCIChTZXJhIC8gTm90dGUpIC0tPgogICAgPHVzZQogICAgICAgaHJlZj0iI3N0YXIiCiAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjcsMCwwLDAuNyw1MjAsMTIwKSIKICAgICAgIGNsYXNzPSJzdGFyLW9kZCIgaWQ9InVzZTI3IiAvPgogICAgPCEtLSBDYXBwaW5nIHRoZSB0b3AtbGVmdCB0aXAgb2YgQiAtLT4KICAgIDx1c2UKICAgICAgIGhyZWY9IiNzdGFyIgogICAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMC44LDAsMCwwLjgsNTQ4LDE3MCkiCiAgICAgICBjbGFzcz0ic3Rhci1ldmVuIiBpZD0idXNlMjgiIC8+CiAgICA8IS0tIE5lc3RsZWQgSU5TSURFIHRoZSB0b3AgbG9vcCBjb3VudGVyIG9mIEIgLS0+CiAgICA8dXNlCiAgICAgICBocmVmPSIjc3RhciIKICAgICAgIHRyYW5zZm9ybT0ibWF0cml4KDAuNSwwLDAsMC41LDU5NSwxNDApIgogICAgICAgY2xhc3M9InN0YXItb2RkIiBpZD0idXNlMjkiIC8+CiAgICA8IS0tIEh1Z2dpbmcgdGhlIHRvcCBvdXRlciBjdXJ2ZSBvZiBCIC0tPgogICAgPHVzZQogICAgICAgaHJlZj0iI3N0YXIiCiAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjYsMCwwLDAuNiw2MDIsMjQwKSIKICAgICAgIGNsYXNzPSJzdGFyLWV2ZW4iIGlkPSJ1c2UzMCIgLz4KICAgIDwhLS0gSHVnZ2luZyB0aGUgbWlkZGxlIG91dGVyIGluZGVudGF0aW9uIG9mIEIgLS0+CiAgICA8dXNlCiAgICAgICBocmVmPSIjc3RhciIKICAgICAgIHRyYW5zZm9ybT0ibWF0cml4KDAuNywwLDAsMC43LDU3NSwyNjApIgogICAgICAgY2xhc3M9InN0YXItb2RkIiBpZD0idXNlMzEiIC8+CiAgICA8IS0tIEVtYmVkZGVkIGRpcmVjdGx5IG9uIHRoZSBib3R0b20gc3Ryb2tlIG9mIEIgLS0+CiAgPC9nPgo8L3N2Zz4K") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+  z-index: 3 !important;
+}
+
+/* Progress indicator bar container (the orbit path) - CENTRED & SCALED TO PREVENT OVERFLOW */
+body > .app-container > .progress-bar .progress-bar-indicator,
+body > .progress-bar .progress-bar-indicator,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *) .progress-bar-indicator {
+  width: min(320px, 70vw) !important;
+  height: 6px !important;
+  background: repeating-linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.08) 0px, 
+    rgba(255, 255, 255, 0.08) 4px, 
+    transparent 4px, 
+    transparent 8px
+  ) !important; /* Dashed orbit path */
+  border-radius: 99px !important;
+  position: absolute !important;
+  /* Centered explicitly without using transforms, avoiding fixed placement issues */
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto !important; /* margin shorthand kills Obsidian's default `margin: 0 10vw` */
+  top: calc(50% + 55px) !important;
+  /* Hard horizontal containment, soft vertical: the negative top/bottom inset lets the comet
+     glow bleed above/below the track, while left/right are clipped exactly at the track edges
+     so nothing can ever escape the card sideways (Obsidian's default overflow-x: hidden was
+     lost when the theme set overflow: visible — this clip-path restores containment). */
+  overflow: visible !important;
+  clip-path: inset(-60px 0px) !important;
+  border: none !important;
+  z-index: 3 !important;
+}
+
+/* The loading line, recast as the travelling comet (tail + light beam).
+   Obsidian 1.12.7 gives .progress-bar-line width: 150% and opacity: 0.4 as a static backdrop
+   strip — the 150% was the main horizontal overflow past the card. It becomes a full-track
+   comet that sweeps via transform, clipped by the indicator's clip-path. */
+body > .app-container > .progress-bar .progress-bar-line,
+body > .progress-bar .progress-bar-line,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *) .progress-bar-line {
+  width: 100% !important;  /* override Obsidian's default 150% */
+  height: 100% !important;
+  opacity: 1 !important;   /* override Obsidian's default 0.4 */
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 184, 140, 0.18) 30%,
+    rgba(207, 154, 125, 0.55) 60%,
+    rgba(107, 161, 216, 0.9) 85%,
+    #ffffff 100%
+  ) !important;
+  border-radius: 99px !important;
+  position: absolute !important; /* Fixed: Absolute relative to indicator container */
+  left: 0 !important;           /* Anchor exactly to the start of the progress bar */
+  top: 0 !important;
+  overflow: visible !important; /* Crucial for the comet pseudo-element */
+  z-index: 4 !important;
+  box-shadow: 0 0 10px rgba(107, 161, 216, 0.5) !important;
+  transition: none !important;
+  /* transform must stay free of !important here: the sweep animates it */
+  transform-origin: left center;
+  animation: hobCometRide 1.8s cubic-bezier(0.37, 0, 0.63, 1) infinite !important;
+}
+
+/* Comet orbit: slides in from the left edge, exits right, re-enters — always inside the track */
+@keyframes hobCometRide {
+  0%   { transform: translateX(-104%); }
+  100% { transform: translateX(104%); }
+}
+
+/* The Comet Nucleus / Shooting Star at the leading edge of the progress line */
+body > .app-container > .progress-bar .progress-bar-line::after,
+body > .progress-bar .progress-bar-line::after,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *) .progress-bar-line::after {
+  content: "" !important;
+  position: absolute !important;
+  right: -4px !important; /* Centered on the tip */
+  top: 50% !important;
+  width: 10px !important;
+  height: 10px !important;
+  background: #ffffff !important;
+  border-radius: 50% !important;
+  /* transform and box-shadow stay un-!important: an author !important declaration would
+     override the cometPulse keyframes in the cascade and freeze the pulse */
+  transform: translateY(-50%);
+  box-shadow:
+    0 0 12px 4px #ffffff,
+    0 0 20px 8px rgba(107, 161, 216, 0.8),
+    0 0 30px 12px rgba(255, 184, 140, 0.6);
+  animation: cometPulse 1.5s infinite alternate ease-in-out !important;
+  z-index: 5 !important;
+}
+
+@keyframes cometPulse {
+  0% {
+    transform: translateY(-50%) scale(0.8);
+    box-shadow: 
+      0 0 8px 2px #ffffff,
+      0 0 15px 5px rgba(107, 161, 216, 0.6),
+      0 0 25px 9px rgba(255, 184, 140, 0.4);
+  }
+  100% {
+    transform: translateY(-50%) scale(1.2);
+    box-shadow:
+      0 0 16px 6px #ffffff,
+      0 0 28px 12px rgba(107, 161, 216, 0.9),
+      0 0 40px 18px rgba(255, 184, 140, 0.8);
+  }
+}
+
+/* Kill Obsidian's native indeterminate sweepers: two accent-blue .progress-bar-subline strips
+   animate translateX up to 130% of the track (keyframes `increase`/`decrease`) — with the
+   theme's visible overflow they were the blue beam shooting out of the card. The comet on
+   .progress-bar-line replaces them. */
+body > .app-container > .progress-bar .progress-bar-subline,
+body > .progress-bar .progress-bar-subline,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *) .progress-bar-subline {
+  display: none !important;
+}
+
+/* The loading message text */
+body > .app-container > .progress-bar .progress-bar-message,
+body > .progress-bar .progress-bar-message,
+.progress-bar:not(.workspace *):not(.workspace-leaf *):not(.status-bar *) .progress-bar-message {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-family: var(--font-interface, system-ui, sans-serif) !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.05em !important;
+  font-weight: 500 !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+  top: calc(50% + 25px) !important; /* Positioned via top, leaving children with no parent transform */
+  width: 100% !important;
+  z-index: 3 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  animation: loadingTextPulse 2.5s infinite ease-in-out !important;
+}
+
+@keyframes loadingTextPulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.95; }
+}
+
+/* ==============================================================================
+   PART 3: MERMAID GANTT — readable on every sky
+   ------------------------------------------------------------------------------
+   Strategy (see ADR): themeVariables CANNOT meet WCAG AA on both the bright day
+   sky (L* ~85) and the dark night sky (L* ~15) at once — contrast is relative to
+   the background and a single static palette can only win against one extreme.
+   So we do NOT theme via the init block. Two rules instead:
+
+     1. Task bars are self-contained CHIPS: light-ish fills (L* ~60-84) with DARK
+        text BAKED IN, distinguished by HUE not luminance. A light chip is always
+        lighter than the night sky (separates there) and a thin dark stroke + soft
+        shadow separates it from the day sky. No bar ever "disappears".
+     2. ALL text (chip labels, section labels, axis, title) gets ONE self-contained
+        treatment: dark ink + a white halo (paint-order:stroke). The halo is invisible
+        on the light chips (labels stay clean+dark) but outlines the glyphs on any sky,
+        so they read day AND night. It must NOT be bound to the theme ink vars — those
+        follow the macOS light/dark appearance too, so they went black-on-navy in macOS
+        Light over a night sky. A unified halo is needed because Mermaid keeps the
+        inside class on labels that overflow a short bar onto the sky (no CSS hook to
+        tell an on-chip label from an overflowing one).
+
+   Section background bands are killed (transparent): they were the unpredictable
+   part (Mermaid mixes sectionBkgColor with primaryColor internally). Sections are
+   read from the labels + bar grouping instead.
+
+   !important is required throughout: Mermaid injects an ID-scoped <style> into the
+   SVG (#mermaid-xxx .task { ... }), and ID specificity otherwise beats us.
+   The markdown gantt block needs NO %%{init}%% block anymore.
+   ============================================================================== */
+
+/* --- shared chip ink: dark text always reads on the light fills below --------- */
+:root {
+  --gantt-chip-ink:    #14181f;   /* on-bar text — AA on every fill (L* >= ~55) */
+  --gantt-chip-stroke: rgba(20, 24, 31, 0.55); /* edge vs the bright day sky */
+}
+
+/* Task bars (rects). Hue-coded states, uniformly light luminance.
+   filter gives a soft edge that survives on the dark sky. */
+.markdown-rendered .mermaid g.tasks rect.task,
+.mermaid g.tasks rect.task {
+  stroke: var(--gantt-chip-stroke) !important;
+  stroke-width: 1px !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.30)) !important;
+}
+
+/* "Tea Green" pastel ramp (cornsilk → tea-green): a sequential ramp, so we use its
+   most-separated stops for the calm states. All L* ~90-95 → night/sunset separate
+   on luminance; on the bright-blue day sky the chips are lighter than the sky, so
+   the dark stroke + shadow carry the edge. Dark on-bar text → >15:1 everywhere. */
+/* default / not-started — Beige 2, neutral centre of the ramp */
+.mermaid rect.task            { fill: #eaf2d2 !important; stroke: #7e8a5f !important; }
+/* done — Cornsilk, warmest+lightest stop = "faded / settled" */
+.mermaid rect.task.done0,
+.mermaid rect.task.done1,
+.mermaid rect.task.done2,
+.mermaid rect.task.done3,
+.mermaid rect.task.done       { fill: #fff6d9 !important; stroke: #9a8d5e !important; }
+/* active — Tea Green 2, greenest stop = "in progress / go" */
+.mermaid rect.task.active0,
+.mermaid rect.task.active1,
+.mermaid rect.task.active2,
+.mermaid rect.task.active3,
+.mermaid rect.task.active     { fill: #caebc7 !important; stroke: #3f8a63 !important; }
+/* crit — vivid amber alert: the ramp has no warning hue, so crit + milestone share
+   one saturated amber that reads "attention" against every sky */
+.mermaid rect.task.crit0,
+.mermaid rect.task.crit1,
+.mermaid rect.task.crit2,
+.mermaid rect.task.crit3,
+.mermaid rect.task.crit       { fill: #f7b32b !important; stroke: #8a5e0f !important; }
+
+/* milestone diamond — same amber so it never blends into a section run */
+.mermaid .task.milestone,
+.mermaid rect.task.milestone,
+.mermaid path.task.milestone  { fill: #f7b32b !important; stroke: #8a5e0f !important; }
+
+/* --- ALL gantt text: ONE self-contained treatment = dark ink + white halo -------
+   Why unified: Mermaid does NOT reliably mark which labels sit on a chip vs on the
+   sky. When a bar is shorter than its label (e.g. a short done/active task), Mermaid
+   keeps the INSIDE class (taskText) but the text overflows onto the sky — there is no
+   CSS hook to tell that apart from a genuine on-chip label. So we give every label the
+   same treatment that reads on BOTH surfaces: dark fill + a white outline (paint-order
+   :stroke). On the light chips the white halo is ~invisible, so chip labels stay clean
+   and dark; on any sky the halo outlines the dark glyphs so they read at day AND night,
+   independent of the macOS light/dark appearance. Earlier var(--text-normal) failed
+   here because the theme ink also tracks the OS appearance (black-on-navy in Light). */
+.mermaid .taskText,
+.mermaid text.taskText,
+.mermaid .taskTextOutsideLeft,
+.mermaid .taskTextOutsideRight,
+.mermaid text.taskTextOutsideLeft,
+.mermaid text.taskTextOutsideRight,
+.mermaid .sectionTitle,
+.mermaid text.sectionTitle,
+.mermaid .titleText,
+.mermaid .grid .tick text,
+.mermaid g.grid .tick text {
+  fill: var(--gantt-chip-ink) !important;          /* #14181f */
+  stroke: rgba(255, 255, 255, 0.92) !important;    /* white halo for the sky */
+  stroke-width: 2.4px !important;
+  stroke-linejoin: round !important;
+  paint-order: stroke !important;   /* stroke paints UNDER the fill → clean halo */
+  font-weight: 600 !important;
+}
+.mermaid .grid .tick text { stroke-width: 2px !important; }
+.mermaid .titleText { font-weight: 700 !important; stroke-width: 2.6px !important; }
+
+/* grid lines: neutral mid-grey at low alpha reads faintly on any sky, no var dep */
+.mermaid .grid .tick line,
+.mermaid g.grid .tick line {
+  stroke: rgba(140, 146, 160, 0.40) !important;
+  stroke-dasharray: 2 3 !important;
+}
+.mermaid .grid path.domain { stroke: rgba(140, 146, 160, 0.40) !important; }
+
+/* today marker — uses the live phase accent so it pops against any sky */
+.mermaid .today {
+  stroke: var(--interactive-accent) !important;
+  stroke-width: 2px !important;
+}
+
+/* kill the unpredictable section bands — sections are read from labels + grouping */
+.mermaid rect.section,
+.mermaid .section0, .mermaid .section1,
+.mermaid .section2, .mermaid .section3 {
+  fill: transparent !important;
+  opacity: 0 !important;
+}
+
+/* Fix date picker calendar icon overlap with text (especially at large font sizes) */
+input[type="date"],
+input[type="datetime-local"] {
+  position: relative !important;
+  padding-left: 36px !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  position: absolute !important;
+  left: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+}
+
+/* Remove glass background from note stickers (Make.md & native) */
+body .mk-header button:not(.mod-cta):not(.mod-warning):not(.mod-muted),
+body .mk-header-icon button:not(.mod-cta):not(.mod-warning):not(.mod-muted),
+body .mk-note-header button:not(.mod-cta):not(.mod-warning):not(.mod-muted),
+body .mk-path-context button:not(.mod-cta):not(.mod-warning):not(.mod-muted),
+body .mk-title-container button:not(.mod-cta):not(.mod-warning):not(.mod-muted),
+body .mk-sticker-icon button:not(.mod-cta):not(.mod-warning):not(.mod-muted),
+body .inline-title-icon,
+body .view-header-title-container .view-header-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
