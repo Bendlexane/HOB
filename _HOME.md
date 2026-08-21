@@ -9,8 +9,18 @@ cssclasses:
 ---
 
 ```dataviewjs
+// Obsidian's window.localStorage is shared by every vault open in the app,
+// so a name or a weather location set here would leak into any other vault.
+// Namespace every dashboard key to this vault instead.
+const VAULT_NS = `hob:${app.appId ?? app.vault.getName()}:`;
+const store = {
+  getItem:    k => window.localStorage.getItem(VAULT_NS + k),
+  setItem:    (k, v) => window.localStorage.setItem(VAULT_NS + k, v),
+  removeItem: k => window.localStorage.removeItem(VAULT_NS + k),
+};
+
 const NAME_KEY = 'home-user-name';
-let NAME = localStorage.getItem(NAME_KEY) ?? 'Researcher';
+let NAME = store.getItem(NAME_KEY) ?? 'Researcher';
 const DAYS_AHEAD = 45;
 const CFG_FILE = '.obsidian/plugins/obsidian-full-calendar/data.json';
 const obsidian = require('obsidian');
@@ -116,7 +126,7 @@ const monNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','N
 const ymd = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 
 const WEATHER_LOC_KEY = 'home-weather-location';
-const getLoc = () => localStorage.getItem(WEATHER_LOC_KEY) ?? '';
+const getLoc = () => store.getItem(WEATHER_LOC_KEY) ?? '';
 
 function greetFor(h) {
   if (h < 6) return 'Good night';
@@ -137,7 +147,26 @@ style.textContent = `
   .view-content:has(.home-sky) .metadata-container,
   .view-content:has(.home-sky) .frontmatter,
   .view-content:has(.home-sky) .cm-frontmatter,
-  .view-content:has(.home-sky) .cm-embed-block:has(.frontmatter) {
+  .view-content:has(.home-sky) .cm-embed-block:has(.frontmatter),
+  .view-content:has(.home-sky) .inline-title,
+  .view-content:has(.home-sky) .mk-inline-context,
+  .view-content:has(.home-sky) .mk-cover-image-container {
+    display: none !important;
+  }
+  /* In Live Preview, Obsidian wraps the dataviewjs block in an editable
+     code-block frame with an "edit source" button. The dashboard is not
+     meant to read as a code block, so strip the chrome in both modes. */
+  .view-content:has(.home-sky) .cm-embed-block:not(:has(.frontmatter)),
+  .view-content:has(.home-sky) .cm-preview-code-block,
+  .view-content:has(.home-sky) .block-language-dataviewjs {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+  .view-content:has(.home-sky) .edit-block-button,
+  .view-content:has(.home-sky) .cm-embed-block .edit-block-button {
     display: none !important;
   }
   .view-content:has(.home-sky) .markdown-preview-sizer,
@@ -229,7 +258,8 @@ const sub = leftHeader.createDiv();
 sub.style.cssText = 'opacity:0.85;font-size:0.95rem;text-shadow:0 1px 6px rgba(0,0,0,0.3);cursor:pointer;';
 const updateSubText = () => {
   const loc = getLoc();
-  sub.setText(loc ? `Research Vault · 📍 ${loc}` : `Research Vault · 📍 Auto-detect`);
+  const vaultName = app.vault.getName();
+  sub.setText(loc ? `${vaultName} · 📍 ${loc}` : `${vaultName} · 📍 Auto-detect`);
 };
 updateSubText();
 
@@ -242,7 +272,7 @@ title.addEventListener('click', async () => {
       onSubmit: (val) => {
         if (val && val.trim()) {
           NAME = val.trim();
-          localStorage.setItem(NAME_KEY, NAME);
+          store.setItem(NAME_KEY, NAME);
         }
       }
     });
@@ -256,7 +286,7 @@ sub.addEventListener('click', async () => {
       defaultValue: getLoc(),
       onSubmit: (val) => {
         if (val && val.trim()) {
-          localStorage.setItem(WEATHER_LOC_KEY, val.trim());
+          store.setItem(WEATHER_LOC_KEY, val.trim());
           updateSubText();
           loadWeather();
           const skyPlugin = app.plugins.getPlugin('sky-background');
@@ -304,6 +334,72 @@ searchSlot.style.cssText = 'position:relative;z-index:5;margin:2rem 0 2.5rem;fle
 const askSlot = banner.createDiv();
 askSlot.className = 'home-banner-ask';
 askSlot.style.cssText = 'position:relative;z-index:5;margin:-0.5rem 0 1.5rem;flex:0 0 auto;display:none;';
+
+// ─── FIRST-RUN SETUP (name + weather location) ───
+// Shown once, until the reader saves or skips. Both values live in
+// localStorage and stay editable later by clicking the greeting or the
+// location line under it.
+const ONBOARD_KEY = 'home-onboarded';
+if (!store.getItem(ONBOARD_KEY) && !store.getItem(NAME_KEY) && !getLoc()) {
+  const ob = banner.createDiv();
+  ob.style.cssText = 'position:relative;z-index:6;margin:0 0 1.5rem;background:var(--vault-glass-strong);backdrop-filter:var(--vault-blur);-webkit-backdrop-filter:var(--vault-blur);border:1px solid var(--vault-glass-border);border-radius:16px;padding:1.1rem 1.3rem;box-shadow:0 10px 34px rgba(0,0,0,0.22);';
+
+  const obHead = ob.createDiv();
+  obHead.style.cssText = 'display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem;';
+  obHead.createSpan({text:'👋'}).style.fontSize = '1.15rem';
+  obHead.createSpan({text:'Welcome to HOB'}).style.cssText = 'font-weight:700;font-size:1.05rem;';
+
+  const obSub = ob.createDiv({text:'Two things and the dashboard is yours. You can change both later by clicking your name or the location under it.'});
+  obSub.style.cssText = 'font-size:.82rem;color:var(--text-muted);margin-bottom:.85rem;line-height:1.5;';
+
+  const obRow = ob.createDiv();
+  obRow.style.cssText = 'display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;';
+  const inputCss = 'font-size:.85rem;padding:.45rem .75rem;border-radius:9px;border:1px solid var(--vault-glass-border);background:rgba(255,255,255,0.05);color:var(--text-normal);outline:none;min-width:170px;';
+
+  const obName = obRow.createEl('input');
+  obName.setAttr('type','text'); obName.setAttr('placeholder','Your name');
+  obName.style.cssText = inputCss;
+
+  const obLoc = obRow.createEl('input');
+  obLoc.setAttr('type','text'); obLoc.setAttr('placeholder','Weather location, e.g. Pisa');
+  obLoc.style.cssText = inputCss;
+
+  const obSave = obRow.createEl('button', {text:'Save'});
+  obSave.style.cssText = 'font-size:.82rem;padding:.45rem 1.1rem;border-radius:9px;border:none;background:var(--interactive-accent);color:var(--text-on-accent);cursor:pointer;font-weight:600;';
+
+  const obSkip = obRow.createEl('button', {text:'Skip'});
+  obSkip.style.cssText = 'font-size:.8rem;padding:.45rem .8rem;border-radius:9px;border:1px solid var(--vault-glass-border);background:transparent;color:var(--text-muted);cursor:pointer;';
+
+  const obFoot = ob.createDiv();
+  obFoot.style.cssText = 'font-size:.75rem;color:var(--text-faint);margin-top:.7rem;';
+  const obLink = obFoot.createEl('a', {text:'Read GET STARTED'});
+  obLink.style.cssText = 'color:var(--text-accent);cursor:pointer;text-decoration:none;';
+  obLink.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    app.workspace.openLinkText('GET STARTED', '', true);
+  });
+  obFoot.createSpan({text:' for what each folder is for and which scripts to run first.'});
+
+  const finish = () => { store.setItem(ONBOARD_KEY, '1'); ob.remove(); };
+
+  obSave.addEventListener('click', () => {
+    const n = obName.value.trim();
+    const l = obLoc.value.trim();
+    if (n) { NAME = n; store.setItem(NAME_KEY, n); }
+    if (l) {
+      store.setItem(WEATHER_LOC_KEY, l);
+      updateSubText();
+      try { loadWeather(); } catch (e) {}
+      const skyPlugin = app.plugins.getPlugin('sky-background');
+      if (skyPlugin && typeof skyPlugin.loadWeather === 'function') skyPlugin.loadWeather();
+    }
+    finish();
+  });
+
+  obSkip.addEventListener('click', finish);
+  obName.addEventListener('keydown', e => { if (e.key === 'Enter') obLoc.focus(); });
+  obLoc.addEventListener('keydown', e => { if (e.key === 'Enter') obSave.click(); });
+}
 
 // ─── QUICK ACTIONS PANEL (Full Width) ───
 const act = wrap.createDiv();
@@ -430,8 +526,8 @@ addOk.addEventListener('click', ()=>{
   if(allFeeds().some(f=>f.name===name || f.issn===issn)){ addHint.setText('Already in the list.'); return; }
   const color = CR_PALETTE[custom.length % CR_PALETTE.length];
   custom.push({ name, color, type:'crossref', max:3, issn });
-  localStorage.setItem(CUSTOM_KEY, JSON.stringify(custom));
-  const e = getEnabled(); e.add(name); localStorage.setItem(ENABLED_KEY, JSON.stringify([...e]));
+  store.setItem(CUSTOM_KEY, JSON.stringify(custom));
+  const e = getEnabled(); e.add(name); store.setItem(ENABLED_KEY, JSON.stringify([...e]));
   nameIn.value=''; issnIn.value=''; addForm.style.display='none';
   renderChips(); run(false);
 });
@@ -1259,9 +1355,18 @@ async function renderKpiWidget() {
     }
 
   } catch(e) {
-    kpiSub.setText("· error");
-    console.error("Failed to render KPI card", e);
-    kpiMetricsGrid.setText("KPI data currently unavailable. Run _scripts/kpi/collector.py.");
+    // No collected data yet. This is the expected state on a fresh vault,
+    // so explain the next step instead of reporting a failure.
+    kpiSub.setText("· nothing to show yet");
+    console.debug("KPI card: no data yet", e);
+    kpiMetricsGrid.empty();
+    const hint = kpiMetricsGrid.createDiv();
+    hint.style.cssText = 'font-size:.82rem;color:var(--text-muted);line-height:1.6;';
+    hint.createDiv({text: 'Your numbers build up as you work.'}).style.cssText = 'font-weight:600;color:var(--text-normal);margin-bottom:.3rem;';
+    hint.createDiv({text: 'This card tracks what you read, annotate and write. It fills in once the vault has a few days of activity to measure, collected nightly by the scheduler.'});
+    const how = hint.createDiv();
+    how.style.cssText = 'margin-top:.5rem;font-size:.76rem;color:var(--text-faint);';
+    how.setText('To collect the first snapshot now, run _scripts/kpi/collector.py from the vault root.');
   }
 }
 renderKpiWidget();
@@ -1578,16 +1683,9 @@ aaBtn.addEventListener('click', () => {
 const FEEDS = [
   { name:'bioRxiv · Plant Biology', color:'#e2574c', type:'xml', max:3,
     url:'https://connect.biorxiv.org/biorxiv_xml.php?subject=plant_biology' },
-  { name:'Nature Plants',                  color:'#3a7d44', type:'crossref', max:3, issn:'2055-0278' },
-  { name:'New Phytologist',                color:'#2e9e5b', type:'crossref', max:3, issn:'0028-646X' },
-  { name:'Annals of Botany',               color:'#b5651d', type:'crossref', max:3, issn:'1095-8290' },
-  { name:'Taxon',                          color:'#9b59b6', type:'crossref', max:3, issn:'1996-8175' },
-  { name:'Systematic Biology',             color:'#2c6e8f', type:'crossref', max:3, issn:'1063-5157' },
-  { name:'J. Systematics & Evolution',     color:'#3a86c8', type:'crossref', max:3, issn:'1759-6831' },
-  { name:'Plant Systematics & Evolution',  color:'#17b3a3', type:'crossref', max:3, issn:'1615-6110' },
-  { name:'Plant Biosystems',               color:'#6a8d3a', type:'crossref', max:3, issn:'1126-3504' },
-  { name:'PhytoKeys',                       color:'#e08a2e', type:'crossref', max:3, issn:'1314-2003' },
-  { name:'Mol. Phylogenetics & Evolution', color:'#7a8a99', type:'crossref', max:3, issn:'1055-7903' },
+  // One journal ships as a worked example. Add your own with the "+" chip
+  // in the What's new? card, or by copying this line with another ISSN.
+  { name:'Nature Plants', color:'#3a7d44', type:'crossref', max:3, issn:'2055-0278' },
   { name:'PubMed', color:'#4a6fa5', type:'pubmed', max:3,
     query:'species delimitation OR plant systematics OR Mediterranean flora OR phylogenomics' },
 ];
@@ -1617,13 +1715,13 @@ const CUTOFF_MS  = DAYS_BACK*864e5;
 const cutoffYMD  = () => { const d=new Date(Date.now()-CUTOFF_MS); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
 const within     = it => { if(!it.date) return false; const t=new Date(it.date).getTime(); return !isNaN(t) && (Date.now()-t) <= CUTOFF_MS; };
 
-const getCustom  = () => { try{ return JSON.parse(localStorage.getItem(CUSTOM_KEY))||[]; }catch(e){ return []; } };
-const getRemoved = () => { try{ return new Set(JSON.parse(localStorage.getItem(REMOVED_KEY))); }catch(e){ return new Set(); } };
+const getCustom  = () => { try{ return JSON.parse(store.getItem(CUSTOM_KEY))||[]; }catch(e){ return []; } };
+const getRemoved = () => { try{ return new Set(JSON.parse(store.getItem(REMOVED_KEY))); }catch(e){ return new Set(); } };
 const allFeeds   = () => FEEDS.filter(f=>!getRemoved().has(f.name) && (f.type!=='crossref' || CR_MAILTO)).concat(getCustom());
-const getQuery   = () => localStorage.getItem(QUERY_KEY) ?? PUBMED_DEF;
-const getEnabled = () => { try{ return new Set(JSON.parse(localStorage.getItem(ENABLED_KEY))); }catch(e){ return new Set(allFeeds().map(f=>f.name)); } };
-const loadCache  = () => { try{ return JSON.parse(localStorage.getItem(CACHE_KEY))||{}; }catch(e){ return {}; } };
-const saveCache  = c => { try{ localStorage.setItem(CACHE_KEY, JSON.stringify(c)); }catch(e){} };
+const getQuery   = () => store.getItem(QUERY_KEY) ?? PUBMED_DEF;
+const getEnabled = () => { try{ return new Set(JSON.parse(store.getItem(ENABLED_KEY))); }catch(e){ return new Set(allFeeds().map(f=>f.name)); } };
+const loadCache  = () => { try{ return JSON.parse(store.getItem(CACHE_KEY))||{}; }catch(e){ return {}; } };
+const saveCache  = c => { try{ store.setItem(CACHE_KEY, JSON.stringify(c)); }catch(e){} };
 const feedKey    = f => f.type==='pubmed' ? 'pubmed:'+getQuery() : f.type==='crossref' ? 'crossref:'+f.issn : 'xml:'+f.url;
 
 const txt = (el, tag) => { const n = el.getElementsByTagName(tag); return n.length ? (n[0].textContent||'').trim() : ''; };
@@ -1784,8 +1882,8 @@ async function run(force){
   rssStatus.setText(`· ${total} items · last ${DAYS_BACK}d${failed?`  ⚠ ${failed} unavailable`:''}`);
 }
 
-applyBtn.addEventListener('click', ()=>{ localStorage.setItem(QUERY_KEY, input.value.trim()); run(true); });
-input.addEventListener('keydown', e=>{ if(e.key==='Enter'){ localStorage.setItem(QUERY_KEY, input.value.trim()); run(true); } });
+applyBtn.addEventListener('click', ()=>{ store.setItem(QUERY_KEY, input.value.trim()); run(true); });
+input.addEventListener('keydown', e=>{ if(e.key==='Enter'){ store.setItem(QUERY_KEY, input.value.trim()); run(true); } });
 refreshBtn.addEventListener('click', ()=>run(true));
 
 function renderChips(){
@@ -1803,7 +1901,7 @@ function renderChips(){
     lbl.addEventListener('click', ()=>{
       const e = getEnabled();
       if(e.has(f.name)) e.delete(f.name); else e.add(f.name);
-      localStorage.setItem(ENABLED_KEY, JSON.stringify([...e]));
+      store.setItem(ENABLED_KEY, JSON.stringify([...e]));
       renderChips(); run(false);
     });
     const x = chip.createSpan({text:'×'});
@@ -1812,11 +1910,11 @@ function renderChips(){
     x.addEventListener('click', ev=>{
       ev.stopPropagation();
       if(isCustom){
-        localStorage.setItem(CUSTOM_KEY, JSON.stringify(getCustom().filter(c=>c.name!==f.name)));
+        store.setItem(CUSTOM_KEY, JSON.stringify(getCustom().filter(c=>c.name!==f.name)));
       } else {
-        const r = getRemoved(); r.add(f.name); localStorage.setItem(REMOVED_KEY, JSON.stringify([...r]));
+        const r = getRemoved(); r.add(f.name); store.setItem(REMOVED_KEY, JSON.stringify([...r]));
       }
-      const e = getEnabled(); e.delete(f.name); localStorage.setItem(ENABLED_KEY, JSON.stringify([...e]));
+      const e = getEnabled(); e.delete(f.name); store.setItem(ENABLED_KEY, JSON.stringify([...e]));
       renderChips(); run(false);
     });
   }
@@ -1846,7 +1944,7 @@ function wxEmoji(code){
 async function loadWeather(){
   try{
     const res = await requestUrl({url:`https://wttr.in/${encodeURIComponent(getLoc())}?format=j1`, throw:false});
-    if(res.status<200 || res.status>=300) return;
+    if(res.status<200 || res.status>=300) { wxFallback(); return; }
     const data = JSON.parse(res.text);
     wx.empty();
     const cur = data.current_condition && data.current_condition[0];
@@ -1877,7 +1975,22 @@ async function loadWeather(){
       const temps = chip.createDiv({text:`${d.maxtempC}° / ${d.mintempC}°`});
       temps.style.cssText='font-size:0.7rem;font-family:\'Inter\', system-ui, sans-serif;font-variant-numeric:lining-nums tabular-nums;color:var(--text-normal);font-weight:600;';
     });
-  }catch(e){ /* offline */ }
+  }catch(e){ wxFallback(); }
+}
+
+// The weather service answers by IP when no location is set, but it also
+// rate-limits. Either way, say so instead of leaving an empty gap.
+function wxFallback(){
+  wx.empty();
+  const chip = wx.createDiv();
+  chip.style.cssText = 'display:flex;align-items:center;gap:.5rem;background:var(--vault-glass);border:0.5px solid var(--vault-glass-border);border-radius:14px;padding:.6rem 1rem;cursor:pointer;';
+  chip.createSpan({text:'🌡'}).style.fontSize = '1.1rem';
+  const box = chip.createDiv();
+  box.createDiv({text: getLoc() ? 'Weather unavailable' : 'Set your location'})
+     .style.cssText = 'font-size:.8rem;font-weight:600;';
+  box.createDiv({text: getLoc() ? 'Tap to retry' : 'Tap to choose a city'})
+     .style.cssText = 'font-size:.68rem;color:var(--text-muted);';
+  chip.addEventListener('click', () => { sub.click(); });
 }
 loadWeather();
 

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "hob-welcome-1",
+    "title": "Welcome",
+    "message": "This is the Notification Center. Scripts and vault actions post here, and Obsidian notices are routed in too. Dismiss All clears it.",
+    "timestamp": 1787340916072,
+    "read": false,
+    "sound": false
+  },
+  {
+    "id": "hob-welcome-2",
+    "title": "Next step",
+    "message": "Open GET STARTED in the vault root for the first-day walkthrough.",
+    "timestamp": 1787340856072,
+    "read": false,
+    "sound": false
+  }
+]
