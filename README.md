@@ -24,6 +24,8 @@ HOB started as one researcher's daily setup and is published here so other resea
 | **Theme** (`.obsidian/themes/HOB Glass/`) | A frosted-glass Obsidian theme. |
 | **Sky Background** (`.obsidian/plugins/sky-background/`) | A small Obsidian plugin rendering a time-of-day sky behind the glass panels. |
 
+It also provide built in connection to Zotero, iOS calendar, wheater forecast and much more. 
+
 ## Required companion plugins
 
 Two pieces the dashboard depends on are **not** bundled here — install them separately:
