@@ -32,20 +32,21 @@ Ask the HOB-AI what HOB can do for you and it will help you can get things done!
 
 ## Plugins
 
-The 7 plugins HOB's own code actually depends on ship **pre-built inside this repo** (`.obsidian/plugins/`) — Dataview, Templater, QuickAdd, Full Calendar, Sky Background, [llm-wiki](https://github.com/domleca/llm-wiki) (Ask-AI search — not in Obsidian's official registry, which is why it's bundled rather than linked), and [HOB's `home-tab` fork](https://github.com/Bendlexane/obsidian-home-tab) (folder search + Ask-AI Enter routing, a maintained fork of [olrenso/obsidian-home-tab](https://github.com/olrenso/obsidian-home-tab), used **instead of** the stock plugin, not alongside it). They activate the moment you turn on community plugins — nothing else to install for the dashboard to work.
+The 8 plugins HOB's own code actually depends on ship **pre-built inside this repo** (`.obsidian/plugins/`) — Dataview, Templater, QuickAdd, Full Calendar, Sky Background, [Make.md](https://github.com/Make-md/makemd) (folder notes, stickers and the Spaces navigator), [llm-wiki](https://github.com/domleca/llm-wiki) (Ask-AI search — not in Obsidian's official registry, which is why it's bundled rather than linked), and [HOB's `home-tab` fork](https://github.com/Bendlexane/obsidian-home-tab) (folder search + Ask-AI Enter routing, a maintained fork of [olrenso/obsidian-home-tab](https://github.com/olrenso/obsidian-home-tab), used **instead of** the stock plugin, not alongside it). They activate the moment you turn on community plugins — nothing else to install for the dashboard to work.
 
-Everything else in `.obsidian/community-plugins.json` (Zotero connector, PDF++, Git, and other supporting plugins) is optional — Obsidian will offer to install each one from its own browser, on your call.
+`.obsidian/community-plugins.json` lists exactly those eight and nothing else, so a fresh clone starts clean. Anything else you want (Zotero connector, PDF++, Git, and so on) installs the normal way from Obsidian's own plugin browser.
 
 ## Setup
 
 1. Clone this repo and open it as a vault: `File → Open vault → /path/to/HOB`
-2. Obsidian will prompt about community plugins being present — turn them on (Settings → Community plugins). That's it for the plugins covered above; install any of the optional ones you also want.
-3. Copy both env files and fill them in:
+2. Open **GET STARTED** in the vault root, or click the link in the welcome card on the dashboard. It walks through the first day.
+3. Obsidian will prompt about community plugins being present — turn them on (Settings → Community plugins). That's it for the plugins covered above; install any of the optional ones you also want.
+4. Copy both env files and fill them in:
    ```bash
    cp .env.example .env                          # read by Templater/dataviewjs (AI_URL, CROSSREF_MAILTO, ...)
    cp _scripts/.env.example _scripts/.env         # read by the Python automations (VAULT_ROOT, ZOTERO_DB, ...)
    ```
-4. Set up the Python side:
+5. Set up the Python side:
    ```bash
    cd _scripts
    python3 -m venv venv && source venv/bin/activate
@@ -71,4 +72,4 @@ MIT — see [LICENSE](LICENSE). This covers the vault structure, theme, plugin, 
 - Theme and dashboard originally built around [Obsidian](https://obsidian.md/) — HOB is an independent toolkit that runs on top of the stock app, not a modified build of it.
 - `home-tab` fork based on [olrenso/obsidian-home-tab](https://github.com/olrenso/obsidian-home-tab) (MIT) by Lorenzo.
 - Ask-AI search powered by [llm-wiki](https://github.com/domleca/llm-wiki) (MIT) by Dominique Leca.
-- Bundled, unmodified: [Dataview](https://github.com/blacksmithgu/obsidian-dataview), [Templater](https://github.com/SilentVoid13/Templater), [QuickAdd](https://github.com/chhoumann/quickadd), [Full Calendar](https://github.com/obsidian-community/obsidian-full-calendar) — each MIT-licensed, credit to their respective authors.
+- Bundled, unmodified: [Dataview](https://github.com/blacksmithgu/obsidian-dataview), [Templater](https://github.com/SilentVoid13/Templater), [QuickAdd](https://github.com/chhoumann/quickadd), [Full Calendar](https://github.com/obsidian-community/obsidian-full-calendar), [Make.md](https://github.com/Make-md/makemd) — each MIT-licensed, credit to their respective authors.
