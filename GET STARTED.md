@@ -15,6 +15,70 @@ A day-one guide to HOB. The [README](README.md) covers installation; this note c
 
 Everything else can wait. HOB is usable as a plain vault before a single script runs.
 
+## Two things HOB does not set up for you
+
+These are the two most common surprises, so they are worth doing early.
+
+### Versioning is not automatic
+
+HOB arrives as a git repository, but that repository is the *template*. Its `origin` points at the HOB repo, not at anything of yours, and nothing commits on your behalf. So out of the box your notes have no backup and no history.
+
+Point it somewhere of your own before you write anything you care about.
+
+```bash
+git -C /path/to/your/vault remote remove origin
+git -C /path/to/your/vault remote add origin git@github.com:you/your-vault.git
+```
+
+If you downloaded HOB as a zip rather than cloning it, there is no repository at all. Run `git init` first. The Vault Status card reads "Not versioned" whenever that is the case, so you can tell at a glance.
+
+For automatic timestamped snapshots, install the **Obsidian Git** community plugin. It is not bundled because it is in Obsidian's official registry and installs in two clicks. Set it to commit on an interval and your vault backs itself up while you work.
+
+One warning worth repeating. A research vault holds unpublished work, reviews under confidentiality, and personal data about collaborators. Keep that remote private.
+
+### The AI features need Ollama
+
+Two features talk to a language model, the Ask-AI search bar and the AI helper card. Neither works until Ollama is installed. Everything else in HOB works without it.
+
+This is the part HOB cannot do for you, so here is the whole thing.
+
+**1. Install Ollama.** Download it from [ollama.com](https://ollama.com), or on macOS run `brew install ollama`. Then start it, either by opening the app or with `ollama serve` in a terminal. It listens on `http://localhost:11434`.
+
+**2. Pull the embedding model.** The Ask-AI search builds a semantic index of your notes and needs this one regardless of which chat model you pick.
+
+```bash
+ollama pull nomic-embed-text
+```
+
+**3. Pick a chat model.** Two routes, and you can change your mind later.
+
+*Hosted, more capable.* `gpt-oss:120b-cloud` runs on Ollama's servers, so it needs a free account but no GPU of your own. This is what HOB ships pointing at.
+
+```bash
+ollama signin
+ollama pull gpt-oss:120b-cloud
+```
+
+*Local, fully offline.* Slower and less capable, but nothing leaves your machine and no account is involved. Good if your notes are sensitive.
+
+```bash
+ollama pull qwen2.5:7b
+```
+
+**4. Check it worked.**
+
+```bash
+ollama list
+```
+
+The model you pulled should appear. Hosted models show a size of `-` because they are not stored locally.
+
+**5. Tell HOB which model to use.** Set `AI_MODEL` in the vault-root `.env`, and put the same name in LLM Wiki's settings under Settings, Community plugins, LLM Wiki. If you went local, both become `qwen2.5:7b`. `AI_URL` only needs changing if Ollama is not on the default port, or if you are pointing at some other Ollama-compatible server.
+
+Reopen `_HOME` afterwards. If something is still off, the helper card now names the cause rather than just failing, so it will say whether the server is unreachable or the model is missing.
+
+Being honest about where this stands: HOB is beta, and this is the one part that is not out of the box.
+
 ## Where things go
 
 Put a note in the folder matching the *stage of work*, not the topic. Click any folder in the sidebar to open its hub note, which explains what belongs there.
@@ -68,7 +132,8 @@ That is usually configuration, not breakage.
 | KPI Analytics says "not collected yet" | Run `python3 _scripts/kpi/collector.py` from the vault root. |
 | No journal papers | `CROSSREF_MAILTO` is missing from `.env`. |
 | Calendar is empty | No calendar sources yet. Add them in Full Calendar's settings. |
-| Ask AI answers nothing | It talks to a local Ollama. Start it, or point LLM Wiki at another provider in its settings. |
+| Ask AI answers nothing | Ollama is not running, or a model is not pulled. See the Ollama guide above. |
+| Vault Status says "Not versioned" | The vault is not a git repository yet. See the versioning section above. |
 
 ## Making it yours
 

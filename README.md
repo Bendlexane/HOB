@@ -57,6 +57,23 @@ The 8 plugins HOB's own code actually depends on ship **pre-built inside this re
    python3 ops/health_check.py --no-write   # smoke test
    ```
 
+6. The AI features (Ask-AI search, AI helper card) need [Ollama](https://ollama.com) with a chat model and `nomic-embed-text` for the semantic index. Nothing else in HOB depends on it. **GET STARTED** has the full walkthrough, including the free hosted-model route.
+
+## Versioning
+
+HOB ships as a git repository, but that repository is the template. Cloning it leaves `origin` pointing at this repo, and nothing commits on your behalf, so a fresh vault has no backup and no history of its own.
+
+Repoint the remote before you write anything you care about, and keep it private. A research vault holds unpublished work, confidential reviews, and personal data about collaborators.
+
+```bash
+git -C /path/to/your/vault remote remove origin
+git -C /path/to/your/vault remote add origin git@github.com:you/your-vault.git
+```
+
+Downloaded the zip instead of cloning? There is no repository at all, so run `git init` first. The dashboard's Vault Status card reads "Not versioned" whenever that is the case.
+
+For automatic snapshots, install the **Obsidian Git** community plugin. It is not bundled because it installs in two clicks from Obsidian's own registry.
+
 **macOS only.** The scheduler is built on `launchd`; the Python scripts themselves are portable, but running them under cron/systemd on Linux is untested.
 
 ## Folder layout

@@ -19,6 +19,27 @@ const store = {
   removeItem: k => window.localStorage.removeItem(VAULT_NS + k),
 };
 
+// The AI helper talks to whatever Ollama-compatible endpoint .env points at,
+// so the model is a setting rather than something baked into this note.
+let _envCache = null;
+async function vaultEnv(){
+  if (_envCache) return _envCache;
+  try {
+    const base = app.vault.adapter.basePath || app.vault.adapter.getBasePath();
+    const U = require(`${base}/_scripts/lib/templater-utils.js`);
+    _envCache = (await U.loadEnv()) || {};
+  } catch (e) { _envCache = {}; }
+  return _envCache;
+}
+const AI_DEFAULT_HOST  = 'http://localhost:11434';
+const AI_DEFAULT_MODEL = 'gpt-oss:120b-cloud';
+async function aiConfig(){
+  const env = await vaultEnv();
+  let host = AI_DEFAULT_HOST;
+  if (env.AI_URL) { try { const u = new URL(env.AI_URL); host = u.origin; } catch (e) {} }
+  return { host, model: env.AI_MODEL || AI_DEFAULT_MODEL };
+}
+
 const NAME_KEY = 'home-user-name';
 let NAME = store.getItem(NAME_KEY) ?? 'Researcher';
 const DAYS_AHEAD = 45;
@@ -641,16 +662,22 @@ async function handleSendMessage() {
   thinkingDiv.setText("thinking...");
   chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
   
+  const { host: AI_HOST, model: AI_MODEL } = await aiConfig();
   try {
-    const statusText = await app.vault.adapter.read("_meta/IMPLEMENTATION_STATUS.md");
-    const sysPrompt = `You are a helpful assistant for the Research Vault. Use the following implementation status document to answer the user's questions about the software, script execution schedules, and configuration. Respond in the same language as the user. Keep your responses concise, precise, and user-friendly.\n\n${statusText}`;
-    
+    // The status document is optional. A vault that has not written one yet
+    // should still get a usable assistant, not a failure blamed on Ollama.
+    let statusText = '';
+    try { statusText = await app.vault.adapter.read("_meta/IMPLEMENTATION_STATUS.md"); } catch (e) {}
+    const sysPrompt = statusText
+      ? `You are a helpful assistant for this research vault. Use the following implementation status document to answer the user's questions about the software, script execution schedules, and configuration. Respond in the same language as the user. Keep your responses concise, precise, and user-friendly.\n\n${statusText}`
+      : `You are a helpful assistant for this research vault, built on the HOB toolkit. Answer questions about the vault's folders, templates, scripts and dashboard. Respond in the same language as the user. Keep your responses concise, precise, and user-friendly.`;
+
     const response = await requestUrl({
-      url: 'http://localhost:11434/api/chat',
+      url: `${AI_HOST}/api/chat`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'gpt-oss:120b-cloud',
+        model: AI_MODEL,
         messages: [
           { role: 'system', content: sysPrompt },
           ...chatHistory
@@ -668,8 +695,17 @@ async function handleSendMessage() {
     chatHistory.push({ role: 'assistant', content: reply });
   } catch (err) {
     thinkingDiv.remove();
-    appendMessage('assistant', "⚠️ Error communicating with Ollama. Make sure Ollama is running with the `gpt-oss:120b-cloud` model.");
-    console.error("Chatbot Ollama error:", err);
+    const detail = String(err && (err.message || err));
+    let msg;
+    if (/ECONNREFUSED|Failed to fetch|net::ERR/i.test(detail)) {
+      msg = `⚠️ No AI server answering at ${AI_HOST}.\n\nThe helper needs Ollama running locally. Install it from ollama.com, then run \`ollama pull ${AI_MODEL}\` once and \`ollama serve\`.`;
+    } else if (/model|not found|404/i.test(detail)) {
+      msg = `⚠️ Ollama is running but does not have the \`${AI_MODEL}\` model.\n\nRun \`ollama pull ${AI_MODEL}\`, or point AI_MODEL in the vault-root .env at a model you already have.`;
+    } else {
+      msg = `⚠️ The AI helper could not answer.\n\n${detail}`;
+    }
+    appendMessage('assistant', msg);
+    console.error("Chatbot error:", err);
   }
 }
 
@@ -704,12 +740,21 @@ function updateVaultStatus() {
     } else {
       const { execSync } = require('child_process');
       const vaultRoot = app.vault.adapter.getBasePath();
-      const gitTime = execSync('git log -1 --format="%cd" --date=relative', { cwd: vaultRoot }).toString().trim();
+      try {
+        execSync('git rev-parse --is-inside-work-tree', { cwd: vaultRoot, stdio: 'pipe' });
+      } catch (notARepo) {
+        // A vault downloaded as an archive, or never initialised, has no
+        // history at all. Say that rather than showing a stale timestamp.
+        gitStatusVal = "● Not versioned";
+        gitColor = "#e0a030";
+        throw notARepo;
+      }
+      const gitTime = execSync('git log -1 --format="%cd" --date=relative', { cwd: vaultRoot, stdio: 'pipe' }).toString().trim();
       gitStatusVal = `● ${gitTime}`;
       gitColor = "#27ae60"; // Vibrant Green
     }
   } catch (e) {
-    console.error("Git status check failed", e);
+    if (gitStatusVal !== "● Not versioned") console.debug("Git status check failed", e);
   }
 
   let llmWikiStatus = "Never";
