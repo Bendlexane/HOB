@@ -1,0 +1,9 @@
+/* Reading mode: justified paragraphs. */
+.markdown-preview-view p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* NOTE: justify is intentionally NOT applied to .cm-line (Live Preview /
+   source view). text-align: justify on CodeMirror lines breaks cursor and
+   placeholder positioning, causing ghosting/overlap while typing. */

@@ -1,0 +1,5 @@
+/* Editor line width — Obsidian default is 700px, too narrow for the
+   three-column _HOME dashboard. */
+body {
+  --file-line-width: 1250px;
+}

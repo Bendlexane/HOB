@@ -1,1 +1,15 @@
-{}
+{
+  "theme": "system",
+  "cssTheme": "HOB Glass",
+  "accentColor": "#bababa",
+  "showRibbon": true,
+  "translucency": true,
+  "interfaceFontFamily": "Outfit",
+  "textFontFamily": "Outfit",
+  "baseFontSize": 18,
+  "baseFontSizeAction": true,
+  "enabledCssSnippets": [
+    "context_width",
+    "justify"
+  ]
+}

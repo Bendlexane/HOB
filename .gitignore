@@ -24,6 +24,13 @@ node_modules/
 .obsidian/workspace-mobile.json
 .obsidian/cache
 .trash/
+# Full Calendar CalDAV settings hold plaintext account passwords, so they never ship.
+.obsidian/plugins/obsidian-full-calendar/data.json
+# llm-wiki local embeddings cache (large, machine-specific)
+.obsidian/plugins/llm-wiki/embeddings-cache.json
+# Make.md rebuilds these caches on open; they hold local indexing state.
+.makemd/fileCache.mdc
+.makemd/superstate.mdc
 
 # ── PDFs — live in Zotero, not in the vault ─────────────────────────────
 *.pdf

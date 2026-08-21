@@ -1,1 +1,21 @@
-{}
+{
+  "userIgnoreFilters": [
+    "wiki/"
+  ],
+  "openBehavior": "file:_HOME",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "00_STAGING/_daily",
+  "attachmentFolderPath": "_attachments",
+  "alwaysUpdateLinks": true,
+  "showUnsupportedFiles": true,
+  "showLineNumber": false,
+  "propertiesInDocument": "visible",
+  "foldHeading": true,
+  "pdfExportSettings": {
+    "includeName": true,
+    "pageSize": "A4",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
+}
