@@ -12,8 +12,8 @@ This directory houses configuration files and static registries used as metadata
 ### 1. `actions-registry.json`
 - **Purpose**: The single source of truth for vault-wide quick actions. 
 - **Consumed by**:
-  1. **Dashboard Launcher**: The quick actions grid rendered in the main dashboard ([`_HOME.md`](_HOME.md)).
-  2. **Templater Suggester**: The multi-step launcher workspace command picker ([`_templates/actions.md`](_templates/actions.md)).
+  1. **Dashboard Launcher**: The quick actions grid rendered in the main dashboard ([`_HOME.md`](../../_HOME.md)).
+  2. **Templater Suggester**: The multi-step launcher workspace command picker ([`_templates/actions.md`](../../_templates/actions.md)).
 - **Editing Guidelines**: If you add a new template script in `_scripts/templates/`, you must declare it here under its corresponding category block for it to appear in the launchers.
 
 ### 2. `templater-utils.js`

@@ -1,11 +1,19 @@
 # Core dependencies for _scripts/.
-# Most of the pipeline is stdlib (sqlite3, pathlib, json, urllib) — only Excel
-# export needs external packages. Audio transcription has its own optional
-# file: requirements-transcription.txt.
+# Most of the pipeline is stdlib (sqlite3, pathlib, json, urllib) — only a
+# few external packages are actually needed. Audio transcription has its
+# own optional file: requirements-transcription.txt.
 
 # Excel export (kpi/database.py export)
 pandas>=2.0
 openpyxl>=3.1
+
+# YAML frontmatter schemas (ops/checks/frontmatter_lint.py) and .yaml
+# config reads (funding_runway.py, refresh_gantt.py, grant_transition.py)
+pyyaml>=6.0
+jsonschema>=4.0
+
+# Bayesian Gantt forecasting (ml/posterior.py, Student-t posterior predictive)
+scipy>=1.10
 
 # Optional: for development
 # pytest>=8

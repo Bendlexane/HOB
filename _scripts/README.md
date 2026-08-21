@@ -65,6 +65,5 @@ See `.env.example` for the full list.
 
 ## References
 
-- Architecture: [VAULT_ARCHITECTURE.md](05_ADMIN/missions/conferences/2026-08_uppsala_sweden/_mission.md)
-- Machine-readable spec: [AGENTS.md](_meta/AGENTS.md)
-- User guide: [USER_GUIDE.md](USER_GUIDE.md)
+- Root [README.md](../README.md) for the vault-level overview and setup steps.
+- Each subfolder here (`kpi/`, `automation/`, `cron/`, `lib/`, `ml/`, `ops/`) has its own README with a script-by-script breakdown.
