@@ -30,19 +30,16 @@ It also provide built in connection to Zotero, iOS calendar, weather forecast an
 
 Ask the HOB-AI what HOB can do for you and it will help you can get things done! 
 
-## Required companion plugins
+## Plugins
 
-Two pieces the dashboard depends on are **not** bundled here — install them separately:
+The 7 plugins HOB's own code actually depends on ship **pre-built inside this repo** (`.obsidian/plugins/`) — Dataview, Templater, QuickAdd, Full Calendar, Sky Background, [llm-wiki](https://github.com/domleca/llm-wiki) (Ask-AI search — not in Obsidian's official registry, which is why it's bundled rather than linked), and [HOB's `home-tab` fork](https://github.com/Bendlexane/obsidian-home-tab) (folder search + Ask-AI Enter routing, a maintained fork of [olrenso/obsidian-home-tab](https://github.com/olrenso/obsidian-home-tab), used **instead of** the stock plugin, not alongside it). They activate the moment you turn on community plugins — nothing else to install for the dashboard to work.
 
-- **[llm-wiki](https://github.com/domleca/llm-wiki)** — local semantic search over your vault, powers the dashboard's Ask-AI search bar. Install from Obsidian's Community Plugins browser.
-- **[HOB's `home-tab` fork](https://github.com/Bendlexane/obsidian-home-tab)** — a maintained fork of [olrenso/obsidian-home-tab](https://github.com/olrenso/obsidian-home-tab) with folder search and Ask-AI Enter-key routing added. Install via [BRAT](https://github.com/TfTHacker/obsidian42-brat): `Bendlexane/obsidian-home-tab`. Use this **instead of** the stock plugin, not alongside it.
-
-Everything else community-plugin-side is listed in `.obsidian/community-plugins.json` — Obsidian will offer to install them when you open the vault.
+Everything else in `.obsidian/community-plugins.json` (Zotero connector, PDF++, Git, and other supporting plugins) is optional — Obsidian will offer to install each one from its own browser, on your call.
 
 ## Setup
 
 1. Clone this repo and open it as a vault: `File → Open vault → /path/to/HOB`
-2. Install the community plugins Obsidian prompts you for, plus the two required companions above.
+2. Obsidian will prompt about community plugins being present — turn them on (Settings → Community plugins). That's it for the plugins covered above; install any of the optional ones you also want.
 3. Copy both env files and fill them in:
    ```bash
    cp .env.example .env                          # read by Templater/dataviewjs (AI_URL, CROSSREF_MAILTO, ...)
@@ -74,3 +71,4 @@ MIT — see [LICENSE](LICENSE). This covers the vault structure, theme, plugin, 
 - Theme and dashboard originally built around [Obsidian](https://obsidian.md/) — HOB is an independent toolkit that runs on top of the stock app, not a modified build of it.
 - `home-tab` fork based on [olrenso/obsidian-home-tab](https://github.com/olrenso/obsidian-home-tab) (MIT) by Lorenzo.
 - Ask-AI search powered by [llm-wiki](https://github.com/domleca/llm-wiki) (MIT) by Dominique Leca.
+- Bundled, unmodified: [Dataview](https://github.com/blacksmithgu/obsidian-dataview), [Templater](https://github.com/SilentVoid13/Templater), [QuickAdd](https://github.com/chhoumann/quickadd), [Full Calendar](https://github.com/obsidian-community/obsidian-full-calendar) — each MIT-licensed, credit to their respective authors.
