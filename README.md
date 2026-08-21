@@ -29,7 +29,7 @@ HOB started as one researcher's daily setup and is published here so other resea
 Two pieces the dashboard depends on are **not** bundled here — install them separately:
 
 - **[llm-wiki](https://github.com/domleca/llm-wiki)** — local semantic search over your vault, powers the dashboard's Ask-AI search bar. Install from Obsidian's Community Plugins browser.
-- **HOB's `home-tab` fork** *(link coming with the beta release)* — a fork of [olrenso/obsidian-home-tab](https://github.com/olrenso/obsidian-home-tab) with folder search and Ask-AI Enter-key routing added. Install via [BRAT](https://github.com/TfTHacker/obsidian42-brat).
+- **[HOB's `home-tab` fork](https://github.com/Bendlexane/obsidian-home-tab)** — a maintained fork of [olrenso/obsidian-home-tab](https://github.com/olrenso/obsidian-home-tab) with folder search and Ask-AI Enter-key routing added. Install via [BRAT](https://github.com/TfTHacker/obsidian42-brat): `Bendlexane/obsidian-home-tab`. Use this **instead of** the stock plugin, not alongside it.
 
 Everything else community-plugin-side is listed in `.obsidian/community-plugins.json` — Obsidian will offer to install them when you open the vault.
 
