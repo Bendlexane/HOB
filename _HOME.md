@@ -1684,44 +1684,6 @@ zBtn.addEventListener('click', () => {
   exec('open -a "Zotero"');
 });
 
-// ─── Reference library QUICK LAUNCH ───
-const aaBtn = actGrid.createEl('button');
-aaBtn.className = 'home-quick-action-btn';
-aaBtn.setAttr('title', "Open Reference library");
-const aaLabel = aaBtn.createSpan({text: "Reference library"});
-aaLabel.style.cssText = 'font-weight:500 !important;font-size:.78rem !important;line-height:1 !important;';
-
-app.vault.adapter.read('.obsidian/logo/logo.svg').then(svgContent => {
-  const cleanSvg = svgContent
-    .replace(/<\?xml[^>]*\?>/g, '')
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .trim();
-  
-  const aaIcon = document.createElement('span');
-  aaIcon.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;height:16px;';
-  aaIcon.innerHTML = cleanSvg;
-  
-  const svgEl = aaIcon.querySelector('svg');
-  if (svgEl) {
-    svgEl.setAttribute('height', '16');
-    svgEl.removeAttribute('width');
-    svgEl.querySelectorAll('path').forEach(p => {
-      p.style.setProperty('fill', 'currentColor', 'important');
-    });
-    
-    aaBtn.innerHTML = '';
-    aaBtn.appendChild(aaIcon);
-  }
-}).catch(err => {
-  console.warn("Could not load Reference library logo SVG, using text fallback:", err);
-  const emoji = aaBtn.createSpan({text: '📚 '});
-  emoji.style.cssText = 'font-size:1rem !important;margin-right:0.3rem;';
-  aaBtn.prepend(emoji);
-});
-
-aaBtn.addEventListener('click', () => {
-  window.open('https://example.invalid', '_blank');
-});
 
 
 // ─── WHAT'S NEW? RSS FEEDS PIPELINE ───
@@ -2141,10 +2103,15 @@ async function loadCalendar(){
       }
     }
   }catch(err){
-    calStatus.setText('· error');
-    calBody.setText('Could not load calendar: '+err.message);
-    calBody.style.opacity='0.85';
-    calBody.style.fontSize='0.8rem';
+    // Never surface err.message here. On a vault with no calendar configured
+    // it is an ENOENT carrying the reader's absolute home path.
+    console.debug('Calendar not available', err);
+    calStatus.setText('· not connected');
+    calBody.empty();
+    const hint = calBody.createDiv();
+    hint.style.cssText = 'font-size:.82rem;color:var(--text-muted);line-height:1.6;';
+    hint.createDiv({text: 'No calendar connected yet.'}).style.cssText = 'font-weight:600;color:var(--text-normal);margin-bottom:.3rem;';
+    hint.createDiv({text: 'Add your accounts under Settings, Community plugins, Full Calendar. CalDAV works with iCloud, Google and Fastmail.'});
   }
 }
 loadCalendar();
