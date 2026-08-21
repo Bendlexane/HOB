@@ -4,7 +4,7 @@
 
 # HOB — Research Vault Toolkit
 
-**β** — A free, open-source Obsidian vault template for running a complete scientific research workflow: projects, grants, lab notes, literature, KPIs, and automation, powered by a local-first AI stack.
+**BETA VERSION** — A free, open-source Obsidian vault template acting as Research Manadgment System (RMS) for running a complete scientific research workflow: projects, grants, lab notes, writing, summaries, literature, KPIs, and automation, powered by a local-first AI stack.
 
 HOB started as one researcher's daily setup and is published here so other researchers can adopt it, break it, and improve it. It ships as a **ready-to-clone vault**, not a single plugin — most of what makes it useful (the scheduler, the Zotero pipeline, the Bayesian forecasting) runs outside Obsidian's plugin sandbox entirely.
 
@@ -23,6 +23,12 @@ HOB started as one researcher's daily setup and is published here so other resea
 | **Templates** (`_scripts/templates/`, `_templates/`) | 18 Templater templates: new project, new grant, protocol, lab note, peer review, conference/mission, and more. |
 | **Theme** (`.obsidian/themes/HOB Glass/`) | A frosted-glass Obsidian theme. |
 | **Sky Background** (`.obsidian/plugins/sky-background/`) | A small Obsidian plugin rendering a time-of-day sky behind the glass panels. |
+
+It also provide built in connection to Zotero, iOS calendar, weather forecast and much more. 
+
+## Need help?
+
+Ask the HOB-AI what HOB can do for you and it will help you can get things done! 
 
 ## Required companion plugins
 
