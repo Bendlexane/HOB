@@ -4,7 +4,7 @@
 
 # HOB — Research Vault Toolkit
 
-**BETA VERSION** — A free, open-source Obsidian vault template for running a complete scientific research workflow: projects, grants, lab notes, literature, KPIs, and automation, powered by a local-first AI stack.
+**BETA VERSION** — A free, open-source Obsidian vault template acting as Research Manadgment System (RMS) for running a complete scientific research workflow: projects, grants, lab notes, writing, summaries, literature, KPIs, and automation, powered by a local-first AI stack.
 
 HOB started as one researcher's daily setup and is published here so other researchers can adopt it, break it, and improve it. It ships as a **ready-to-clone vault**, not a single plugin — most of what makes it useful (the scheduler, the Zotero pipeline, the Bayesian forecasting) runs outside Obsidian's plugin sandbox entirely.
 
