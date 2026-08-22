@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+title: >-
+  HOB: A Free, Open-Source Obsidian-Based Research Management
+  System for Scientific Workflows
+message: If you use HOB in your work, please cite it as below.
+type: software
+authors:
+  - family-names: Tiburtini
+    given-names: Manuel
+    # orcid: "https://orcid.org/0000-0000-0000-0000"   # add yours
+repository-code: "https://github.com/Bendlexane/HOB"
+abstract: >-
+  HOB is a free and open-source Obsidian vault template acting as a
+  Research Management System for scientific workflows. It adds a
+  stage-based folder taxonomy, structured templates, a dashboard, a
+  scheduler, a Zotero pipeline, Bayesian project-duration forecasting,
+  KPI collection, self-observability checks, and a vault-aware AI layer
+  scoped to the knowledge folder. Research records remain plain Markdown
+  files on the researcher's own machine.
+keywords:
+  - research management system
+  - Obsidian
+  - local-first software
+  - Markdown
+  - research workflow automation
+  - Bayesian forecasting
+  - electronic lab notebook
+license: AGPL-3.0-or-later
+version: 1.0.0-beta
+date-released: "2026-08-22"
+# Fill both fields in after archiving the release on Zenodo, then the
+# GitHub "Cite this repository" button resolves to the DOI.
+# doi: "10.5281/zenodo.XXXXXXX"
+# identifiers:
+#   - type: doi
+#     value: "10.5281/zenodo.XXXXXXX"
+#     description: Archived release on Zenodo

@@ -123,24 +123,42 @@ AGPL-3.0 — see [LICENSE](LICENSE). This covers the vault structure, theme, the
 - Ask-AI search powered by [llm-wiki](https://github.com/domleca/llm-wiki) (MIT) by Dominique Leca, used through [HOB's fork](https://github.com/Bendlexane/llm-wiki), which adds vault scoping and an inline query API.
 - Bundled, unmodified: [Dataview](https://github.com/blacksmithgu/obsidian-dataview), [QuickAdd](https://github.com/chhoumann/quickadd), [Full Calendar](https://github.com/obsidian-community/obsidian-full-calendar) and [Make.md](https://github.com/Make-md/makemd), each MIT-licensed, plus [Templater](https://github.com/SilentVoid13/Templater), which is **AGPL-3.0**. Credit to their respective authors. Every bundled plugin ships its upstream `LICENSE` next to its build, and [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) lists version, license and source for all eight.
 
+## Citation
+
+If HOB is useful in your work, please cite it.
+
+> Tiburtini, M. (2026). *HOB: A Free, Open-Source Obsidian-Based Research Management System for Scientific Workflows* (Version 1.0-beta) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+
+```bibtex
+@software{tiburtini2026hob,
+  author   = {Tiburtini, Manuel},
+  title    = {{HOB}: A Free, Open-Source Obsidian-Based Research
+              Management System for Scientific Workflows},
+  year     = {2026},
+  version  = {1.0-beta},
+  doi      = {10.5281/zenodo.XXXXXXX},
+  url      = {https://github.com/Bendlexane/HOB},
+  license  = {AGPL-3.0}
+}
+```
+
+> **The DOI above is a placeholder.** It is filled in when the release is
+> archived on Zenodo. Until then, cite the repository URL together with the
+> commit you actually used, so the version is unambiguous.
+
 ## Final note
 
-HOB is free and open source.
+HOB is free and open source. There is no subscription and no account to
+create. The AI layer is the only part that can reach outside your machine,
+it is limited to `03_KNOWLEDGE/`, and it runs fully offline once you point it
+at a local model. Nothing else in the vault talks to the network at all.
 
-There is no subscription, no hosted service required for the core workflow, and no obligation to use every component.
+The project is still evolving, and the best way to make it better is to have
+more researchers actually use it. If you find something broken, report it. If
+you have an idea, share it. If you want to build it together, get in touch.
 
-The project is still evolving, and the best way to make it better is to have more researchers actually use it.
+---
 
-If you find HOB useful, give it a try and cite it in your papers as:
+**HOB Research Vault Toolkit**
 
-
-
-
-
-If you find something broken, report it. If you have an idea, share it. If you want to build it together, get in touch.
-
-⸻
-
-HOB Research Vault Toolkit
-
-Free · Open Source · Local-first · Built for Researchers
+Free · Open Source · Markdown-first · Built for Researchers
