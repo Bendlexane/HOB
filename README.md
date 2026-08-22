@@ -125,26 +125,28 @@ AGPL-3.0 — see [LICENSE](LICENSE). This covers the vault structure, theme, the
 
 ## Citation
 
+[![DOI](https://zenodo.org/badge/1341849307.svg)](https://doi.org/10.5281/zenodo.22059429)
+
 If HOB is useful in your work, please cite it.
 
-> Tiburtini, M. (2026). *HOB: A Free, Open-Source Obsidian-Based Research Management System for Scientific Workflows* (Version 1.0-beta) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+> Tiburtini, M. (2026). *HOB: A Free, Open-Source Obsidian-Based Research Management System for Scientific Workflows* [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22059429
 
 ```bibtex
 @software{tiburtini2026hob,
-  author   = {Tiburtini, Manuel},
-  title    = {{HOB}: A Free, Open-Source Obsidian-Based Research
-              Management System for Scientific Workflows},
-  year     = {2026},
-  version  = {1.0-beta},
-  doi      = {10.5281/zenodo.XXXXXXX},
-  url      = {https://github.com/Bendlexane/HOB},
-  license  = {AGPL-3.0}
+  author  = {Tiburtini, Manuel},
+  title   = {{HOB}: A Free, Open-Source Obsidian-Based Research
+             Management System for Scientific Workflows},
+  year    = {2026},
+  doi     = {10.5281/zenodo.22059429},
+  url     = {https://github.com/Bendlexane/HOB},
+  license = {AGPL-3.0-or-later}
 }
 ```
 
-> **The DOI above is a placeholder.** It is filled in when the release is
-> archived on Zenodo. Until then, cite the repository URL together with the
-> commit you actually used, so the version is unambiguous.
+The DOI above is the concept DOI: it always resolves to the most recent
+release, so a citation using it does not go stale. To cite the exact code
+behind a result, use the DOI of that specific release instead, listed on the
+[Zenodo record](https://doi.org/10.5281/zenodo.22059429).
 
 ## Final note
 

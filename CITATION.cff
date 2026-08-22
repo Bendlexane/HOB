@@ -28,10 +28,12 @@ keywords:
 license: AGPL-3.0-or-later
 version: 1.0.0-beta
 date-released: "2026-08-22"
-# Fill both fields in after archiving the release on Zenodo, then the
-# GitHub "Cite this repository" button resolves to the DOI.
-# doi: "10.5281/zenodo.XXXXXXX"
-# identifiers:
-#   - type: doi
-#     value: "10.5281/zenodo.XXXXXXX"
-#     description: Archived release on Zenodo
+# Concept DOI: always resolves to the latest archived release.
+doi: "10.5281/zenodo.22059429"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22059429"
+    description: Concept DOI, resolves to the latest release
+  - type: doi
+    value: "10.5281/zenodo.22059430"
+    description: Archived release 1.0.0-beta
