@@ -4,7 +4,9 @@ tags:
   - hob/docs
 ---
 
-A day-one guide to HOB. The [README](README.md) covers installation; this note covers what to actually do once the vault opens.
+A day-one guide to HOB. The [README](README.md) covers installation, this note covers setup and reference.
+
+For a look around the dashboard itself, take the guided tour instead. It runs once after the welcome card on `_HOME`, and the **Take the tour** button at the bottom of the Vault Status card replays it whenever you want. The tour explains what each card does; this note holds the commands, which are easier to copy from a page than from a tooltip.
 
 ## First ten minutes
 

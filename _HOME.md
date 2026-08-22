@@ -330,21 +330,29 @@ dateline.style.cssText = 'opacity:0.85;font-size:0.9rem;margin-top:0.35rem;text-
 
 // Bottom header row (Weather on left, Notifications on right under the clock)
 const headerBottomRow = banner.createDiv();
-headerBottomRow.style.cssText = 'position:relative;z-index:1;display:flex;justify-content:space-between;align-items:start;gap:2rem;margin-top:1.25rem;flex-wrap:wrap;';
+headerBottomRow.style.cssText = 'position:relative;z-index:1;display:flex;align-items:flex-start;gap:2rem;margin-top:1.25rem;flex-wrap:wrap;';
+
+// Left column: weather, with the sticky notes stacked directly underneath it.
+// Keeping them in a column means the notes sit beside the notification panel
+// rather than below its full height.
+const headerLeftCol = headerBottomRow.createDiv();
+headerLeftCol.style.cssText = 'flex:1 1 320px;min-width:0;display:flex;flex-direction:column;';
 
 // Weather cards row (inside bottom row)
-const wx = headerBottomRow.createDiv();
+const wx = headerLeftCol.createDiv();
 wx.style.cssText = 'display:flex;gap:0.75rem;flex-wrap:wrap;flex:0 0 auto;align-items:stretch;';
 
 // Sticky Notes slot (fills the gap between weather and notifications)
-const stickySlot = headerBottomRow.createDiv();
+const stickySlot = headerLeftCol.createDiv();
 stickySlot.className = 'home-banner-sticky-notes';
-stickySlot.style.cssText = 'flex:1;display:flex;justify-content:center;align-items:flex-start;min-width:200px;';
+// Scrolls sideways rather than wrapping, so more notes never push the search
+// bar down the page.
+stickySlot.style.cssText = 'position:relative;z-index:4;display:none;margin-top:1rem;overflow-x:auto;overflow-y:hidden;padding-bottom:.35rem;';
 
 // Notification Center slot (inside bottom row, float right, max width)
 const notiSlot = headerBottomRow.createDiv();
 notiSlot.className = 'home-banner-notifications';
-notiSlot.style.cssText = 'position:relative;z-index:5;flex:1;min-width:320px;max-width:480px;display:none;';
+notiSlot.style.cssText = 'position:relative;z-index:5;flex:0 1 480px;min-width:280px;max-width:480px;margin-left:auto;display:none;';
 
 // Search Bar slot
 const searchSlot = banner.createDiv();
@@ -393,15 +401,22 @@ if (!store.getItem(ONBOARD_KEY) && !store.getItem(NAME_KEY) && !getLoc()) {
 
   const obFoot = ob.createDiv();
   obFoot.style.cssText = 'font-size:.75rem;color:var(--text-faint);margin-top:.7rem;';
-  const obLink = obFoot.createEl('a', {text:'Read GET STARTED'});
+  obFoot.createSpan({text:'Next comes a short tour of the dashboard. For the setup commands, Ollama and git included, see '});
+  const obLink = obFoot.createEl('a', {text:'GET STARTED'});
   obLink.style.cssText = 'color:var(--text-accent);cursor:pointer;text-decoration:none;';
   obLink.addEventListener('click', (ev) => {
     ev.preventDefault();
     app.workspace.openLinkText('GET STARTED', '', true);
   });
-  obFoot.createSpan({text:' for what each folder is for and which scripts to run first.'});
+  obFoot.createSpan({text:'.'});
 
-  const finish = () => { store.setItem(ONBOARD_KEY, '1'); ob.remove(); };
+  const finish = () => {
+    store.setItem(ONBOARD_KEY, '1');
+    ob.remove();
+    // The tour is how a new reader learns the dashboard, so lead into it
+    // once, right after the two questions.
+    if (!store.getItem(TOUR_KEY)) window.setTimeout(startTour, 350);
+  };
 
   obSave.addEventListener('click', () => {
     const n = obName.value.trim();
@@ -2415,14 +2430,15 @@ async function _saveStickyNotes(notes) {
 async function renderStickyNotes() {
   const notes = await _loadStickyNotes();
   stickySlot.empty();
-  if (!notes.length) return;
+  if (!notes.length) { stickySlot.style.display = 'none'; return; }
+  stickySlot.style.display = 'block';
 
   const grid = stickySlot.createDiv();
-  grid.style.cssText = `display:grid;grid-template-columns:repeat(${STICKY_COLS}, ${STICKY_CARD_W}px);gap:${STICKY_GAP}px;max-width:${STICKY_COLS * STICKY_CARD_W + (STICKY_COLS - 1) * STICKY_GAP}px;`;
+  grid.style.cssText = `display:flex;gap:${STICKY_GAP}px;width:max-content;`;
 
   for (const note of notes) {
     const card = grid.createDiv();
-    card.style.cssText = `background:var(--vault-glass-card);backdrop-filter:var(--vault-blur);-webkit-backdrop-filter:var(--vault-blur);border:0.5px solid var(--vault-glass-border);border-radius:14px;padding:1rem 1.1rem;height:${STICKY_CARD_H}px;display:flex;flex-direction:column;cursor:pointer;position:relative;box-shadow:0 4px 16px rgba(0,0,0,0.12);`;
+    card.style.cssText = `background:var(--vault-glass-card);backdrop-filter:var(--vault-blur);-webkit-backdrop-filter:var(--vault-blur);border:0.5px solid var(--vault-glass-border);border-radius:14px;padding:1rem 1.1rem;flex:0 0 ${STICKY_CARD_W}px;height:${STICKY_CARD_H}px;display:flex;flex-direction:column;cursor:pointer;position:relative;box-shadow:0 4px 16px rgba(0,0,0,0.12);`;
 
     const closeBtn = card.createEl('button', {text:'×'});
     closeBtn.setAttr('aria-label','Delete note');
@@ -2525,6 +2541,214 @@ async function addStickyNote() {
 window.__addStickyNote = addStickyNote;
 
 
+
+// ─── GUIDED TOUR ───
+// A first-run walkthrough of the dashboard. Orientation lives here, where the
+// thing being explained is on screen; the setup commands stay in GET STARTED,
+// where they can be copied.
+const TOUR_KEY = 'home-tour-done';
+
+const TOUR_STEPS = [
+  { get: () => title, side: 'bottom',
+    head: 'Start here',
+    body: 'The greeting is clickable. Click your name to change it, and the line underneath to set the city used for weather.' },
+
+  { get: () => document.querySelector('.mk-space-body') || document.querySelector('.nav-files-container'), side: 'right',
+    head: 'Folders are stages, not subjects',
+    body: 'The numbers order the workflow. A note lives where the work currently is, and moves on as it matures. Click a folder to open its hub note.',
+    list: [
+      ['00_STAGING',     'The inbox. Daily notes, downloads, raw ideas. Nothing stays here.'],
+      ['01_PROJECTS',    'One folder per active project. Where the day-to-day work happens.'],
+      ['02_GRANTS',      'Proposals moving through writing, submitted, active, archive.'],
+      ['03_KNOWLEDGE',   'Literature, concepts, methods, protocols. What the AI indexes.'],
+      ['04_PEOPLE',      'Students, collaborators, and the coauthor registry. No science here.'],
+      ['05_ADMIN',       'Bureaucracy, missions, certificates, CV material.'],
+      ['06_PLANNING',    'KPIs, monthly plans, annual reports.'],
+      ['07_INNOVATION',  'Changes to the system itself. Retrospectives, tech radar.'],
+      ['08_TEACHING',    'Courses, seminars, teaching materials.'],
+      ['09_PEER_REVIEWS','Reviews you are doing for journals. Gitignored by default.'],
+      ['99_ARCHIVE',     'Published projects, moved here automatically.'],
+    ] },
+
+  { get: () => searchSlot, side: 'bottom',
+    head: 'One bar, two jobs',
+    body: 'Type part of a filename to jump straight to it. Type a question and press Enter to ask the AI about your notes instead.' },
+
+  { get: () => act, side: 'bottom',
+    head: 'Vault Actions',
+    body: 'Each button opens a menu of templates. They do not just create a file, they build the folders, the frontmatter and the links, so the structure stays consistent without you thinking about it.',
+    list: [
+      ['📓 Notes',       'Post-it, idea, lab note, protocol.'],
+      ['📄 Publications','New project, journal submission round, LaTeX abstract.'],
+      ['🔍 Peer Review', 'A review workspace, and further rounds on it.'],
+      ['💰 Grants',      'A new grant, tracked through its lifecycle.'],
+      ['✈️ Missions',    'Conference or fieldwork workspace.'],
+      ['⚙️ System',      'PDF to markdown, audio transcription, LaTeX export, file recovery, collaborators.'],
+      ['Z Zotero',       'Opens your reference manager.'],
+    ] },
+
+  { get: () => kpiCard, side: 'right',
+    head: 'KPI Analytics',
+    body: 'What you read, annotate and write, collected nightly once the scheduler is installed. Empty until the vault has some activity to measure.' },
+
+  { get: () => rssCard, side: 'top',
+    head: "What's new?",
+    body: 'Recent papers from bioRxiv, PubMed, and any journal you add by ISSN with the + chip. One journal ships as a worked example.' },
+
+  { get: () => cal, side: 'left',
+    head: 'Calendar',
+    body: 'Your own calendars, over CalDAV. Add the accounts under Settings, Community plugins, Full Calendar. Nothing is configured out of the box.' },
+
+  { get: () => chatCard, side: 'left',
+    head: 'The AI helper',
+    body: 'Ask questions about the vault itself. It needs Ollama running locally, which is the one part HOB cannot set up for you. GET STARTED walks through it.' },
+
+  { get: () => statusCard, side: 'left',
+    head: 'Vault Status',
+    body: 'Whether the automations ran, and whether the vault is under version control. A clone is not versioned until you point it at a remote of your own.' },
+
+  { get: () => null,
+    head: 'That is the tour',
+    body: 'GET STARTED in the vault root has the setup details, Ollama and git versioning included. You can replay this tour any time from the Vault Status card.' },
+];
+
+function startTour(){
+  if (document.getElementById('hob-tour')) return;
+  let i = 0;
+
+  const ov = document.body.createDiv();
+  ov.id = 'hob-tour';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:9999;';
+
+  const ring = ov.createDiv();
+  ring.style.cssText = 'position:absolute;border-radius:14px;box-shadow:0 0 0 9999px rgba(8,10,20,0.66);pointer-events:none;border:1.5px solid rgba(255,255,255,0.5);';
+
+  const tip = ov.createDiv();
+  tip.style.cssText = 'position:absolute;width:360px;max-height:80vh;overflow-y:auto;background:var(--vault-glass-strong, rgba(30,34,52,0.97));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--vault-glass-border, rgba(255,255,255,0.18));border-radius:16px;padding:1rem 1.15rem;box-shadow:0 16px 48px rgba(0,0,0,0.45);color:var(--text-normal);';
+
+  const finish = () => {
+    store.setItem(TOUR_KEY, '1');
+    ov.remove();
+    window.removeEventListener('keydown', onKey);
+    window.removeEventListener('resize', place);
+    window.removeEventListener('scroll', place, true);
+  };
+  const onKey = e => {
+    if (e.key === 'Escape') { e.preventDefault(); finish(); }
+    else if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); go(i + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
+  };
+  window.addEventListener('keydown', onKey);
+  // Recompute on every scroll and resize. Measuring once is what puts the
+  // highlight on the wrong element when anything moves underneath it.
+  window.addEventListener('resize', place);
+  window.addEventListener('scroll', place, true);
+  ov.addEventListener('click', ev => { if (ev.target === ov) finish(); });
+
+  let target = null;
+
+  function place(){
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const tw = tip.offsetWidth, th = tip.offsetHeight, gap = 14, pad = 8;
+
+    if (!target || !target.isConnected) {
+      ring.style.width = '0px'; ring.style.height = '0px';
+      ring.style.top = (vh / 2) + 'px'; ring.style.left = (vw / 2) + 'px';
+      tip.style.top = Math.max(10, (vh - th) / 2) + 'px';
+      tip.style.left = ((vw - tw) / 2) + 'px';
+      return;
+    }
+
+    const r = target.getBoundingClientRect();
+    ring.style.top    = (r.top - pad) + 'px';
+    ring.style.left   = (r.left - pad) + 'px';
+    ring.style.width  = (r.width + pad * 2) + 'px';
+    ring.style.height = (r.height + pad * 2) + 'px';
+
+    // Try the preferred side, then its opposite, then whatever fits. The card
+    // must never sit on top of the thing it is describing.
+    const fits = {
+      bottom: vh - r.bottom - gap >= th,
+      top:    r.top - gap >= th,
+      right:  vw - r.right - gap >= tw,
+      left:   r.left - gap >= tw,
+    };
+    const opposite = { bottom:'top', top:'bottom', right:'left', left:'right' };
+    const pref = TOUR_STEPS[i].side || 'bottom';
+    const side = fits[pref] ? pref
+               : fits[opposite[pref]] ? opposite[pref]
+               : (['bottom','top','right','left'].find(s => fits[s]) || pref);
+
+    let top, left;
+    if (side === 'right')     { left = r.right + gap;    top = r.top; }
+    else if (side === 'left') { left = r.left - tw - gap; top = r.top; }
+    else if (side === 'top')  { left = r.left; top = r.top - th - gap; }
+    else                      { left = r.left; top = r.bottom + gap; }
+
+    tip.style.top  = Math.min(Math.max(top, 10), Math.max(10, vh - th - 10)) + 'px';
+    tip.style.left = Math.min(Math.max(left, 10), Math.max(10, vw - tw - 10)) + 'px';
+  }
+
+  function go(n){
+    if (n < 0) return;
+    if (n >= TOUR_STEPS.length) { finish(); return; }
+    i = n;
+    const step = TOUR_STEPS[i];
+    target = (() => { try { return step.get(); } catch (e) { return null; } })();
+
+    tip.empty();
+    const h = tip.createDiv({ text: step.head });
+    h.style.cssText = 'font-weight:700;font-size:1rem;margin-bottom:.4rem;';
+    const b = tip.createDiv({ text: step.body });
+    b.style.cssText = 'font-size:.83rem;line-height:1.55;color:var(--text-muted);';
+
+    if (step.list) {
+      const ul = tip.createDiv();
+      ul.style.cssText = 'display:flex;flex-direction:column;gap:.3rem;margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--vault-glass-border, rgba(255,255,255,0.14));';
+      for (const [label, desc] of step.list) {
+        const row = ul.createDiv();
+        row.style.cssText = 'font-size:.76rem;line-height:1.45;';
+        row.createSpan({ text: label }).style.cssText = 'font-weight:700;color:var(--text-normal);';
+        row.createSpan({ text: '  ' + desc }).style.cssText = 'color:var(--text-muted);';
+      }
+    }
+
+    const bar = tip.createDiv();
+    bar.style.cssText = 'display:flex;align-items:center;gap:.5rem;margin-top:.9rem;';
+    bar.createSpan({ text: `${i + 1} / ${TOUR_STEPS.length}` })
+       .style.cssText = 'font-size:.72rem;color:var(--text-faint);margin-right:auto;';
+    const mkBtn = (label, primary) => {
+      const btn = bar.createEl('button', { text: label });
+      btn.style.cssText = primary
+        ? 'font-size:.8rem;padding:.35rem .9rem;border-radius:8px;border:none;background:var(--interactive-accent);color:var(--text-on-accent);cursor:pointer;font-weight:600;'
+        : 'font-size:.78rem;padding:.35rem .7rem;border-radius:8px;border:1px solid var(--vault-glass-border, rgba(255,255,255,0.18));background:transparent;color:var(--text-muted);cursor:pointer;';
+      return btn;
+    };
+    mkBtn('Skip').addEventListener('click', finish);
+    if (i > 0) mkBtn('Back').addEventListener('click', () => go(i - 1));
+    mkBtn(i === TOUR_STEPS.length - 1 ? 'Done' : 'Next', true)
+      .addEventListener('click', () => go(i + 1));
+
+    // Jump without animation, then measure on the next two frames, once the
+    // browser has settled the new scroll offset and the card's own height.
+    if (target && target.scrollIntoView) {
+      target.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'auto' });
+    }
+    window.requestAnimationFrame(() => window.requestAnimationFrame(place));
+  }
+
+  go(0);
+}
+
+// Clean the overlay up if the note re-renders underneath it.
+dv.component.register(() => { const o = document.getElementById('hob-tour'); if (o) o.remove(); });
+
+// A permanent way back in, so the tour is not a one-shot.
+const tourBtn = statusCard.createEl('button', {text: '🧭 Take the tour'});
+tourBtn.style.cssText = 'margin-top:.9rem;width:100%;font-size:.78rem;padding:.45rem .8rem;border-radius:9px;border:1px solid var(--vault-glass-border);background:rgba(255,255,255,0.06);color:var(--text-muted);cursor:pointer;font-weight:600;';
+tourBtn.addEventListener('mouseenter', () => tourBtn.style.background = 'rgba(255,255,255,0.13)');
+tourBtn.addEventListener('mouseleave', () => tourBtn.style.background = 'rgba(255,255,255,0.06)');
+tourBtn.addEventListener('click', startTour);
 
 // ─── CLOCK UPDATE TICK PIPELINE ───
 function tick(){
