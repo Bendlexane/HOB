@@ -1,15 +1,31 @@
 <%*
-const name = await tp.system.prompt("Protocol name (kebab-case, e.g. ctab-extraction-herbarium)");
+const name = await tp.system.prompt("Protocol name (kebab-case, e.g. sample-preparation)");
 if (!name) return;
 
-const domain = await tp.system.suggester(
-    ["phylogenomics-wetlab", "phylogenomics-drylab", "morphometry", "cytogenetics", "herbarium"],
-    ["phylogenomics", "phylogenomics", "morphometry", "cytogenetics", "herbarium"]
-);
+// Domains are whatever your field calls them, so offer the ones already in
+// use and let anything new be typed in.
+const existing = app.vault.getMarkdownFiles()
+    .map(f => app.metadataCache.getFileCache(f)?.frontmatter)
+    .filter(fm => fm && fm.type === "protocol" && fm.domain)
+    .map(fm => String(fm.domain));
+const known = [...new Set(existing)].sort();
 
-const phase = domain === "phylogenomics" 
-    ? await tp.system.prompt("Phase (e.g. wetlab/02_dna-extraction or drylab/07-read-processing)")
-    : "";
+let domain;
+if (known.length) {
+    const picked = await tp.system.suggester(
+        [...known, "New domain…"],
+        [...known, "__new__"]
+    );
+    if (!picked) return;
+    domain = picked === "__new__"
+        ? await tp.system.prompt("Domain (kebab-case, e.g. microscopy)")
+        : picked;
+} else {
+    domain = await tp.system.prompt("Domain (kebab-case, e.g. microscopy)");
+}
+if (!domain) return;
+
+const phase = await tp.system.prompt("Phase, optional (e.g. 01_preparation, or leave blank)", "");
 
 const owner = await tp.system.prompt("Owner (name or lab ID)", "");
 

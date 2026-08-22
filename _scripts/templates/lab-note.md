@@ -12,11 +12,11 @@ type: lab-note
 experiment_id: <% expId %>
 date: <% today %>
 project_code: 
-activity_type: null            # dna_extraction | pcr | library_prep | gel | herbarium | sequencing | analysis
+activity_type: null            # free text, whatever your field calls the activity
 protocol: null
 samples_processed: null
 success_count: null
-material: null                 # fresh | silica | herbarium
+material: null                 # free text, what the sample is made of
 ---
 
 # Lab note <% today %> — ID `<% expId %>`

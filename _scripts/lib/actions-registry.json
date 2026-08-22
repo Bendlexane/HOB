@@ -11,7 +11,7 @@
         { "file": "sticky-note", "icon": "🗒️", "label": "Post-it", "name": "🗒️ Post-it — Add a quick sticky note to the Home dashboard", "desc": "What it does: Adds a small sticky note to the Home dashboard.\nWhen to use it: For a short reminder that doesn't need a full note file." },
         { "file": "idea.md", "icon": "💡", "label": "Idea", "name": "💡 Idea — Capture a quick idea → 00_STAGING/ideas/", "desc": "What it does: Captures a quick idea in the staging area.\nWhen to use it: To jot down a fast concept or thought to elaborate later." },
         { "file": "lab-note.md", "icon": "🔬", "label": "Lab Note", "name": "🔬 Lab Note — Lab note with date + experiment ID → 00_STAGING/_daily/", "desc": "What it does: Creates a dated lab note with an experiment ID.\nWhen to use it: To record daily experimental procedures, raw observations, or lab work." },
-        { "file": "protocol.md", "icon": "📋", "label": "Protocol", "name": "📋 Protocol — Create a protocol (wet/dry lab, morphometry...) → 03_KNOWLEDGE/protocols/", "desc": "What it does: Generates a standard protocol template (wet/dry lab, morphometry, etc.).\nWhen to use it: To document reusable step-by-step methodologies or experimental guidelines." }
+        { "file": "protocol.md", "icon": "📋", "label": "Protocol", "name": "📋 Protocol — Create a protocol in any domain → 03_KNOWLEDGE/protocols/", "desc": "What it does: Generates a standard protocol template and files it under the domain you name.\nWhen to use it: To document reusable step-by-step methodologies or experimental guidelines." }
       ]
     },
     {

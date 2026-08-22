@@ -1,70 +1,27 @@
 ---
 type: meta
 title: Protocols Index
+sticker: emoji//1f9ea
 cssclasses: [graph-hide]
 ---
 
 # Protocols Index
 
-> Auto-generated table of all protocols by domain, phase, and reproducibility status.
+> Every note with `type: protocol`, grouped by the `domain` you give it. Make one subfolder per domain you actually work in, then use the Protocol action to create notes inside it.
 
-## Phylogenomics — Wet lab
+## All protocols by domain
 
 ```dataview
 TABLE WITHOUT ID
   file.link AS Protocol,
+  phase AS Phase,
   reproducibility_status AS Repro,
   last_validated AS "Last validated",
   status AS Status
-FROM "03_KNOWLEDGE/protocols/phylogenomics/01_wetlab"
+FROM "03_KNOWLEDGE/protocols"
 WHERE type = "protocol"
-SORT phase ASC
-```
-
-## Phylogenomics — Dry lab
-
-```dataview
-TABLE WITHOUT ID
-  file.link AS Protocol,
-  reproducibility_status AS Repro,
-  last_validated AS "Last validated",
-  status AS Status
-FROM "03_KNOWLEDGE/protocols/phylogenomics/02_drylab"
-WHERE type = "protocol"
-SORT phase ASC
-```
-
-## Morphometry
-
-```dataview
-TABLE WITHOUT ID
-  file.link AS Protocol,
-  reproducibility_status AS Repro,
-  status AS Status
-FROM "03_KNOWLEDGE/protocols/morphometry"
-WHERE type = "protocol"
-```
-
-## Cytogenetics
-
-```dataview
-TABLE WITHOUT ID
-  file.link AS Protocol,
-  reproducibility_status AS Repro,
-  status AS Status
-FROM "03_KNOWLEDGE/protocols/cytogenetics"
-WHERE type = "protocol"
-```
-
-## Herbarium
-
-```dataview
-TABLE WITHOUT ID
-  file.link AS Protocol,
-  reproducibility_status AS Repro,
-  status AS Status
-FROM "03_KNOWLEDGE/protocols/herbarium"
-WHERE type = "protocol"
+GROUP BY domain
+SORT domain ASC, phase ASC
 ```
 
 ## Due for re-validation (>24 months)

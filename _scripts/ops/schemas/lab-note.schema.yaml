@@ -17,8 +17,9 @@ properties:
       - type: string
       - type: "null"
   activity_type:
+    # Free-form: what counts as an activity depends on the field.
     oneOf:
-      - enum: [dna_extraction, pcr, library_prep, gel, herbarium, sequencing, analysis]
+      - type: string
       - type: "null"
   protocol:
     oneOf:
@@ -33,6 +34,7 @@ properties:
       - type: integer
       - type: "null"
   material:
+    # Free-form: what a sample is made of depends on the field.
     oneOf:
-      - enum: [fresh, silica, herbarium]
+      - type: string
       - type: "null"

@@ -6,7 +6,10 @@ properties:
   type:
     const: protocol
   domain:
-    enum: [phylogenomics, morphometry, cytogenetics, herbarium]
+    # Whatever your field calls it. Kept free-form so the vault does not
+    # assume one discipline.
+    type: string
+    minLength: 1
   phase:
     type: string
     description: "Relative path inside protocols/ e.g. wetlab/02_dna-extraction"
