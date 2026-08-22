@@ -54,7 +54,7 @@ ollama pull nomic-embed-text
 
 **3. Pick a chat model.** Two routes, and you can change your mind later.
 
-*Hosted, more capable.* `gpt-oss:120b-cloud` runs on Ollama's servers, so it needs a free account but no GPU of your own. This is what HOB ships pointing at.
+*Hosted, more capable.* `gpt-oss:120b-cloud` runs on Ollama's servers, so it needs a free account but no GPU of your own. This is what HOB ships pointing at, which means that by default the notes in `03_KNOWLEDGE/` and the questions you ask leave your machine.
 
 ```bash
 ollama signin
@@ -78,6 +78,14 @@ The model you pulled should appear. Hosted models show a size of `-` because the
 **5. Tell HOB which model to use.** Set `AI_MODEL` in the vault-root `.env`, and put the same name in LLM Wiki's settings under Settings, Community plugins, LLM Wiki. If you went local, both become `qwen2.5:7b`. `AI_URL` only needs changing if Ollama is not on the default port, or if you are pointing at some other Ollama-compatible server.
 
 Reopen `_HOME` afterwards. If something is still off, the helper card now names the cause rather than just failing, so it will say whether the server is unreachable or the model is missing.
+
+**What the model can actually see.** Whichever route you pick, the AI layer only
+reads `03_KNOWLEDGE/`. That is an allowlist — `queryFolders` in LLM Wiki's
+settings — and it ships containing that one folder, so your projects, grants,
+collaborators, admin and peer reviews are never indexed and never sent to a
+model, hosted or not. If you add folders to that list, you are widening what
+leaves your machine; the README's [What leaves your machine](README.md#what-leaves-your-machine)
+table is the full picture.
 
 Being honest about where this stands: HOB is beta, and this is the one part that is not out of the box.
 
@@ -123,7 +131,25 @@ Two rules keep this workable. Nothing stays in `00_STAGING` forever, and scienti
 
 ## What runs on its own
 
-`python3 _scripts/cron/setup_launchd.py` installs the scheduler. From then on the vault collects KPIs, ingests Zotero annotations, cleans the wiki, and checks review deadlines every night. Run `python3 _scripts/ops/health_check.py` whenever you want to know whether it is still working.
+`python3 _scripts/cron/setup_launchd.py` installs the scheduler. It lists the
+nine jobs and asks before installing anything, so run it once and read the list;
+`--dry-run` shows the same list and installs nothing. From then on the vault
+collects KPIs, ingests Zotero annotations, cleans the wiki, and checks review
+deadlines every night. Run `python3 _scripts/ops/health_check.py` whenever you
+want to know whether it is still working, and
+`python3 _scripts/cron/setup_launchd.py --uninstall` to remove the lot.
+
+Two of those jobs change things on their own, so they are worth knowing about
+before you wonder where a folder went:
+
+- **`archive_published` (08:00 daily) moves folders.** Any project in
+  `01_PROJECTS/` whose `_project.md` has `status: published` is moved into
+  `99_ARCHIVE/`. Nothing is deleted, but the project is no longer where you
+  left it. Preview it any time with
+  `python3 _scripts/automation/archive_published.py --dry-run`.
+- **`wiki_lint` (17:00 daily) only proposes.** It reports which generated wiki
+  files look like junk and posts the count to the Notification Center. It
+  deletes nothing unless you run it yourself with `--apply`.
 
 ## When a card looks empty
 

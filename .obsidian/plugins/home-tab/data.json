@@ -16,18 +16,13 @@
   "showbookmarkedFiles": true,
   "showRecentFiles": false,
   "maxRecentFiles": 5,
-  "storeRecentFile": true,
+  "storeRecentFile": false,
   "showPath": true,
   "selectionHighlight": "default",
   "showShortcuts": true,
   "markdownOnly": false,
   "unresolvedLinks": false,
-  "recentFilesStore": [
-    {
-      "filepath": "_HOME.md",
-      "timestamp": 1787342537865
-    }
-  ],
+  "recentFilesStore": [],
   "bookmarkedFileStore": [],
   "searchDelay": 0,
   "replaceNewTabs": true,

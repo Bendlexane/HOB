@@ -8,6 +8,7 @@ cssclasses:
   - home-sky
 ---
 
+
 ```dataviewjs
 // Obsidian's window.localStorage is shared by every vault open in the app,
 // so a name or a weather location set here would leak into any other vault.
