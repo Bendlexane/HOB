@@ -26,7 +26,7 @@ Core files responsible for configuring plist files and wrapping execution enviro
 
 | Script | Schedule / Trigger | Purpose | Config / Dependencies |
 |---|---|---|---|
-| [`setup_launchd.py`](_scripts/cron/setup_launchd.py) | **Manual** | Installs, removes, and lists system plist LaunchAgents under `~/Library/LaunchAgents/`. | `launchctl` |
+| [`setup_launchd.py`](_scripts/cron/setup_launchd.py) | **Manual** | Installs, removes, and lists user LaunchAgents under `~/Library/LaunchAgents/`. Prints the full job list and asks for confirmation before installing; `--dry-run` shows the list and exits, `--yes` skips the prompt, `--uninstall` removes them all. | `launchctl` |
 | [`run_job.py`](_scripts/cron/run_job.py) | **Automatic** (launchd) | Ensures CWD is correct, pipes script logs, and writes heartbeats upon success. | Python executable |
 
 ### 🔔 Utility & Alerts

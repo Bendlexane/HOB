@@ -101,7 +101,39 @@ def _load_plist(path: Path, name: str) -> str:
     return "loaded" if r.returncode == 0 else f"FAILED: {r.stderr.strip()}"
 
 
-def install() -> None:
+def _describe_jobs() -> None:
+    """Print exactly what is about to be scheduled, before scheduling it."""
+    print(f"\nAbout to install {len(_jobs())} LaunchAgents into {LA_DIR}")
+    print("They run in your user session — no root, no Full Disk Access prompt —")
+    print("and keep running daily until you run this script with --uninstall.\n")
+    for name, (cal, program_args) in _jobs().items():
+        when = cal if isinstance(cal, dict) else cal[0]
+        days = "" if isinstance(cal, dict) else " (Mon–Fri)"
+        # _args() builds [python, run_job.py, job_name, script_rel, ...], so the
+        # script the job actually runs is at index 3; the shell job has it at 0.
+        target = program_args[3] if len(program_args) > 3 else program_args[0]
+        print(f"  {when.get('Hour', 0):02d}:{when.get('Minute', 0):02d}{days:<10} "
+              f"{_label(name):<38} {target}")
+    print()
+
+
+def _confirm() -> bool:
+    """Ask before writing to ~/Library/LaunchAgents, unless told not to."""
+    try:
+        answer = input("Install these agents? [y/N] ").strip().lower()
+    except EOFError:
+        # Non-interactive (piped, CI): say no rather than scheduling silently.
+        print("Not a terminal — re-run with --yes to install non-interactively.")
+        return False
+    return answer in ("y", "yes")
+
+
+def install(assume_yes: bool = False) -> None:
+    _describe_jobs()
+    if not assume_yes and not _confirm():
+        print("Nothing installed.")
+        return
+
     LA_DIR.mkdir(parents=True, exist_ok=True)
     LAUNCHD_LOGS.mkdir(parents=True, exist_ok=True)
 
@@ -148,6 +180,10 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Install vault jobs as launchd agents")
     ap.add_argument("--uninstall", action="store_true")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="Show what would be scheduled, then exit without installing")
+    ap.add_argument("--yes", "-y", action="store_true",
+                    help="Skip the confirmation prompt")
     ap.add_argument("--python", help="Python interpreter to run jobs with (default: current interpreter)")
     args = ap.parse_args()
     if args.python:
@@ -156,8 +192,11 @@ def main() -> int:
         uninstall()
     elif args.list:
         list_agents()
+    elif args.dry_run:
+        _describe_jobs()
+        print("Dry run — nothing installed.")
     else:
-        install()
+        install(assume_yes=args.yes)
     return 0
 
 
