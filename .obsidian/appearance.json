@@ -6,7 +6,7 @@
   "translucency": true,
   "interfaceFontFamily": "Outfit",
   "textFontFamily": "Outfit",
-  "baseFontSize": 22,
+  "baseFontSize": 20,
   "baseFontSizeAction": true,
   "enabledCssSnippets": [
     "context_width",

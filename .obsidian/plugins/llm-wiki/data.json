@@ -19,5 +19,20 @@
   "nightlyExtractionEnabled": true,
   "nightlyExtractionHour": 2,
   "showStatusBar": true,
-  "hideWikiFromSearch": true
+  "hideWikiFromSearch": true,
+  "excludedFolders": [
+    "00_STAGING/",
+    "01_PROJECTS/",
+    "04_PEOPLE/",
+    "05_ADMIN/",
+    "09_PEER_REVIEWS/",
+    "99_ARCHIVE/",
+    "_daily/",
+    "_templates/",
+    "_scripts/",
+    "_meta/",
+    ".obsidian/",
+    "wiki/"
+  ],
+  "excludeUnderscoreFiles": true
 }

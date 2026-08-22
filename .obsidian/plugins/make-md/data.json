@@ -38,8 +38,7 @@
   "vaultSelector": true,
   "deleteFileOption": "trash",
   "expandedSpaces": [
-    "/",
-    "//paper"
+    "/"
   ],
   "expandFolderOnClick": true,
   "spacesFolder": "Tags",
