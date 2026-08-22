@@ -20,9 +20,27 @@ const notePath = tp.file.path(true);
 // Launched as a detached child of Obsidian → macOS attributes microphone
 // permission to Obsidian (grant once). The server auto-shuts down after a
 // period of inactivity, so nothing lingers in the background.
+// Shared secret for the server. It writes this file on first run, owner-only,
+// so reading it is the proof that we are a local process rather than a web
+// page that happens to know the port.
+function authToken() {
+  try {
+    return require("fs")
+      .readFileSync(`${app.vault.adapter.basePath}/_scripts/.transcribe_token`, "utf8")
+      .trim();
+  } catch { return ""; }
+}
+function authHeaders(extra) {
+  return Object.assign({ "X-HOB-Token": authToken() }, extra || {});
+}
 async function serverHealth() {
-  try { return await (await fetch(`${TRANS_SERVER}/health`)).json(); }
-  catch { return null; }
+  try {
+    const res = await fetch(`${TRANS_SERVER}/health`, { headers: authHeaders() });
+    // A 403 means the server is up but we read a stale or missing token, which
+    // is not "healthy" — treat it as down so the caller reports it.
+    if (!res.ok) return null;
+    return await res.json();
+  } catch { return null; }
 }
 async function ensureServer() {
   let h = await serverHealth();
@@ -56,7 +74,7 @@ try {
   if (status.recording) {
     const stopRes = await fetch(`${TRANS_SERVER}/record/stop`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders({ "Content-Type": "application/json" }),
       body: JSON.stringify({ note_path: notePath }),
     });
     const data = await stopRes.json();
@@ -101,7 +119,7 @@ try {
     while (Date.now() - started < 240000) {           // safety cap 4 min
       await new Promise((r) => setTimeout(r, 1500));
       let st;
-      try { st = await (await fetch(`${TRANS_SERVER}/status`)).json(); }
+      try { st = await (await fetch(`${TRANS_SERVER}/status`, { headers: authHeaders() })).json(); }
       catch { continue; }
       if (st.stage === "done") {
         setMsg(`✅ Transcript added under "${st.session || data.session_name}"`);
@@ -155,7 +173,7 @@ try {
 
   const startRes = await fetch(`${TRANS_SERVER}/record/start`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify({ note_path: notePath, session_name: session }),
   });
   const data = await startRes.json();

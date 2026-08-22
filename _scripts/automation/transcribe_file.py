@@ -11,8 +11,8 @@ Called by the Templater template `_scripts/templates/transcribe-audio.md`
 (System & Utilities action), or directly:
 
     python _scripts/automation/transcribe_file.py \
-        --audio "Via Francesco De Sanctis 2.m4a" \
-        --note  "02_GRANTS/writing/GRANT_2026_MSCA/masterclass/Masterclass notes day 2.md"
+        --audio "session-recording.m4a" \
+        --note  "05_ADMIN/missions/conferences/2026_EXAMPLE/daily_notes/day-2.md"
 
 Arguments:
     --audio    Audio file: absolute, vault-relative, or a bare filename resolved

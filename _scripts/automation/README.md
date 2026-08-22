@@ -72,7 +72,7 @@ Interactive scripts processing external inputs (PDFs, voice recordings) into cle
 | Script | Schedule / Trigger | Purpose | Config / Dependencies |
 |---|---|---|---|
 | [`pdf_to_md.py`](_scripts/automation/pdf_to_md.py) | **Manual** | Converts input PDF paper/notes to Literature Markdown schemas. | `marker` / Ollama / Gemini APIs |
-| [`transcribe_server.py`](_scripts/automation/transcribe_server.py) | **Manual** (HTTP Server) | Starts local port `11435` Whisper server to process microphone inputs into note sections (live conference recording). | Whisper model, Ollama |
+| [`transcribe_server.py`](_scripts/automation/transcribe_server.py) | **Manual** (HTTP Server) | Starts local port `11435` Whisper server to process microphone inputs into note sections (live conference recording). Every request must carry the shared secret from `_scripts/.transcribe_token` in an `X-HOB-Token` header — loopback alone would let any web page in your browser open the microphone. Requires `VAULT_ROOT`; note paths are confined to the vault. | Whisper model, Ollama, `VAULT_ROOT` |
 | [`transcribe_file.py`](_scripts/automation/transcribe_file.py) | **Manual** (Templater: `transcribe-audio.md`, System & Utilities) | Transcribes an EXISTING audio file embedded in a note (`![[file.m4a]]`) with Whisper + Ollama and stamps the cleaned transcript right under its embed. Reports live progress into the Home Notification Center (`notifications.json`). Standalone — shares no code with `transcribe_server.py`. | Whisper model, Ollama, ffmpeg |
 
 ### 🏷️ Zotero Integrations
@@ -80,4 +80,4 @@ Scripts running inside the Zotero desktop app to clean or manage libraries.
 
 | Script | Schedule / Trigger | Purpose | Config / Dependencies |
 |---|---|---|---|
-| [`clean_tags_zotero_library.js`](_scripts/automation/clean_tags_zotero_library.js) | **Manual** (Zotero script) | Classifies historical papers in Zotero into taxonomy tags. | Ollama cloud API / key |
+| [`clean_tags_zotero_library.js`](_scripts/automation/clean_tags_zotero_library.js) | **Manual** (Zotero script) | Classifies historical papers in Zotero into taxonomy tags. Sends titles and abstracts to Ollama's **hosted** API. The key is read from the Zotero preference `extensions.zotero.hob.ollamaKey` (Settings → Advanced → Config Editor), never stored in this file — it is tracked by git. | Ollama cloud API / key in Zotero prefs |

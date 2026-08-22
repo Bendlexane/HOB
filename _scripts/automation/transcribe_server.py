@@ -6,6 +6,12 @@ Listens on localhost:11435. Obsidian Templater buttons POST here to
 start/stop audio recording. On stop, runs Whisper transcription and
 Ollama cleanup, then appends the result to the target note.
 
+Every request must carry the shared secret from _scripts/.transcribe_token
+in an X-HOB-Token header. Loopback alone is not enough: this server opens the
+microphone and writes into the vault, and any web page the user has open can
+POST to 127.0.0.1. The token is generated on first run, is owner-readable
+only, and is gitignored.
+
 Usage:
     python _scripts/automation/transcribe_server.py          # default port 11435
     python _scripts/automation/transcribe_server.py --port 11435
@@ -31,6 +37,8 @@ import logging
 import os
 import queue
 import re
+import secrets
+import sys
 import tempfile
 import threading
 import time
@@ -90,6 +98,50 @@ def load_env() -> dict:
 
 
 CFG = load_env()
+
+# ─── Auth ─────────────────────────────────────────────────────────────
+# The server binds to loopback, but loopback is not a trust boundary against
+# a browser: any page the user visits can POST to 127.0.0.1. Since this server
+# opens the microphone and writes into the vault, every request must carry a
+# shared secret that only local processes can read off the disk.
+
+TOKEN_PATH = Path(__file__).parent.parent / ".transcribe_token"
+
+
+def load_or_create_token() -> str:
+    """Read the shared secret, creating it (owner-only) on first run.
+
+    The Templater side reads the same file, so the token survives restarts and
+    the auto-start path in record-session-toggle.md needs no coordination.
+    """
+    try:
+        existing = TOKEN_PATH.read_text(encoding="utf-8").strip()
+        if existing:
+            return existing
+    except FileNotFoundError:
+        pass
+    token = secrets.token_urlsafe(32)
+    TOKEN_PATH.write_text(token, encoding="utf-8")
+    os.chmod(TOKEN_PATH, 0o600)
+    log.info("Generated a new auth token at %s", TOKEN_PATH)
+    return token
+
+
+TOKEN = load_or_create_token()
+
+
+def resolve_note_path(note_path: str) -> Path:
+    """Resolve note_path inside the vault, refusing anything that escapes it.
+
+    note_path arrives over HTTP, so it is untrusted: an absolute path or a
+    ../ chain would otherwise let a caller write outside the vault entirely.
+    """
+    vault = Path(CFG["vault_root"]).resolve()
+    candidate = (vault / note_path).resolve()
+    if not candidate.is_relative_to(vault):
+        raise ValueError(f"note_path escapes the vault: {note_path!r}")
+    return candidate
+
 
 # ─── Recording state ──────────────────────────────────────────────────
 
@@ -232,9 +284,18 @@ def get_whisper_model():
 
 
 def _recordings_dir(note_path: str) -> Path:
-    """Derive a `_recordings/` folder at the mission root (two levels up from daily_notes/)."""
-    p = Path(note_path)
-    return p.parent.parent / "_recordings"
+    """Derive a `_recordings/` folder at the mission root (two levels up from daily_notes/).
+
+    Resolved against the vault, both so the folder lands next to the note
+    rather than next to the server's working directory, and so a hostile
+    note_path cannot steer the mkdir somewhere else on disk.
+    """
+    p = resolve_note_path(note_path)
+    target = p.parent.parent / "_recordings"
+    vault = Path(CFG["vault_root"]).resolve()
+    if not target.resolve().is_relative_to(vault):
+        raise ValueError(f"recordings folder escapes the vault: {note_path!r}")
+    return target
 
 
 def save_frames(frames: list, note_path: str, session_name: str, samplerate: int = 16000) -> Path:
@@ -312,12 +373,19 @@ def ollama_clean(raw_text: str, session_name: str, language: Optional[str] = Non
 
 # ─── Note append ──────────────────────────────────────────────────────
 
-def append_to_note(note_path: str, session_name: str, text: str, vault_root: str) -> bool:
+def append_to_note(note_path: str, session_name: str, text: str) -> bool:
     """
     Append the transcription block under the matching session heading.
     If the heading is not found, appends at the end of the note.
     """
-    full_path = Path(vault_root) / note_path if not Path(note_path).is_absolute() else Path(note_path)
+    # note_path is caller-supplied, so it is resolved through the vault-
+    # containment check rather than trusted — an absolute path used verbatim
+    # here would append the transcript to any writable file on the machine.
+    try:
+        full_path = resolve_note_path(note_path)
+    except ValueError:
+        log.error("Refusing to write outside the vault: %s", note_path)
+        return False
     if not full_path.exists():
         log.error("Note not found: %s", full_path)
         return False
@@ -365,18 +433,32 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(code)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Access-Control-Allow-Origin", "*")
+        # Deliberately no Access-Control-Allow-Origin. The only caller is
+        # Templater, which runs in Node and is not subject to CORS. Sending a
+        # wildcard here would let any web page read these responses.
         self.end_headers()
         self.wfile.write(body)
 
+    def _authorized(self) -> bool:
+        """Constant-time check of the shared secret on every request."""
+        supplied = self.headers.get("X-HOB-Token", "")
+        if secrets.compare_digest(supplied, TOKEN):
+            return True
+        log.warning("Rejected unauthenticated %s %s from %s",
+                    self.command, self.path, self.client_address[0])
+        self._respond(403, {"status": "error", "message": "missing or invalid X-HOB-Token"})
+        return False
+
     def do_OPTIONS(self):
-        self.send_response(204)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        # No preflight is served: a browser that cannot preflight cannot reach
+        # /record/start, which is the point.
+        self.send_response(405)
+        self.send_header("Content-Length", "0")
         self.end_headers()
 
     def do_GET(self):
+        if not self._authorized():
+            return
         if self.path == "/health":
             self._respond(200, {"status": "ok", "recording": _state.active})
         elif self.path == "/status":
@@ -387,6 +469,8 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         global _last_active_time
+        if not self._authorized():
+            return
         _last_active_time = time.time()
         data = self._read_json() or {}
 
@@ -396,6 +480,13 @@ class Handler(BaseHTTPRequestHandler):
             session_name = data.get("session_name", "")
             if not note_path or not session_name:
                 self._respond(400, {"status": "error", "message": "note_path and session_name required"})
+                return
+            # Reject a path that leaves the vault before opening the mic, so a
+            # bad request never reaches the recording or the filesystem.
+            try:
+                resolve_note_path(note_path)
+            except ValueError as bad_path:
+                self._respond(400, {"status": "error", "message": str(bad_path)})
                 return
             # Quick microphone probe — catch "no input device / lid closed" before
             # accepting the session so the user gets an alert immediately.
@@ -455,7 +546,7 @@ class Handler(BaseHTTPRequestHandler):
                         log.warning("Cleanup returned empty — using raw transcript")
                         clean = raw
 
-                    ok = append_to_note(note_path, session_name, clean, CFG["vault_root"])
+                    ok = append_to_note(note_path, session_name, clean)
                     if ok:
                         log.info("Transcript appended to note OK")
                         _set_stage("done", session_name)
@@ -501,7 +592,10 @@ def main():
     args = ap.parse_args()
 
     if not CFG["vault_root"]:
-        log.warning("VAULT_ROOT not set in .env — note paths will be resolved as absolute")
+        log.error("VAULT_ROOT is not set in _scripts/.env — refusing to start. "
+                  "Every note path is resolved inside the vault, so without it "
+                  "there is nothing to resolve against.")
+        return 2
 
     # ThreadingHTTPServer: each request in its own thread, so a slow handler
     # (or background transcription) never blocks /health or the next click.
@@ -513,12 +607,14 @@ def main():
 
     log.info("Transcription server listening on http://127.0.0.1:%d", args.port)
     log.info("Whisper model: %s | Ollama model: %s", CFG["whisper_model"], CFG["ollama_model"])
+    log.info("Auth token read from %s — requests need it in X-HOB-Token", TOKEN_PATH)
     log.info("Press Ctrl+C to stop")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         log.info("Server stopped")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

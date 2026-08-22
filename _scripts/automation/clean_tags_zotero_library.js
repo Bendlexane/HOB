@@ -10,10 +10,26 @@
 
 
 // ── CONFIG ──────────────────────────────────────────────────────────────────
+// ⚠️ This model is hosted: it runs on Ollama's servers, so every title and
+// abstract classified here leaves your machine. Point OLLAMA_URL at
+// http://localhost:11434/api/generate with a local model to keep it in-house.
 const OLLAMA_URL = "https://api.ollama.com/api/generate";
 const OLLAMA_MODEL = "gpt-oss:120b-cloud";
-const OLLAMA_KEY = "PASTE_YOUR_OLLAMA_KEY_HERE"; // ⚠️ paste your key here before running — see OLLAMA_API_KEY in _scripts/.env
 const TIMEOUT_MS = 30000;
+
+// The API key is read from a Zotero preference, never stored in this file.
+// This script lives in a git repository, and a key pasted into a tracked file
+// is one `git commit -a` away from being published.
+//
+// Set it once in Zotero → Settings → Advanced → Config Editor:
+//   name:  extensions.zotero.hob.ollamaKey
+//   value: your Ollama API key
+const OLLAMA_KEY_PREF = "extensions.zotero.hob.ollamaKey";
+
+function ollamaKey() {
+    try { return (Zotero.Prefs.get(OLLAMA_KEY_PREF, true) || "").trim(); }
+    catch (e) { return ""; }
+}
 
 // ⚠️ SYSTEM FRAGILITY WARNING:
 // The CATEGORIES list is duplicated between this Zotero JS script and
@@ -32,14 +48,18 @@ const ALLOWED_TYPES = new Set([
 
 function ollamaRequest(prompt) {
     return new Promise((resolve, reject) => {
-        if (!OLLAMA_KEY || OLLAMA_KEY === "PASTE_YOUR_OLLAMA_KEY_HERE") {
-            reject(new Error("OLLAMA_KEY not set — edit the CONFIG block at the top of this script."));
+        const key = ollamaKey();
+        if (!key) {
+            reject(new Error(
+                "Ollama API key not set. In Zotero open Settings → Advanced → Config Editor " +
+                `and add the preference "${OLLAMA_KEY_PREF}" with your key as the value.`
+            ));
             return;
         }
         const xhr = new XMLHttpRequest();
         xhr.open("POST", OLLAMA_URL, true);
         xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Authorization", "Bearer " + OLLAMA_KEY);
+        xhr.setRequestHeader("Authorization", "Bearer " + key);
         xhr.timeout = TIMEOUT_MS;
         xhr.ontimeout = () => reject(new Error("timeout"));
         xhr.onerror = () => reject(new Error("network error"));
