@@ -533,7 +533,7 @@ const ctl = rssCard.createDiv();
 ctl.style.cssText = 'display:flex;gap:.5rem;align-items:center;margin-bottom:.7rem;';
 const kwIcon = ctl.createSpan({text:'🔍'}); kwIcon.style.fontSize='.95rem';
 const input = ctl.createEl('input');
-input.setAttr('type','text'); input.setAttr('placeholder','PubMed keywords…');
+input.setAttr('type','text'); input.setAttr('placeholder','PubMed keywords, e.g. your topic…');
 input.style.cssText = 'flex:1;font-size:.85rem;padding:.4rem .7rem;border-radius:9px;border:1px solid var(--vault-glass-border);background:rgba(255,255,255,0.04);color:var(--text-normal);outline:none;';
 const applyBtn = ctl.createEl('button', {text:'Apply'});
 applyBtn.style.cssText = 'font-size:.8rem;padding:.4rem .9rem;border-radius:9px;border:none;background:var(--interactive-accent);color:var(--text-on-accent);cursor:pointer;font-weight:600;';
@@ -1708,8 +1708,10 @@ const FEEDS = [
   // One journal ships as a worked example. Add your own with the "+" chip
   // in the What's new? card, or by copying this line with another ISSN.
   { name:'Nature Plants', color:'#3a7d44', type:'crossref', max:3, issn:'2055-0278' },
-  { name:'PubMed', color:'#4a6fa5', type:'pubmed', max:3,
-    query:'species delimitation OR plant systematics OR Mediterranean flora OR phylogenomics' },
+  // No default query. PubMed searches are topic choices, so anything shipped
+  // here would pick a field on the reader's behalf. The feed appears once you
+  // type keywords into the box on the card.
+  { name:'PubMed', color:'#4a6fa5', type:'pubmed', max:3, query:'' },
 ];
 const TTL_HOURS  = 6;
 const CACHE_KEY  = 'home-rss-cache-v2';
@@ -1739,7 +1741,7 @@ const within     = it => { if(!it.date) return false; const t=new Date(it.date).
 
 const getCustom  = () => { try{ return JSON.parse(store.getItem(CUSTOM_KEY))||[]; }catch(e){ return []; } };
 const getRemoved = () => { try{ return new Set(JSON.parse(store.getItem(REMOVED_KEY))); }catch(e){ return new Set(); } };
-const allFeeds   = () => FEEDS.filter(f=>!getRemoved().has(f.name) && (f.type!=='crossref' || CR_MAILTO)).concat(getCustom());
+const allFeeds   = () => FEEDS.filter(f=>!getRemoved().has(f.name) && (f.type!=='crossref' || CR_MAILTO) && (f.type!=='pubmed' || getQuery())).concat(getCustom());
 const getQuery   = () => store.getItem(QUERY_KEY) ?? PUBMED_DEF;
 const getEnabled = () => { try{ return new Set(JSON.parse(store.getItem(ENABLED_KEY))); }catch(e){ return new Set(allFeeds().map(f=>f.name)); } };
 const loadCache  = () => { try{ return JSON.parse(store.getItem(CACHE_KEY))||{}; }catch(e){ return {}; } };
@@ -1904,8 +1906,8 @@ async function run(force){
   rssStatus.setText(`· ${total} items · last ${DAYS_BACK}d${failed?`  ⚠ ${failed} unavailable`:''}`);
 }
 
-applyBtn.addEventListener('click', ()=>{ store.setItem(QUERY_KEY, input.value.trim()); run(true); });
-input.addEventListener('keydown', e=>{ if(e.key==='Enter'){ store.setItem(QUERY_KEY, input.value.trim()); run(true); } });
+applyBtn.addEventListener('click', ()=>{ store.setItem(QUERY_KEY, input.value.trim()); renderChips(); run(true); });
+input.addEventListener('keydown', e=>{ if(e.key==='Enter'){ store.setItem(QUERY_KEY, input.value.trim()); renderChips(); run(true); } });
 refreshBtn.addEventListener('click', ()=>run(true));
 
 function renderChips(){

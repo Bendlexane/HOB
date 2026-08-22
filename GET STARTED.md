@@ -137,6 +137,22 @@ That is usually configuration, not breakage.
 | Ask AI answers nothing | Ollama is not running, or a model is not pulled. See the Ollama guide above. |
 | Vault Status says "Not versioned" | The vault is not a git repository yet. See the versioning section above. |
 
+## The literature classifier speaks botany
+
+The KPI card's "Top Reading Topics" comes from a classifier that reads each paper in Zotero and files it under one category. The machinery is field-agnostic, it just asks a model to pick from a list. The list shipped here is the author's own: phylogenomics, taxonomy, morphometry, cytogenetics, and so on.
+
+Nothing breaks if you leave it. Papers outside those categories land in `other`. But the topic breakdown will only be useful once the list matches your field.
+
+The catch is that the list lives in three files, because two of them run inside Zotero and cannot read anything from the vault. Change all three together or the counts stop matching the tags.
+
+| File | What to change |
+|---|---|
+| `_scripts/kpi/tag_prompt.txt` | The category descriptions and the disambiguation rules. This is the prompt the model actually sees. |
+| `_scripts/kpi/zotero_stats.py` | The `CATEGORIES` set, used to validate what the model returns. |
+| `_scripts/automation/clean_tags_zotero_library.js` | The same set plus its own copy of the prompt, for the Zotero-side action. |
+
+Keep `other` in the list. It is the fallback when the model is unsure.
+
 ## Making it yours
 
 The folder names are wired into the Python scripts, so rename them only if you are ready to update `_scripts/` too. Everything else is fair game. The dashboard is markdown you can edit, the theme is one CSS file, and the actions are plain JS modules in `_scripts/actions/`.
