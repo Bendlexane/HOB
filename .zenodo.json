@@ -1,0 +1,30 @@
+{
+  "upload_type": "software",
+  "title": "HOB: A Free, Open-Source Obsidian-Based Research Management System for Scientific Workflows",
+  "creators": [
+    {
+      "name": "Tiburtini, Manuel",
+      "orcid": "0000-0003-4985-3058"
+    }
+  ],
+  "description": "HOB is a free and open-source Obsidian vault template acting as a Research Management System for scientific workflows. It adds a stage-based folder taxonomy, structured templates, a dashboard, a macOS scheduler, a Zotero-to-Markdown literature pipeline, Bayesian project-duration forecasting, KPI collection, self-observability checks, and a vault-aware AI layer scoped to the knowledge folder. Research records remain plain Markdown files on the researcher's own machine.",
+  "license": "AGPL-3.0-or-later",
+  "access_right": "open",
+  "keywords": [
+    "research management system",
+    "Obsidian",
+    "local-first software",
+    "Markdown",
+    "research workflow automation",
+    "Bayesian forecasting",
+    "electronic lab notebook",
+    "open-source software"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Bendlexane/HOB",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

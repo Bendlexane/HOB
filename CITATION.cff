@@ -7,7 +7,7 @@ type: software
 authors:
   - family-names: Tiburtini
     given-names: Manuel
-    # orcid: "https://orcid.org/0000-0000-0000-0000"   # add yours
+    orcid: "https://orcid.org/0000-0003-4985-3058"
 repository-code: "https://github.com/Bendlexane/HOB"
 abstract: >-
   HOB is a free and open-source Obsidian vault template acting as a
