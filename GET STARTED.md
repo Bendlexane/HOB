@@ -25,6 +25,14 @@ These are the two most common surprises, so they are worth doing early.
 
 HOB arrives as a git repository, but that repository is the *template*. Its `origin` points at the HOB repo, not at anything of yours, and nothing commits on your behalf. So out of the box your notes have no backup and no history.
 
+> **⚠️ Do not fork the HOB repository to start your own vault.** A fork of a
+> public repository is public, and GitHub does not let you make a fork private.
+> Fork it, write your research into it, push, and your unpublished results and
+> confidential reviews are world-readable, with no warning at any step. Use
+> **"Use this template"** instead, which creates an independent repository you
+> can set to Private. Then run `git remote -v` and check the output before your
+> first push.
+
 Point it somewhere of your own before you write anything you care about.
 
 ```bash

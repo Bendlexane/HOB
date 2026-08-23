@@ -94,7 +94,22 @@ notes are sensitive, do it before you start writing.
 
 HOB ships as a git repository, but that repository is the template. Cloning it leaves `origin` pointing at this repo, and nothing commits on your behalf, so a fresh vault has no backup and no history of its own.
 
-Repoint the remote before you write anything you care about, and keep it private. A research vault holds unpublished work, confidential reviews, and personal data about collaborators.
+> ### ⚠️ Do not fork this repository to start your own vault
+>
+> **A fork of a public repository is public, and GitHub does not let you make a
+> fork private.** If you fork HOB, fill the vault with your own work and push,
+> then your unpublished results, your confidential peer reviews and your
+> collaborators' personal data become world-readable. Nothing warns you at any
+> step, because from git's point of view you did everything correctly.
+>
+> Use **"Use this template"** instead. It creates an independent repository
+> that you can set to Private, with no fork relationship and no shared history.
+> If you cloned rather than forked, repoint the remote as shown below.
+>
+> Either way, run `git remote -v` and read the output before your first push.
+> It should name a repository of yours, not this one.
+
+A research vault holds unpublished work, confidential reviews, and personal data about collaborators, so repoint the remote before you write anything you care about, and keep that repository private.
 
 ```bash
 git -C /path/to/your/vault remote remove origin
