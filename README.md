@@ -148,6 +148,15 @@ release, so a citation using it does not go stale. To cite the exact code
 behind a result, use the DOI of that specific release instead, listed on the
 [Zenodo record](https://doi.org/10.5281/zenodo.22059429).
 
+**The design and rationale are described in a preprint**, which covers the
+architecture, the Bayesian forecasting model, the KPI and observability
+subsystems, and the current limitations:
+
+> Tiburtini, M. (2026). *HOB: A Free, Open-Source Obsidian-Based Research Management System for Scientific Workflows* [Preprint]. ResearchGate. https://www.researchgate.net/publication/413543809
+
+Cite the preprint when you are referring to the design, and the software DOI
+when you are referring to the code you ran.
+
 ## Final note
 
 HOB is free and open source. There is no subscription and no account to

@@ -37,3 +37,16 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.22059430"
     description: Archived release 1.0.0-beta
+
+preferred-citation:
+  type: article
+  title: >-
+    HOB: A Free, Open-Source Obsidian-Based Research Management
+    System for Scientific Workflows
+  authors:
+    - family-names: Tiburtini
+      given-names: Manuel
+      orcid: "https://orcid.org/0000-0003-4985-3058"
+  year: 2026
+  url: "https://www.researchgate.net/publication/413543809"
+  notes: Preprint describing the design and rationale of the software.
