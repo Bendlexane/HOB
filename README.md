@@ -181,6 +181,8 @@ The project is still evolving, and the best way to make it better is to have
 more researchers actually use it. If you find something broken, report it. If
 you have an idea, share it. If you want to build it together, get in touch.
 
+Contact: manuel.tiburtini.phd@icloud.com
+
 ---
 
 **HOB Research Vault Toolkit**
